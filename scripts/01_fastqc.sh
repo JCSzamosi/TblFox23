@@ -1,0 +1,1 @@
+../../CRISPR3/scripts/01_fastqc.sh

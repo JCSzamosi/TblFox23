@@ -1,0 +1,5 @@
+*.swp
+*.swo
+data*
+orig_data*
+results/*

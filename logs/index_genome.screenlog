@@ -1,0 +1,21 @@
+./scripts/index_genome.sh 
+STAR --runThreadN 10 --runMode genomeGenerate --genomeDir /home/jcszamosi/Disk2/CommonData/ReferenceGenomes/Mouse/GRCm39/ncbi-genomes-2022-03-04/STAR2.7.9_100 --sjdbGTFfile /home/jcszamosi/Disk2/CommonData/ReferenceGenomes/Mouse/GRCm39/ncbi-genomes-2022-03-04/GCF_000001635.27_GRCm39_genomic.gtf --sjdbOverhang 49 --limitGenomeGenerateRAM 24000000000 --genomeSAsparseD 2 --genomeFastaFiles /home/jcszamosi/Disk2/CommonData/ReferenceGenomes/Mouse/GRCm39/ncbi-genomes-2022-03-04/GCF_000001635.27_GRCm39_genomic.fna
+	STAR --runThreadN 10 --runMode genomeGenerate --sjdbGTFfile /home/jcszamosi/Disk2/CommonData/ReferenceGenomes/Mouse/GRCm39/ncbi-genomes-2022-03-04/GCF_000001635.27_GRCm39_genomic.gtf --sjdbOverhang 49 --genomeDir /home/jcszamosi/Disk2/CommonData/ReferenceGenomes/Mouse/GRCm39/ncbi-genomes-2022-03-04/STAR2.7.9_100 --limitGenomeGenerateRAM 24000000000 --genomeSAsparseD 2 --genomeFastaFiles /home/jcszamosi/Disk2/CommonData/ReferenceGenomes/Mouse/GRCm39/ncbi-genomes-2022-03-04/GCF_000001635.27_GRCm39_genomic.fna
+	STAR version: 2.7.9a   compiled: 2021-05-04T09:43:56-0400 vega:/home/dobin/data/STAR/STARcode/STAR.master/source
+Mar 04 14:34:41 ..... started STAR run
+!!!!! WARNING: Could not move Log.out file from ./Log.out into /home/jcszamosi/Disk2/CommonData/ReferenceGenomes/Mouse/GRCm39/ncbi-genomes-2022-03-04/STAR2.7.9_100/Log.out. Will keep ./Log.out
+
+Mar 04 14:34:41 ... starting to generate Genome files
+Mar 04 14:35:23 ..... processing annotations GTF
+Mar 04 14:35:49 ... starting to sort Suffix Array. This may take a long time...
+Mar 04 14:36:00 ... sorting Suffix Array chunks and saving them to disk...
+Mar 04 14:44:24 ... loading chunks from disk, packing SA...
+Mar 04 14:46:11 ... finished generating suffix array
+Mar 04 14:46:11 ... generating Suffix Array index
+Mar 04 14:48:40 ... completed Suffix Array index
+Mar 04 14:48:40 ..... inserting junctions into the genome indices
+Mar 04 14:50:10 ... writing Genome to disk ...
+Mar 04 14:50:17 ... writing Suffix Array to disk ...
+Mar 04 14:51:18 ... writing SAindex to disk
+Mar 04 14:51:27 ..... finished successfully
+(base) [01;32mjcszamosi@bioinformation[00m:[01;34mCRISPR3_Take2[00m$ 

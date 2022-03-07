@@ -1,0 +1,124 @@
+./scripts/fix_6/00_cat.sh 
+6*
+cat: 'orig_data/6**R1*': No such file or directory
+cat: 'orig_data/6**R2*': No such file or directory
+(base) [01;32mjcszamosi@bioinformation[00m:[01;34mCRISPR3_Take2[00m$ ln -s ../CRISPR3/orig_data .
+(base) [01;32mjcszamosi@bioinformation[00m:[01;34mCRISPR3_Take2[00m$ ln -s ../CRISPR3/orig_data .[2P./scripts/fix_6/00_cat.sh 
+6*
+cat: 'orig_data/6**R1*': No such file or directory
+cat: 'orig_data/6**R2*': No such file or directory
+(base) [01;32mjcszamosi@bioinformation[00m:[01;34mCRISPR3_Take2[00m$ ls data
+[0m[01;31m10-S2-Diff_S10_R1.fastq.gz[0m   [01;31m2-S1_S2_R2.fastq.gz[0m   [01;31m7-C1P-Diff_S7_R1.fastq.gz[0m
+[01;31m10-S2-Diff_S10_R2.fastq.gz[0m   [01;31m3-F6_S3_R1.fastq.gz[0m   [01;31m7-C1P-Diff_S7_R2.fastq.gz[0m
+[01;31m11-F8P-Diff_S11_R1.fastq.gz[0m  [01;31m3-F6_S3_R2.fastq.gz[0m   [01;31m8-S1-Diff_S8_R1.fastq.gz[0m
+[01;31m11-F8P-Diff_S11_R2.fastq.gz[0m  [01;31m4-S2_S4_R1.fastq.gz[0m   [01;31m8-S1-Diff_S8_R2.fastq.gz[0m
+[01;31m12-S3-Diff_S12_R1.fastq.gz[0m   [01;31m4-S2_S4_R2.fastq.gz[0m   [01;31m9-F6-Diff_S9_R1.fastq.gz[0m
+[01;31m12-S3-Diff_S12_R2.fastq.gz[0m   [01;31m5-F8P_S5_R1.fastq.gz[0m  [01;31m9-F6-Diff_S9_R2.fastq.gz[0m
+[01;31m1-C1P_S1_R1.fastq.gz[0m         [01;31m5-F8P_S5_R2.fastq.gz[0m  decoder.txt
+[01;31m1-C1P_S1_R2.fastq.gz[0m         [01;31m6-S3_S6_R1.fastq.gz[0m   mapfile.xlsx
+[01;31m2-S1_S2_R1.fastq.gz[0m          [01;31m6-S3_S6_R2.fastq.gz[0m
+(base) [01;32mjcszamosi@bioinformation[00m:[01;34mCRISPR3_Take2[00m$ rm data/6-S3_S6_R*
+(base) [01;32mjcszamosi@bioinformation[00m:[01;34mCRISPR3_Take2[00m$ ls orig_data/6*
+orig_data/6-S3_465767305.json
+
+orig_data/6-S3_ds.86379b989e4945958dbf6a2fd76c0d04:
+[0m[01;31m6-S3_S6_L001_R1_001.fastq.gz[0m  [01;31m6-S3_S6_L002_R1_001.fastq.gz[0m
+[01;31m6-S3_S6_L001_R2_001.fastq.gz[0m  [01;31m6-S3_S6_L002_R2_001.fastq.gz[0m
+(base) [01;32mjcszamosi@bioinformation[00m:[01;34mCRISPR3_Take2[00m$ ./scripts/fix_6/
+bash: ./scripts/fix_6/: Is a directory
+(base) [01;32mjcszamosi@bioinformation[00m:[01;34mCRISPR3_Take2[00m$ ./scripts/fix_6/00_cat.sh 
+6*
+cat: 'orig_data/6**R1*': No such file or directory
+cat: 'orig_data/6**R2*': No such file or directory
+(base) [01;32mjcszamosi@bioinformation[00m:[01;34mCRISPR3_Take2[00m$ ls orig_data/
+[0m[01;31m10-S2-Diff_S10_L001_R1_001.fastq.gz[0m   [01;31m4-S2_S4_L001_R2_001.fastq.gz[0m
+[01;31m10-S2-Diff_S10_L001_R2_001.fastq.gz[0m   [01;31m4-S2_S4_L002_R1_001.fastq.gz[0m
+[01;31m10-S2-Diff_S10_L002_R1_001.fastq.gz[0m   [01;31m4-S2_S4_L002_R2_001.fastq.gz[0m
+[01;31m10-S2-Diff_S10_L002_R2_001.fastq.gz[0m   [01;31m5-F8P_S5_L001_R1_001.fastq.gz[0m
+[01;31m11-F8P-Diff_S11_L001_R1_001.fastq.gz[0m  [01;31m5-F8P_S5_L001_R2_001.fastq.gz[0m
+[01;31m11-F8P-Diff_S11_L001_R2_001.fastq.gz[0m  [01;31m5-F8P_S5_L002_R1_001.fastq.gz[0m
+[01;31m11-F8P-Diff_S11_L002_R1_001.fastq.gz[0m  [01;31m5-F8P_S5_L002_R2_001.fastq.gz[0m
+[01;31m11-F8P-Diff_S11_L002_R2_001.fastq.gz[0m  6-S3_465767305.json
+[01;31m12-S3-Diff_S12_L001_R1_001.fastq.gz[0m   [01;34m6-S3_ds.86379b989e4945958dbf6a2fd76c0d04[0m
+[01;31m12-S3-Diff_S12_L001_R2_001.fastq.gz[0m   [01;31m7-C1P-Diff_S7_L001_R1_001.fastq.gz[0m
+[01;31m12-S3-Diff_S12_L002_R1_001.fastq.gz[0m   [01;31m7-C1P-Diff_S7_L001_R2_001.fastq.gz[0m
+[01;31m12-S3-Diff_S12_L002_R2_001.fastq.gz[0m   [01;31m7-C1P-Diff_S7_L002_R1_001.fastq.gz[0m
+[01;31m1-C1P_S1_L001_R1_001.fastq.gz[0m         [01;31m7-C1P-Diff_S7_L002_R2_001.fastq.gz[0m
+[01;31m1-C1P_S1_L001_R2_001.fastq.gz[0m         [01;31m8-S1-Diff_S8_L001_R1_001.fastq.gz[0m
+[01;31m1-C1P_S1_L002_R1_001.fastq.gz[0m         [01;31m8-S1-Diff_S8_L001_R2_001.fastq.gz[0m
+[01;31m1-C1P_S1_L002_R2_001.fastq.gz[0m         [01;31m8-S1-Diff_S8_L002_R1_001.fastq.gz[0m
+[01;31m2-S1_S2_L001_R1_001.fastq.gz[0m          [01;31m8-S1-Diff_S8_L002_R2_001.fastq.gz[0m
+[01;31m2-S1_S2_L001_R2_001.fastq.gz[0m          [01;31m9-F6-Diff_S9_L001_R1_001.fastq.gz[0m
+[01;31m2-S1_S2_L002_R1_001.fastq.gz[0m          [01;31m9-F6-Diff_S9_L001_R2_001.fastq.gz[0m
+[01;31m2-S1_S2_L002_R2_001.fastq.gz[0m          [01;31m9-F6-Diff_S9_L002_R1_001.fastq.gz[0m
+[01;31m3-F6_S3_L001_R1_001.fastq.gz[0m          [01;31m9-F6-Diff_S9_L002_R2_001.fastq.gz[0m
+[01;31m3-F6_S3_L001_R2_001.fastq.gz[0m          [01;34mjsons[0m
+[01;31m3-F6_S3_L002_R1_001.fastq.gz[0m          [01;34mold[0m
+[01;31m3-F6_S3_L002_R2_001.fastq.gz[0m          [01;34mtake_2[0m
+[01;31m4-S2_S4_L001_R1_001.fastq.gz[0m
+(base) [01;32mjcszamosi@bioinformation[00m:[01;34mCRISPR3_Take2[00m$ cd orig_data
+(base) [01;32mjcszamosi@bioinformation[00m:[01;34morig_data[00m$ ls
+[0m[01;31m10-S2-Diff_S10_L001_R1_001.fastq.gz[0m   [01;31m4-S2_S4_L001_R2_001.fastq.gz[0m
+[01;31m10-S2-Diff_S10_L001_R2_001.fastq.gz[0m   [01;31m4-S2_S4_L002_R1_001.fastq.gz[0m
+[01;31m10-S2-Diff_S10_L002_R1_001.fastq.gz[0m   [01;31m4-S2_S4_L002_R2_001.fastq.gz[0m
+[01;31m10-S2-Diff_S10_L002_R2_001.fastq.gz[0m   [01;31m5-F8P_S5_L001_R1_001.fastq.gz[0m
+[01;31m11-F8P-Diff_S11_L001_R1_001.fastq.gz[0m  [01;31m5-F8P_S5_L001_R2_001.fastq.gz[0m
+[01;31m11-F8P-Diff_S11_L001_R2_001.fastq.gz[0m  [01;31m5-F8P_S5_L002_R1_001.fastq.gz[0m
+[01;31m11-F8P-Diff_S11_L002_R1_001.fastq.gz[0m  [01;31m5-F8P_S5_L002_R2_001.fastq.gz[0m
+[01;31m11-F8P-Diff_S11_L002_R2_001.fastq.gz[0m  6-S3_465767305.json
+[01;31m12-S3-Diff_S12_L001_R1_001.fastq.gz[0m   [01;34m6-S3_ds.86379b989e4945958dbf6a2fd76c0d04[0m
+[01;31m12-S3-Diff_S12_L001_R2_001.fastq.gz[0m   [01;31m7-C1P-Diff_S7_L001_R1_001.fastq.gz[0m
+[01;31m12-S3-Diff_S12_L002_R1_001.fastq.gz[0m   [01;31m7-C1P-Diff_S7_L001_R2_001.fastq.gz[0m
+[01;31m12-S3-Diff_S12_L002_R2_001.fastq.gz[0m   [01;31m7-C1P-Diff_S7_L002_R1_001.fastq.gz[0m
+[01;31m1-C1P_S1_L001_R1_001.fastq.gz[0m         [01;31m7-C1P-Diff_S7_L002_R2_001.fastq.gz[0m
+[01;31m1-C1P_S1_L001_R2_001.fastq.gz[0m         [01;31m8-S1-Diff_S8_L001_R1_001.fastq.gz[0m
+[01;31m1-C1P_S1_L002_R1_001.fastq.gz[0m         [01;31m8-S1-Diff_S8_L001_R2_001.fastq.gz[0m
+[01;31m1-C1P_S1_L002_R2_001.fastq.gz[0m         [01;31m8-S1-Diff_S8_L002_R1_001.fastq.gz[0m
+[01;31m2-S1_S2_L001_R1_001.fastq.gz[0m          [01;31m8-S1-Diff_S8_L002_R2_001.fastq.gz[0m
+[01;31m2-S1_S2_L001_R2_001.fastq.gz[0m          [01;31m9-F6-Diff_S9_L001_R1_001.fastq.gz[0m
+[01;31m2-S1_S2_L002_R1_001.fastq.gz[0m          [01;31m9-F6-Diff_S9_L001_R2_001.fastq.gz[0m
+[01;31m2-S1_S2_L002_R2_001.fastq.gz[0m          [01;31m9-F6-Diff_S9_L002_R1_001.fastq.gz[0m
+[01;31m3-F6_S3_L001_R1_001.fastq.gz[0m          [01;31m9-F6-Diff_S9_L002_R2_001.fastq.gz[0m
+[01;31m3-F6_S3_L001_R2_001.fastq.gz[0m          [01;34mjsons[0m
+[01;31m3-F6_S3_L002_R1_001.fastq.gz[0m          [01;34mold[0m
+[01;31m3-F6_S3_L002_R2_001.fastq.gz[0m          [01;34mtake_2[0m
+[01;31m4-S2_S4_L001_R1_001.fastq.gz[0m
+(base) [01;32mjcszamosi@bioinformation[00m:[01;34morig_data[00m$ mv 5[K6-S3_465767305.json jsons/
+(base) [01;32mjcszamosi@bioinformation[00m:[01;34morig_data[00m$ cd 6-S3_ds.86379b989e4945958dbf6a2fd76c0d04/
+(base) [01;32mjcszamosi@bioinformation[00m:[01;34m6-S3_ds.86379b989e4945958dbf6a2fd76c0d04[00m$ ls
+[0m[01;31m6-S3_S6_L001_R1_001.fastq.gz[0m  [01;31m6-S3_S6_L002_R1_001.fastq.gz[0m
+[01;31m6-S3_S6_L001_R2_001.fastq.gz[0m  [01;31m6-S3_S6_L002_R2_001.fastq.gz[0m
+(base) [01;32mjcszamosi@bioinformation[00m:[01;34m6-S3_ds.86379b989e4945958dbf6a2fd76c0d04[00m$ mv * .. /
+(base) [01;32mjcszamosi@bioinformation[00m:[01;34m6-S3_ds.86379b989e4945958dbf6a2fd76c0d04[00m$ cd ../
+(base) [01;32mjcszamosi@bioinformation[00m:[01;34morig_data[00m$ ls
+[0m[01;31m10-S2-Diff_S10_L001_R1_001.fastq.gz[0m   [01;31m4-S2_S4_L002_R1_001.fastq.gz[0m
+[01;31m10-S2-Diff_S10_L001_R2_001.fastq.gz[0m   [01;31m4-S2_S4_L002_R2_001.fastq.gz[0m
+[01;31m10-S2-Diff_S10_L002_R1_001.fastq.gz[0m   [01;31m5-F8P_S5_L001_R1_001.fastq.gz[0m
+[01;31m10-S2-Diff_S10_L002_R2_001.fastq.gz[0m   [01;31m5-F8P_S5_L001_R2_001.fastq.gz[0m
+[01;31m11-F8P-Diff_S11_L001_R1_001.fastq.gz[0m  [01;31m5-F8P_S5_L002_R1_001.fastq.gz[0m
+[01;31m11-F8P-Diff_S11_L001_R2_001.fastq.gz[0m  [01;31m5-F8P_S5_L002_R2_001.fastq.gz[0m
+[01;31m11-F8P-Diff_S11_L002_R1_001.fastq.gz[0m  [01;34m6-S3_ds.86379b989e4945958dbf6a2fd76c0d04[0m
+[01;31m11-F8P-Diff_S11_L002_R2_001.fastq.gz[0m  [01;31m6-S3_S6_L001_R1_001.fastq.gz[0m
+[01;31m12-S3-Diff_S12_L001_R1_001.fastq.gz[0m   [01;31m6-S3_S6_L001_R2_001.fastq.gz[0m
+[01;31m12-S3-Diff_S12_L001_R2_001.fastq.gz[0m   [01;31m6-S3_S6_L002_R1_001.fastq.gz[0m
+[01;31m12-S3-Diff_S12_L002_R1_001.fastq.gz[0m   [01;31m6-S3_S6_L002_R2_001.fastq.gz[0m
+[01;31m12-S3-Diff_S12_L002_R2_001.fastq.gz[0m   [01;31m7-C1P-Diff_S7_L001_R1_001.fastq.gz[0m
+[01;31m1-C1P_S1_L001_R1_001.fastq.gz[0m         [01;31m7-C1P-Diff_S7_L001_R2_001.fastq.gz[0m
+[01;31m1-C1P_S1_L001_R2_001.fastq.gz[0m         [01;31m7-C1P-Diff_S7_L002_R1_001.fastq.gz[0m
+[01;31m1-C1P_S1_L002_R1_001.fastq.gz[0m         [01;31m7-C1P-Diff_S7_L002_R2_001.fastq.gz[0m
+[01;31m1-C1P_S1_L002_R2_001.fastq.gz[0m         [01;31m8-S1-Diff_S8_L001_R1_001.fastq.gz[0m
+[01;31m2-S1_S2_L001_R1_001.fastq.gz[0m          [01;31m8-S1-Diff_S8_L001_R2_001.fastq.gz[0m
+[01;31m2-S1_S2_L001_R2_001.fastq.gz[0m          [01;31m8-S1-Diff_S8_L002_R1_001.fastq.gz[0m
+[01;31m2-S1_S2_L002_R1_001.fastq.gz[0m          [01;31m8-S1-Diff_S8_L002_R2_001.fastq.gz[0m
+[01;31m2-S1_S2_L002_R2_001.fastq.gz[0m          [01;31m9-F6-Diff_S9_L001_R1_001.fastq.gz[0m
+[01;31m3-F6_S3_L001_R1_001.fastq.gz[0m          [01;31m9-F6-Diff_S9_L001_R2_001.fastq.gz[0m
+[01;31m3-F6_S3_L001_R2_001.fastq.gz[0m          [01;31m9-F6-Diff_S9_L002_R1_001.fastq.gz[0m
+[01;31m3-F6_S3_L002_R1_001.fastq.gz[0m          [01;31m9-F6-Diff_S9_L002_R2_001.fastq.gz[0m
+[01;31m3-F6_S3_L002_R2_001.fastq.gz[0m          [01;34mjsons[0m
+[01;31m4-S2_S4_L001_R1_001.fastq.gz[0m          [01;34mold[0m
+[01;31m4-S2_S4_L001_R2_001.fastq.gz[0m          [01;34mtake_2[0m
+(base) [01;32mjcszamosi@bioinformation[00m:[01;34morig_data[00m$ rm -r 6-S3_ds.86379b989e4945958dbf6a2fd76c0d04/
+(base) [01;32mjcszamosi@bioinformation[00m:[01;34morig_data[00m$ cd ../
+(base) [01;32mjcszamosi@bioinformation[00m:[01;34mCRISPR3_Take2[00m$ ./scripts/fix_6/00_cat.sh 
+6-S3_S6_
+(base) [01;32mjcszamosi@bioinformation[00m:[01;34mCRISPR3_Take2[00m$ 

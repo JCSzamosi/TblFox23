@@ -1,0 +1,515 @@
+./scripts/03_fastqc.sh 
+mkdir -p results/03_fastqc/
+fastqc -o results/03_fastqc/ -t 10 results/02_cutadapt//7-C1P-Diff_S7_R1_trimmed.fastq.gz results/02_cutadapt//7-C1P-Diff_S7_R2_trimmed.fastq.gz
+Started analysis of 7-C1P-Diff_S7_R1_trimmed.fastq.gz
+Started analysis of 7-C1P-Diff_S7_R2_trimmed.fastq.gz
+Approx 5% complete for 7-C1P-Diff_S7_R1_trimmed.fastq.gz
+Approx 5% complete for 7-C1P-Diff_S7_R2_trimmed.fastq.gz
+Approx 10% complete for 7-C1P-Diff_S7_R1_trimmed.fastq.gz
+Approx 10% complete for 7-C1P-Diff_S7_R2_trimmed.fastq.gz
+Approx 15% complete for 7-C1P-Diff_S7_R1_trimmed.fastq.gz
+Approx 15% complete for 7-C1P-Diff_S7_R2_trimmed.fastq.gz
+Approx 20% complete for 7-C1P-Diff_S7_R1_trimmed.fastq.gz
+Approx 20% complete for 7-C1P-Diff_S7_R2_trimmed.fastq.gz
+Approx 25% complete for 7-C1P-Diff_S7_R1_trimmed.fastq.gz
+Approx 25% complete for 7-C1P-Diff_S7_R2_trimmed.fastq.gz
+Approx 30% complete for 7-C1P-Diff_S7_R1_trimmed.fastq.gz
+Approx 30% complete for 7-C1P-Diff_S7_R2_trimmed.fastq.gz
+Approx 35% complete for 7-C1P-Diff_S7_R1_trimmed.fastq.gz
+Approx 35% complete for 7-C1P-Diff_S7_R2_trimmed.fastq.gz
+Approx 40% complete for 7-C1P-Diff_S7_R1_trimmed.fastq.gz
+Approx 40% complete for 7-C1P-Diff_S7_R2_trimmed.fastq.gz
+Approx 45% complete for 7-C1P-Diff_S7_R1_trimmed.fastq.gz
+Approx 45% complete for 7-C1P-Diff_S7_R2_trimmed.fastq.gz
+Approx 50% complete for 7-C1P-Diff_S7_R1_trimmed.fastq.gz
+Approx 50% complete for 7-C1P-Diff_S7_R2_trimmed.fastq.gz
+Approx 55% complete for 7-C1P-Diff_S7_R1_trimmed.fastq.gz
+Approx 55% complete for 7-C1P-Diff_S7_R2_trimmed.fastq.gz
+Approx 60% complete for 7-C1P-Diff_S7_R1_trimmed.fastq.gz
+Approx 60% complete for 7-C1P-Diff_S7_R2_trimmed.fastq.gz
+Approx 65% complete for 7-C1P-Diff_S7_R1_trimmed.fastq.gz
+Approx 65% complete for 7-C1P-Diff_S7_R2_trimmed.fastq.gz
+Approx 70% complete for 7-C1P-Diff_S7_R1_trimmed.fastq.gz
+Approx 70% complete for 7-C1P-Diff_S7_R2_trimmed.fastq.gz
+Approx 75% complete for 7-C1P-Diff_S7_R1_trimmed.fastq.gz
+Approx 75% complete for 7-C1P-Diff_S7_R2_trimmed.fastq.gz
+Approx 80% complete for 7-C1P-Diff_S7_R1_trimmed.fastq.gz
+Approx 80% complete for 7-C1P-Diff_S7_R2_trimmed.fastq.gz
+Approx 85% complete for 7-C1P-Diff_S7_R1_trimmed.fastq.gz
+Approx 85% complete for 7-C1P-Diff_S7_R2_trimmed.fastq.gz
+Approx 90% complete for 7-C1P-Diff_S7_R1_trimmed.fastq.gz
+Approx 90% complete for 7-C1P-Diff_S7_R2_trimmed.fastq.gz
+Approx 95% complete for 7-C1P-Diff_S7_R1_trimmed.fastq.gz
+Approx 95% complete for 7-C1P-Diff_S7_R2_trimmed.fastq.gz
+Analysis complete for 7-C1P-Diff_S7_R1_trimmed.fastq.gz
+Analysis complete for 7-C1P-Diff_S7_R2_trimmed.fastq.gz
+(base) [01;32mjcszamosi@bioinformation[00m:[01;34mCRISPR3_Take2[00m$ ./scripts/03_fastqc.sh 
+mkdir -p results/03_fastqc/
+fastqc -o results/03_fastqc/ -t 10 results/02_cutadapt//10-S2-Diff_S10_R1_trimmed.fastq.gz results/02_cutadapt//10-S2-Diff_S10_R2_trimmed.fastq.gz results/02_cutadapt//11-F8P-Diff_S11_R1_trimmed.fastq.gz results/02_cutadapt//11-F8P-Diff_S11_R2_trimmed.fastq.gz results/02_cutadapt//12-S3-Diff_S12_R1_trimmed.fastq.gz results/02_cutadapt//12-S3-Diff_S12_R2_trimmed.fastq.gz results/02_cutadapt//1-C1P_S1_R1_trimmed.fastq.gz results/02_cutadapt//1-C1P_S1_R2_trimmed.fastq.gz results/02_cutadapt//2-S1_S2_R1_trimmed.fastq.gz results/02_cutadapt//2-S1_S2_R2_trimmed.fastq.gz results/02_cutadapt//3-F6_S3_R1_trimmed.fastq.gz results/02_cutadapt//3-F6_S3_R2_trimmed.fastq.gz results/02_cutadapt//4-S2_S4_R1_trimmed.fastq.gz results/02_cutadapt//4-S2_S4_R2_trimmed.fastq.gz results/02_cutadapt//5-F8P_S5_R1_trimmed.fastq.gz results/02_cutadapt//5-F8P_S5_R2_trimmed.fastq.gz results/02_cutadapt//6-S3_S6_R1_trimmed.fastq.gz results/02_cutadapt//6-S3_S6_R2_trimmed.fastq.gz results/02_cutadapt//7-C1P-Diff_S7_R1_trimmed.fastq.gz results/02_cutadapt//7-C1P-Diff_S7_R2_trimmed.fastq.gz results/02_cutadapt//8-S1-Diff_S8_R1_trimmed.fastq.gz results/02_cutadapt//8-S1-Diff_S8_R2_trimmed.fastq.gz results/02_cutadapt//9-F6-Diff_S9_R1_trimmed.fastq.gz results/02_cutadapt//9-F6-Diff_S9_R2_trimmed.fastq.gz
+Started analysis of 10-S2-Diff_S10_R1_trimmed.fastq.gz
+Started analysis of 10-S2-Diff_S10_R2_trimmed.fastq.gz
+Started analysis of 11-F8P-Diff_S11_R1_trimmed.fastq.gz
+Started analysis of 11-F8P-Diff_S11_R2_trimmed.fastq.gz
+Started analysis of 12-S3-Diff_S12_R1_trimmed.fastq.gz
+Started analysis of 12-S3-Diff_S12_R2_trimmed.fastq.gz
+Started analysis of 1-C1P_S1_R1_trimmed.fastq.gz
+Started analysis of 1-C1P_S1_R2_trimmed.fastq.gz
+Started analysis of 2-S1_S2_R1_trimmed.fastq.gz
+Started analysis of 2-S1_S2_R2_trimmed.fastq.gz
+Approx 5% complete for 10-S2-Diff_S10_R1_trimmed.fastq.gz
+Approx 5% complete for 10-S2-Diff_S10_R2_trimmed.fastq.gz
+Approx 5% complete for 11-F8P-Diff_S11_R1_trimmed.fastq.gz
+Approx 5% complete for 11-F8P-Diff_S11_R2_trimmed.fastq.gz
+Approx 5% complete for 1-C1P_S1_R1_trimmed.fastq.gz
+Approx 5% complete for 1-C1P_S1_R2_trimmed.fastq.gz
+Approx 5% complete for 2-S1_S2_R2_trimmed.fastq.gz
+Approx 5% complete for 2-S1_S2_R1_trimmed.fastq.gz
+Approx 5% complete for 12-S3-Diff_S12_R1_trimmed.fastq.gz
+Approx 5% complete for 12-S3-Diff_S12_R2_trimmed.fastq.gz
+Approx 10% complete for 10-S2-Diff_S10_R1_trimmed.fastq.gz
+Approx 10% complete for 10-S2-Diff_S10_R2_trimmed.fastq.gz
+Approx 10% complete for 11-F8P-Diff_S11_R2_trimmed.fastq.gz
+Approx 10% complete for 11-F8P-Diff_S11_R1_trimmed.fastq.gz
+Approx 10% complete for 2-S1_S2_R2_trimmed.fastq.gz
+Approx 10% complete for 1-C1P_S1_R1_trimmed.fastq.gz
+Approx 10% complete for 1-C1P_S1_R2_trimmed.fastq.gz
+Approx 10% complete for 2-S1_S2_R1_trimmed.fastq.gz
+Approx 15% complete for 10-S2-Diff_S10_R1_trimmed.fastq.gz
+Approx 15% complete for 10-S2-Diff_S10_R2_trimmed.fastq.gz
+Approx 10% complete for 12-S3-Diff_S12_R2_trimmed.fastq.gz
+Approx 10% complete for 12-S3-Diff_S12_R1_trimmed.fastq.gz
+Approx 15% complete for 11-F8P-Diff_S11_R2_trimmed.fastq.gz
+Approx 15% complete for 11-F8P-Diff_S11_R1_trimmed.fastq.gz
+Approx 15% complete for 2-S1_S2_R2_trimmed.fastq.gz
+Approx 15% complete for 1-C1P_S1_R1_trimmed.fastq.gz
+Approx 15% complete for 1-C1P_S1_R2_trimmed.fastq.gz
+Approx 15% complete for 2-S1_S2_R1_trimmed.fastq.gz
+Approx 20% complete for 10-S2-Diff_S10_R1_trimmed.fastq.gz
+Approx 20% complete for 10-S2-Diff_S10_R2_trimmed.fastq.gz
+Approx 20% complete for 11-F8P-Diff_S11_R2_trimmed.fastq.gz
+Approx 20% complete for 11-F8P-Diff_S11_R1_trimmed.fastq.gz
+Approx 20% complete for 2-S1_S2_R2_trimmed.fastq.gz
+Approx 20% complete for 1-C1P_S1_R2_trimmed.fastq.gz
+Approx 20% complete for 1-C1P_S1_R1_trimmed.fastq.gz
+Approx 20% complete for 2-S1_S2_R1_trimmed.fastq.gz
+Approx 25% complete for 10-S2-Diff_S10_R1_trimmed.fastq.gz
+Approx 25% complete for 10-S2-Diff_S10_R2_trimmed.fastq.gz
+Approx 15% complete for 12-S3-Diff_S12_R2_trimmed.fastq.gz
+Approx 15% complete for 12-S3-Diff_S12_R1_trimmed.fastq.gz
+Approx 25% complete for 11-F8P-Diff_S11_R2_trimmed.fastq.gz
+Approx 25% complete for 11-F8P-Diff_S11_R1_trimmed.fastq.gz
+Approx 25% complete for 2-S1_S2_R2_trimmed.fastq.gz
+Approx 30% complete for 10-S2-Diff_S10_R1_trimmed.fastq.gz
+Approx 25% complete for 1-C1P_S1_R1_trimmed.fastq.gz
+Approx 25% complete for 1-C1P_S1_R2_trimmed.fastq.gz
+Approx 25% complete for 2-S1_S2_R1_trimmed.fastq.gz
+Approx 30% complete for 10-S2-Diff_S10_R2_trimmed.fastq.gz
+Approx 20% complete for 12-S3-Diff_S12_R2_trimmed.fastq.gz
+Approx 20% complete for 12-S3-Diff_S12_R1_trimmed.fastq.gz
+Approx 30% complete for 11-F8P-Diff_S11_R2_trimmed.fastq.gz
+Approx 35% complete for 10-S2-Diff_S10_R1_trimmed.fastq.gz
+Approx 30% complete for 11-F8P-Diff_S11_R1_trimmed.fastq.gz
+Approx 35% complete for 10-S2-Diff_S10_R2_trimmed.fastq.gz
+Approx 30% complete for 2-S1_S2_R2_trimmed.fastq.gz
+Approx 30% complete for 1-C1P_S1_R1_trimmed.fastq.gz
+Approx 30% complete for 1-C1P_S1_R2_trimmed.fastq.gz
+Approx 30% complete for 2-S1_S2_R1_trimmed.fastq.gz
+Approx 40% complete for 10-S2-Diff_S10_R1_trimmed.fastq.gz
+Approx 40% complete for 10-S2-Diff_S10_R2_trimmed.fastq.gz
+Approx 35% complete for 11-F8P-Diff_S11_R2_trimmed.fastq.gz
+Approx 35% complete for 11-F8P-Diff_S11_R1_trimmed.fastq.gz
+Approx 35% complete for 2-S1_S2_R2_trimmed.fastq.gz
+Approx 35% complete for 1-C1P_S1_R1_trimmed.fastq.gz
+Approx 35% complete for 1-C1P_S1_R2_trimmed.fastq.gz
+Approx 35% complete for 2-S1_S2_R1_trimmed.fastq.gz
+Approx 25% complete for 12-S3-Diff_S12_R2_trimmed.fastq.gz
+Approx 25% complete for 12-S3-Diff_S12_R1_trimmed.fastq.gz
+Approx 45% complete for 10-S2-Diff_S10_R1_trimmed.fastq.gz
+Approx 45% complete for 10-S2-Diff_S10_R2_trimmed.fastq.gz
+Approx 40% complete for 11-F8P-Diff_S11_R2_trimmed.fastq.gz
+Approx 40% complete for 11-F8P-Diff_S11_R1_trimmed.fastq.gz
+Approx 40% complete for 2-S1_S2_R2_trimmed.fastq.gz
+Approx 40% complete for 1-C1P_S1_R1_trimmed.fastq.gz
+Approx 40% complete for 1-C1P_S1_R2_trimmed.fastq.gz
+Approx 40% complete for 2-S1_S2_R1_trimmed.fastq.gz
+Approx 50% complete for 10-S2-Diff_S10_R1_trimmed.fastq.gz
+Approx 50% complete for 10-S2-Diff_S10_R2_trimmed.fastq.gz
+Approx 30% complete for 12-S3-Diff_S12_R1_trimmed.fastq.gz
+Approx 30% complete for 12-S3-Diff_S12_R2_trimmed.fastq.gz
+Approx 45% complete for 11-F8P-Diff_S11_R2_trimmed.fastq.gz
+Approx 45% complete for 11-F8P-Diff_S11_R1_trimmed.fastq.gz
+Approx 45% complete for 2-S1_S2_R2_trimmed.fastq.gz
+Approx 45% complete for 1-C1P_S1_R1_trimmed.fastq.gz
+Approx 45% complete for 1-C1P_S1_R2_trimmed.fastq.gz
+Approx 45% complete for 2-S1_S2_R1_trimmed.fastq.gz
+Approx 55% complete for 10-S2-Diff_S10_R1_trimmed.fastq.gz
+Approx 55% complete for 10-S2-Diff_S10_R2_trimmed.fastq.gz
+Approx 50% complete for 11-F8P-Diff_S11_R2_trimmed.fastq.gz
+Approx 50% complete for 11-F8P-Diff_S11_R1_trimmed.fastq.gz
+Approx 50% complete for 2-S1_S2_R2_trimmed.fastq.gz
+Approx 50% complete for 1-C1P_S1_R1_trimmed.fastq.gz
+Approx 50% complete for 1-C1P_S1_R2_trimmed.fastq.gz
+Approx 35% complete for 12-S3-Diff_S12_R1_trimmed.fastq.gz
+Approx 50% complete for 2-S1_S2_R1_trimmed.fastq.gz
+Approx 35% complete for 12-S3-Diff_S12_R2_trimmed.fastq.gz
+Approx 60% complete for 10-S2-Diff_S10_R1_trimmed.fastq.gz
+Approx 60% complete for 10-S2-Diff_S10_R2_trimmed.fastq.gz
+Approx 55% complete for 11-F8P-Diff_S11_R2_trimmed.fastq.gz
+Approx 55% complete for 11-F8P-Diff_S11_R1_trimmed.fastq.gz
+Approx 55% complete for 2-S1_S2_R2_trimmed.fastq.gz
+Approx 65% complete for 10-S2-Diff_S10_R1_trimmed.fastq.gz
+Approx 55% complete for 1-C1P_S1_R1_trimmed.fastq.gz
+Approx 55% complete for 1-C1P_S1_R2_trimmed.fastq.gz
+Approx 65% complete for 10-S2-Diff_S10_R2_trimmed.fastq.gz
+Approx 55% complete for 2-S1_S2_R1_trimmed.fastq.gz
+Approx 40% complete for 12-S3-Diff_S12_R1_trimmed.fastq.gz
+Approx 40% complete for 12-S3-Diff_S12_R2_trimmed.fastq.gz
+Approx 60% complete for 11-F8P-Diff_S11_R2_trimmed.fastq.gz
+Approx 60% complete for 11-F8P-Diff_S11_R1_trimmed.fastq.gz
+Approx 70% complete for 10-S2-Diff_S10_R1_trimmed.fastq.gz
+Approx 70% complete for 10-S2-Diff_S10_R2_trimmed.fastq.gz
+Approx 60% complete for 2-S1_S2_R2_trimmed.fastq.gz
+Approx 60% complete for 1-C1P_S1_R1_trimmed.fastq.gz
+Approx 60% complete for 1-C1P_S1_R2_trimmed.fastq.gz
+Approx 60% complete for 2-S1_S2_R1_trimmed.fastq.gz
+Approx 75% complete for 10-S2-Diff_S10_R1_trimmed.fastq.gz
+Approx 65% complete for 11-F8P-Diff_S11_R2_trimmed.fastq.gz
+Approx 75% complete for 10-S2-Diff_S10_R2_trimmed.fastq.gz
+Approx 65% complete for 11-F8P-Diff_S11_R1_trimmed.fastq.gz
+Approx 45% complete for 12-S3-Diff_S12_R1_trimmed.fastq.gz
+Approx 45% complete for 12-S3-Diff_S12_R2_trimmed.fastq.gz
+Approx 65% complete for 2-S1_S2_R2_trimmed.fastq.gz
+Approx 65% complete for 1-C1P_S1_R1_trimmed.fastq.gz
+Approx 65% complete for 1-C1P_S1_R2_trimmed.fastq.gz
+Approx 65% complete for 2-S1_S2_R1_trimmed.fastq.gz
+Approx 80% complete for 10-S2-Diff_S10_R1_trimmed.fastq.gz
+Approx 80% complete for 10-S2-Diff_S10_R2_trimmed.fastq.gz
+Approx 70% complete for 11-F8P-Diff_S11_R2_trimmed.fastq.gz
+Approx 70% complete for 11-F8P-Diff_S11_R1_trimmed.fastq.gz
+Approx 70% complete for 2-S1_S2_R2_trimmed.fastq.gz
+Approx 70% complete for 1-C1P_S1_R1_trimmed.fastq.gz
+Approx 70% complete for 1-C1P_S1_R2_trimmed.fastq.gz
+Approx 70% complete for 2-S1_S2_R1_trimmed.fastq.gz
+Approx 50% complete for 12-S3-Diff_S12_R1_trimmed.fastq.gz
+Approx 85% complete for 10-S2-Diff_S10_R1_trimmed.fastq.gz
+Approx 50% complete for 12-S3-Diff_S12_R2_trimmed.fastq.gz
+Approx 85% complete for 10-S2-Diff_S10_R2_trimmed.fastq.gz
+Approx 75% complete for 11-F8P-Diff_S11_R2_trimmed.fastq.gz
+Approx 75% complete for 11-F8P-Diff_S11_R1_trimmed.fastq.gz
+Approx 75% complete for 2-S1_S2_R2_trimmed.fastq.gz
+Approx 75% complete for 1-C1P_S1_R1_trimmed.fastq.gz
+Approx 75% complete for 1-C1P_S1_R2_trimmed.fastq.gz
+Approx 75% complete for 2-S1_S2_R1_trimmed.fastq.gz
+Approx 90% complete for 10-S2-Diff_S10_R1_trimmed.fastq.gz
+Approx 90% complete for 10-S2-Diff_S10_R2_trimmed.fastq.gz
+Approx 80% complete for 11-F8P-Diff_S11_R2_trimmed.fastq.gz
+Approx 55% complete for 12-S3-Diff_S12_R1_trimmed.fastq.gz
+Approx 80% complete for 11-F8P-Diff_S11_R1_trimmed.fastq.gz
+Approx 55% complete for 12-S3-Diff_S12_R2_trimmed.fastq.gz
+Approx 80% complete for 2-S1_S2_R2_trimmed.fastq.gz
+Approx 95% complete for 10-S2-Diff_S10_R1_trimmed.fastq.gz
+Approx 80% complete for 1-C1P_S1_R1_trimmed.fastq.gz
+Approx 80% complete for 1-C1P_S1_R2_trimmed.fastq.gz
+Approx 80% complete for 2-S1_S2_R1_trimmed.fastq.gz
+Approx 95% complete for 10-S2-Diff_S10_R2_trimmed.fastq.gz
+Approx 85% complete for 11-F8P-Diff_S11_R2_trimmed.fastq.gz
+Approx 85% complete for 11-F8P-Diff_S11_R1_trimmed.fastq.gz
+Analysis complete for 10-S2-Diff_S10_R1_trimmed.fastq.gz
+Approx 85% complete for 2-S1_S2_R2_trimmed.fastq.gz
+Started analysis of 3-F6_S3_R1_trimmed.fastq.gz
+Approx 85% complete for 1-C1P_S1_R1_trimmed.fastq.gz
+Analysis complete for 10-S2-Diff_S10_R2_trimmed.fastq.gz
+Started analysis of 3-F6_S3_R2_trimmed.fastq.gz
+Approx 85% complete for 1-C1P_S1_R2_trimmed.fastq.gz
+Approx 85% complete for 2-S1_S2_R1_trimmed.fastq.gz
+Approx 60% complete for 12-S3-Diff_S12_R1_trimmed.fastq.gz
+Approx 60% complete for 12-S3-Diff_S12_R2_trimmed.fastq.gz
+Approx 90% complete for 11-F8P-Diff_S11_R2_trimmed.fastq.gz
+Approx 90% complete for 11-F8P-Diff_S11_R1_trimmed.fastq.gz
+Approx 5% complete for 3-F6_S3_R1_trimmed.fastq.gz
+Approx 90% complete for 2-S1_S2_R2_trimmed.fastq.gz
+Approx 5% complete for 3-F6_S3_R2_trimmed.fastq.gz
+Approx 90% complete for 1-C1P_S1_R1_trimmed.fastq.gz
+Approx 90% complete for 1-C1P_S1_R2_trimmed.fastq.gz
+Approx 90% complete for 2-S1_S2_R1_trimmed.fastq.gz
+Approx 10% complete for 3-F6_S3_R1_trimmed.fastq.gz
+Approx 95% complete for 11-F8P-Diff_S11_R2_trimmed.fastq.gz
+Approx 65% complete for 12-S3-Diff_S12_R1_trimmed.fastq.gz
+Approx 95% complete for 11-F8P-Diff_S11_R1_trimmed.fastq.gz
+Approx 65% complete for 12-S3-Diff_S12_R2_trimmed.fastq.gz
+Approx 10% complete for 3-F6_S3_R2_trimmed.fastq.gz
+Approx 95% complete for 2-S1_S2_R2_trimmed.fastq.gz
+Approx 95% complete for 1-C1P_S1_R1_trimmed.fastq.gz
+Approx 95% complete for 1-C1P_S1_R2_trimmed.fastq.gz
+Approx 95% complete for 2-S1_S2_R1_trimmed.fastq.gz
+Approx 15% complete for 3-F6_S3_R1_trimmed.fastq.gz
+Approx 15% complete for 3-F6_S3_R2_trimmed.fastq.gz
+Analysis complete for 11-F8P-Diff_S11_R2_trimmed.fastq.gz
+Analysis complete for 11-F8P-Diff_S11_R1_trimmed.fastq.gz
+Started analysis of 4-S2_S4_R1_trimmed.fastq.gz
+Started analysis of 4-S2_S4_R2_trimmed.fastq.gz
+Analysis complete for 2-S1_S2_R2_trimmed.fastq.gz
+Started analysis of 5-F8P_S5_R1_trimmed.fastq.gz
+Analysis complete for 1-C1P_S1_R1_trimmed.fastq.gz
+Analysis complete for 1-C1P_S1_R2_trimmed.fastq.gz
+Approx 70% complete for 12-S3-Diff_S12_R1_trimmed.fastq.gz
+Started analysis of 5-F8P_S5_R2_trimmed.fastq.gz
+Approx 70% complete for 12-S3-Diff_S12_R2_trimmed.fastq.gz
+Analysis complete for 2-S1_S2_R1_trimmed.fastq.gz
+Started analysis of 6-S3_S6_R1_trimmed.fastq.gz
+Analysis complete for 6-S3_S6_R1_trimmed.fastq.gz
+Started analysis of 6-S3_S6_R2_trimmed.fastq.gz
+Analysis complete for 6-S3_S6_R2_trimmed.fastq.gz
+Started analysis of 7-C1P-Diff_S7_R1_trimmed.fastq.gz
+Started analysis of 7-C1P-Diff_S7_R2_trimmed.fastq.gz
+Approx 20% complete for 3-F6_S3_R1_trimmed.fastq.gz
+Approx 20% complete for 3-F6_S3_R2_trimmed.fastq.gz
+Approx 5% complete for 4-S2_S4_R2_trimmed.fastq.gz
+Approx 5% complete for 4-S2_S4_R1_trimmed.fastq.gz
+Approx 5% complete for 5-F8P_S5_R1_trimmed.fastq.gz
+Approx 25% complete for 3-F6_S3_R1_trimmed.fastq.gz
+Approx 5% complete for 5-F8P_S5_R2_trimmed.fastq.gz
+Approx 25% complete for 3-F6_S3_R2_trimmed.fastq.gz
+Approx 5% complete for 7-C1P-Diff_S7_R1_trimmed.fastq.gz
+Approx 5% complete for 7-C1P-Diff_S7_R2_trimmed.fastq.gz
+Approx 75% complete for 12-S3-Diff_S12_R2_trimmed.fastq.gz
+Approx 75% complete for 12-S3-Diff_S12_R1_trimmed.fastq.gz
+Approx 10% complete for 4-S2_S4_R1_trimmed.fastq.gz
+Approx 10% complete for 4-S2_S4_R2_trimmed.fastq.gz
+Approx 30% complete for 3-F6_S3_R1_trimmed.fastq.gz
+Approx 10% complete for 5-F8P_S5_R1_trimmed.fastq.gz
+Approx 30% complete for 3-F6_S3_R2_trimmed.fastq.gz
+Approx 10% complete for 5-F8P_S5_R2_trimmed.fastq.gz
+Approx 15% complete for 4-S2_S4_R1_trimmed.fastq.gz
+Approx 15% complete for 4-S2_S4_R2_trimmed.fastq.gz
+Approx 10% complete for 7-C1P-Diff_S7_R1_trimmed.fastq.gz
+Approx 10% complete for 7-C1P-Diff_S7_R2_trimmed.fastq.gz
+Approx 35% complete for 3-F6_S3_R1_trimmed.fastq.gz
+Approx 35% complete for 3-F6_S3_R2_trimmed.fastq.gz
+Approx 80% complete for 12-S3-Diff_S12_R1_trimmed.fastq.gz
+Approx 80% complete for 12-S3-Diff_S12_R2_trimmed.fastq.gz
+Approx 15% complete for 5-F8P_S5_R1_trimmed.fastq.gz
+Approx 15% complete for 5-F8P_S5_R2_trimmed.fastq.gz
+Approx 20% complete for 4-S2_S4_R2_trimmed.fastq.gz
+Approx 20% complete for 4-S2_S4_R1_trimmed.fastq.gz
+Approx 40% complete for 3-F6_S3_R1_trimmed.fastq.gz
+Approx 15% complete for 7-C1P-Diff_S7_R1_trimmed.fastq.gz
+Approx 15% complete for 7-C1P-Diff_S7_R2_trimmed.fastq.gz
+Approx 40% complete for 3-F6_S3_R2_trimmed.fastq.gz
+Approx 20% complete for 5-F8P_S5_R1_trimmed.fastq.gz
+Approx 25% complete for 4-S2_S4_R2_trimmed.fastq.gz
+Approx 25% complete for 4-S2_S4_R1_trimmed.fastq.gz
+Approx 20% complete for 5-F8P_S5_R2_trimmed.fastq.gz
+Approx 85% complete for 12-S3-Diff_S12_R1_trimmed.fastq.gz
+Approx 85% complete for 12-S3-Diff_S12_R2_trimmed.fastq.gz
+Approx 45% complete for 3-F6_S3_R1_trimmed.fastq.gz
+Approx 45% complete for 3-F6_S3_R2_trimmed.fastq.gz
+Approx 20% complete for 7-C1P-Diff_S7_R1_trimmed.fastq.gz
+Approx 20% complete for 7-C1P-Diff_S7_R2_trimmed.fastq.gz
+Approx 30% complete for 4-S2_S4_R1_trimmed.fastq.gz
+Approx 30% complete for 4-S2_S4_R2_trimmed.fastq.gz
+Approx 50% complete for 3-F6_S3_R1_trimmed.fastq.gz
+Approx 25% complete for 5-F8P_S5_R1_trimmed.fastq.gz
+Approx 25% complete for 5-F8P_S5_R2_trimmed.fastq.gz
+Approx 50% complete for 3-F6_S3_R2_trimmed.fastq.gz
+Approx 90% complete for 12-S3-Diff_S12_R1_trimmed.fastq.gz
+Approx 90% complete for 12-S3-Diff_S12_R2_trimmed.fastq.gz
+Approx 25% complete for 7-C1P-Diff_S7_R2_trimmed.fastq.gz
+Approx 25% complete for 7-C1P-Diff_S7_R1_trimmed.fastq.gz
+Approx 35% complete for 4-S2_S4_R1_trimmed.fastq.gz
+Approx 55% complete for 3-F6_S3_R1_trimmed.fastq.gz
+Approx 35% complete for 4-S2_S4_R2_trimmed.fastq.gz
+Approx 55% complete for 3-F6_S3_R2_trimmed.fastq.gz
+Approx 30% complete for 5-F8P_S5_R1_trimmed.fastq.gz
+Approx 30% complete for 5-F8P_S5_R2_trimmed.fastq.gz
+Approx 60% complete for 3-F6_S3_R1_trimmed.fastq.gz
+Approx 40% complete for 4-S2_S4_R1_trimmed.fastq.gz
+Approx 40% complete for 4-S2_S4_R2_trimmed.fastq.gz
+Approx 60% complete for 3-F6_S3_R2_trimmed.fastq.gz
+Approx 30% complete for 7-C1P-Diff_S7_R1_trimmed.fastq.gz
+Approx 95% complete for 12-S3-Diff_S12_R1_trimmed.fastq.gz
+Approx 30% complete for 7-C1P-Diff_S7_R2_trimmed.fastq.gz
+Approx 95% complete for 12-S3-Diff_S12_R2_trimmed.fastq.gz
+Approx 35% complete for 5-F8P_S5_R1_trimmed.fastq.gz
+Approx 35% complete for 5-F8P_S5_R2_trimmed.fastq.gz
+Approx 65% complete for 3-F6_S3_R1_trimmed.fastq.gz
+Approx 45% complete for 4-S2_S4_R1_trimmed.fastq.gz
+Approx 65% complete for 3-F6_S3_R2_trimmed.fastq.gz
+Approx 45% complete for 4-S2_S4_R2_trimmed.fastq.gz
+Approx 35% complete for 7-C1P-Diff_S7_R1_trimmed.fastq.gz
+Approx 35% complete for 7-C1P-Diff_S7_R2_trimmed.fastq.gz
+Approx 40% complete for 5-F8P_S5_R1_trimmed.fastq.gz
+Approx 40% complete for 5-F8P_S5_R2_trimmed.fastq.gz
+Analysis complete for 12-S3-Diff_S12_R1_trimmed.fastq.gz
+Approx 70% complete for 3-F6_S3_R1_trimmed.fastq.gz
+Started analysis of 8-S1-Diff_S8_R1_trimmed.fastq.gz
+Analysis complete for 12-S3-Diff_S12_R2_trimmed.fastq.gz
+Approx 70% complete for 3-F6_S3_R2_trimmed.fastq.gz
+Started analysis of 8-S1-Diff_S8_R2_trimmed.fastq.gz
+Approx 50% complete for 4-S2_S4_R1_trimmed.fastq.gz
+Approx 50% complete for 4-S2_S4_R2_trimmed.fastq.gz
+Approx 40% complete for 7-C1P-Diff_S7_R1_trimmed.fastq.gz
+Approx 45% complete for 5-F8P_S5_R1_trimmed.fastq.gz
+Approx 75% complete for 3-F6_S3_R1_trimmed.fastq.gz
+Approx 40% complete for 7-C1P-Diff_S7_R2_trimmed.fastq.gz
+Approx 45% complete for 5-F8P_S5_R2_trimmed.fastq.gz
+Approx 75% complete for 3-F6_S3_R2_trimmed.fastq.gz
+Approx 5% complete for 8-S1-Diff_S8_R1_trimmed.fastq.gz
+Approx 5% complete for 8-S1-Diff_S8_R2_trimmed.fastq.gz
+Approx 55% complete for 4-S2_S4_R1_trimmed.fastq.gz
+Approx 55% complete for 4-S2_S4_R2_trimmed.fastq.gz
+Approx 80% complete for 3-F6_S3_R1_trimmed.fastq.gz
+Approx 80% complete for 3-F6_S3_R2_trimmed.fastq.gz
+Approx 50% complete for 5-F8P_S5_R1_trimmed.fastq.gz
+Approx 45% complete for 7-C1P-Diff_S7_R1_trimmed.fastq.gz
+Approx 10% complete for 8-S1-Diff_S8_R1_trimmed.fastq.gz
+Approx 50% complete for 5-F8P_S5_R2_trimmed.fastq.gz
+Approx 60% complete for 4-S2_S4_R1_trimmed.fastq.gz
+Approx 10% complete for 8-S1-Diff_S8_R2_trimmed.fastq.gz
+Approx 45% complete for 7-C1P-Diff_S7_R2_trimmed.fastq.gz
+Approx 60% complete for 4-S2_S4_R2_trimmed.fastq.gz
+Approx 85% complete for 3-F6_S3_R1_trimmed.fastq.gz
+Approx 85% complete for 3-F6_S3_R2_trimmed.fastq.gz
+Approx 55% complete for 5-F8P_S5_R1_trimmed.fastq.gz
+Approx 65% complete for 4-S2_S4_R1_trimmed.fastq.gz
+Approx 15% complete for 8-S1-Diff_S8_R1_trimmed.fastq.gz
+Approx 15% complete for 8-S1-Diff_S8_R2_trimmed.fastq.gz
+Approx 65% complete for 4-S2_S4_R2_trimmed.fastq.gz
+Approx 55% complete for 5-F8P_S5_R2_trimmed.fastq.gz
+Approx 50% complete for 7-C1P-Diff_S7_R1_trimmed.fastq.gz
+Approx 50% complete for 7-C1P-Diff_S7_R2_trimmed.fastq.gz
+Approx 90% complete for 3-F6_S3_R1_trimmed.fastq.gz
+Approx 90% complete for 3-F6_S3_R2_trimmed.fastq.gz
+Approx 70% complete for 4-S2_S4_R1_trimmed.fastq.gz
+Approx 20% complete for 8-S1-Diff_S8_R1_trimmed.fastq.gz
+Approx 70% complete for 4-S2_S4_R2_trimmed.fastq.gz
+Approx 20% complete for 8-S1-Diff_S8_R2_trimmed.fastq.gz
+Approx 60% complete for 5-F8P_S5_R1_trimmed.fastq.gz
+Approx 60% complete for 5-F8P_S5_R2_trimmed.fastq.gz
+Approx 95% complete for 3-F6_S3_R1_trimmed.fastq.gz
+Approx 55% complete for 7-C1P-Diff_S7_R1_trimmed.fastq.gz
+Approx 95% complete for 3-F6_S3_R2_trimmed.fastq.gz
+Approx 55% complete for 7-C1P-Diff_S7_R2_trimmed.fastq.gz
+Approx 75% complete for 4-S2_S4_R1_trimmed.fastq.gz
+Approx 75% complete for 4-S2_S4_R2_trimmed.fastq.gz
+Approx 25% complete for 8-S1-Diff_S8_R1_trimmed.fastq.gz
+Approx 25% complete for 8-S1-Diff_S8_R2_trimmed.fastq.gz
+Analysis complete for 3-F6_S3_R1_trimmed.fastq.gz
+Started analysis of 9-F6-Diff_S9_R1_trimmed.fastq.gz
+Approx 65% complete for 5-F8P_S5_R1_trimmed.fastq.gz
+Analysis complete for 3-F6_S3_R2_trimmed.fastq.gz
+Approx 65% complete for 5-F8P_S5_R2_trimmed.fastq.gz
+Started analysis of 9-F6-Diff_S9_R2_trimmed.fastq.gz
+Approx 60% complete for 7-C1P-Diff_S7_R1_trimmed.fastq.gz
+Approx 60% complete for 7-C1P-Diff_S7_R2_trimmed.fastq.gz
+Approx 80% complete for 4-S2_S4_R1_trimmed.fastq.gz
+Approx 80% complete for 4-S2_S4_R2_trimmed.fastq.gz
+Approx 30% complete for 8-S1-Diff_S8_R1_trimmed.fastq.gz
+Approx 30% complete for 8-S1-Diff_S8_R2_trimmed.fastq.gz
+Approx 5% complete for 9-F6-Diff_S9_R1_trimmed.fastq.gz
+Approx 5% complete for 9-F6-Diff_S9_R2_trimmed.fastq.gz
+Approx 70% complete for 5-F8P_S5_R1_trimmed.fastq.gz
+Approx 70% complete for 5-F8P_S5_R2_trimmed.fastq.gz
+Approx 85% complete for 4-S2_S4_R1_trimmed.fastq.gz
+Approx 65% complete for 7-C1P-Diff_S7_R1_trimmed.fastq.gz
+Approx 85% complete for 4-S2_S4_R2_trimmed.fastq.gz
+Approx 65% complete for 7-C1P-Diff_S7_R2_trimmed.fastq.gz
+Approx 35% complete for 8-S1-Diff_S8_R1_trimmed.fastq.gz
+Approx 10% complete for 9-F6-Diff_S9_R1_trimmed.fastq.gz
+Approx 35% complete for 8-S1-Diff_S8_R2_trimmed.fastq.gz
+Approx 10% complete for 9-F6-Diff_S9_R2_trimmed.fastq.gz
+Approx 75% complete for 5-F8P_S5_R1_trimmed.fastq.gz
+Approx 75% complete for 5-F8P_S5_R2_trimmed.fastq.gz
+Approx 90% complete for 4-S2_S4_R1_trimmed.fastq.gz
+Approx 90% complete for 4-S2_S4_R2_trimmed.fastq.gz
+Approx 15% complete for 9-F6-Diff_S9_R1_trimmed.fastq.gz
+Approx 40% complete for 8-S1-Diff_S8_R1_trimmed.fastq.gz
+Approx 40% complete for 8-S1-Diff_S8_R2_trimmed.fastq.gz
+Approx 70% complete for 7-C1P-Diff_S7_R1_trimmed.fastq.gz
+Approx 15% complete for 9-F6-Diff_S9_R2_trimmed.fastq.gz
+Approx 70% complete for 7-C1P-Diff_S7_R2_trimmed.fastq.gz
+Approx 80% complete for 5-F8P_S5_R1_trimmed.fastq.gz
+Approx 80% complete for 5-F8P_S5_R2_trimmed.fastq.gz
+Approx 95% complete for 4-S2_S4_R1_trimmed.fastq.gz
+Approx 20% complete for 9-F6-Diff_S9_R1_trimmed.fastq.gz
+Approx 95% complete for 4-S2_S4_R2_trimmed.fastq.gz
+Approx 45% complete for 8-S1-Diff_S8_R1_trimmed.fastq.gz
+Approx 20% complete for 9-F6-Diff_S9_R2_trimmed.fastq.gz
+Approx 45% complete for 8-S1-Diff_S8_R2_trimmed.fastq.gz
+Approx 75% complete for 7-C1P-Diff_S7_R1_trimmed.fastq.gz
+Approx 75% complete for 7-C1P-Diff_S7_R2_trimmed.fastq.gz
+Approx 85% complete for 5-F8P_S5_R1_trimmed.fastq.gz
+Analysis complete for 4-S2_S4_R1_trimmed.fastq.gz
+Approx 25% complete for 9-F6-Diff_S9_R1_trimmed.fastq.gz
+Approx 85% complete for 5-F8P_S5_R2_trimmed.fastq.gz
+Analysis complete for 4-S2_S4_R2_trimmed.fastq.gz
+Approx 25% complete for 9-F6-Diff_S9_R2_trimmed.fastq.gz
+Approx 50% complete for 8-S1-Diff_S8_R1_trimmed.fastq.gz
+Approx 50% complete for 8-S1-Diff_S8_R2_trimmed.fastq.gz
+Approx 80% complete for 7-C1P-Diff_S7_R1_trimmed.fastq.gz
+Approx 30% complete for 9-F6-Diff_S9_R1_trimmed.fastq.gz
+Approx 80% complete for 7-C1P-Diff_S7_R2_trimmed.fastq.gz
+Approx 90% complete for 5-F8P_S5_R1_trimmed.fastq.gz
+Approx 30% complete for 9-F6-Diff_S9_R2_trimmed.fastq.gz
+Approx 90% complete for 5-F8P_S5_R2_trimmed.fastq.gz
+Approx 55% complete for 8-S1-Diff_S8_R1_trimmed.fastq.gz
+Approx 55% complete for 8-S1-Diff_S8_R2_trimmed.fastq.gz
+Approx 35% complete for 9-F6-Diff_S9_R1_trimmed.fastq.gz
+Approx 95% complete for 5-F8P_S5_R1_trimmed.fastq.gz
+Approx 85% complete for 7-C1P-Diff_S7_R1_trimmed.fastq.gz
+Approx 35% complete for 9-F6-Diff_S9_R2_trimmed.fastq.gz
+Approx 85% complete for 7-C1P-Diff_S7_R2_trimmed.fastq.gz
+Approx 60% complete for 8-S1-Diff_S8_R1_trimmed.fastq.gz
+Approx 95% complete for 5-F8P_S5_R2_trimmed.fastq.gz
+Approx 60% complete for 8-S1-Diff_S8_R2_trimmed.fastq.gz
+Approx 40% complete for 9-F6-Diff_S9_R1_trimmed.fastq.gz
+Approx 40% complete for 9-F6-Diff_S9_R2_trimmed.fastq.gz
+Analysis complete for 5-F8P_S5_R1_trimmed.fastq.gz
+Approx 90% complete for 7-C1P-Diff_S7_R1_trimmed.fastq.gz
+Approx 65% complete for 8-S1-Diff_S8_R1_trimmed.fastq.gz
+Approx 90% complete for 7-C1P-Diff_S7_R2_trimmed.fastq.gz
+Approx 65% complete for 8-S1-Diff_S8_R2_trimmed.fastq.gz
+Analysis complete for 5-F8P_S5_R2_trimmed.fastq.gz
+Approx 45% complete for 9-F6-Diff_S9_R1_trimmed.fastq.gz
+Approx 45% complete for 9-F6-Diff_S9_R2_trimmed.fastq.gz
+Approx 70% complete for 8-S1-Diff_S8_R1_trimmed.fastq.gz
+Approx 70% complete for 8-S1-Diff_S8_R2_trimmed.fastq.gz
+Approx 95% complete for 7-C1P-Diff_S7_R1_trimmed.fastq.gz
+Approx 50% complete for 9-F6-Diff_S9_R1_trimmed.fastq.gz
+Approx 95% complete for 7-C1P-Diff_S7_R2_trimmed.fastq.gz
+Approx 50% complete for 9-F6-Diff_S9_R2_trimmed.fastq.gz
+Approx 75% complete for 8-S1-Diff_S8_R1_trimmed.fastq.gz
+Approx 55% complete for 9-F6-Diff_S9_R1_trimmed.fastq.gz
+Approx 75% complete for 8-S1-Diff_S8_R2_trimmed.fastq.gz
+Analysis complete for 7-C1P-Diff_S7_R1_trimmed.fastq.gz
+Approx 55% complete for 9-F6-Diff_S9_R2_trimmed.fastq.gz
+Analysis complete for 7-C1P-Diff_S7_R2_trimmed.fastq.gz
+Approx 60% complete for 9-F6-Diff_S9_R1_trimmed.fastq.gz
+Approx 80% complete for 8-S1-Diff_S8_R1_trimmed.fastq.gz
+Approx 80% complete for 8-S1-Diff_S8_R2_trimmed.fastq.gz
+Approx 60% complete for 9-F6-Diff_S9_R2_trimmed.fastq.gz
+Approx 65% complete for 9-F6-Diff_S9_R1_trimmed.fastq.gz
+Approx 85% complete for 8-S1-Diff_S8_R1_trimmed.fastq.gz
+Approx 85% complete for 8-S1-Diff_S8_R2_trimmed.fastq.gz
+Approx 65% complete for 9-F6-Diff_S9_R2_trimmed.fastq.gz
+Approx 70% complete for 9-F6-Diff_S9_R1_trimmed.fastq.gz
+Approx 90% complete for 8-S1-Diff_S8_R1_trimmed.fastq.gz
+Approx 90% complete for 8-S1-Diff_S8_R2_trimmed.fastq.gz
+Approx 70% complete for 9-F6-Diff_S9_R2_trimmed.fastq.gz
+Approx 75% complete for 9-F6-Diff_S9_R1_trimmed.fastq.gz
+Approx 95% complete for 8-S1-Diff_S8_R1_trimmed.fastq.gz
+Approx 75% complete for 9-F6-Diff_S9_R2_trimmed.fastq.gz
+Approx 95% complete for 8-S1-Diff_S8_R2_trimmed.fastq.gz
+Approx 80% complete for 9-F6-Diff_S9_R1_trimmed.fastq.gz
+Analysis complete for 8-S1-Diff_S8_R1_trimmed.fastq.gz
+Approx 80% complete for 9-F6-Diff_S9_R2_trimmed.fastq.gz
+Analysis complete for 8-S1-Diff_S8_R2_trimmed.fastq.gz
+Approx 85% complete for 9-F6-Diff_S9_R1_trimmed.fastq.gz
+Approx 85% complete for 9-F6-Diff_S9_R2_trimmed.fastq.gz
+Approx 90% complete for 9-F6-Diff_S9_R1_trimmed.fastq.gz
+Approx 90% complete for 9-F6-Diff_S9_R2_trimmed.fastq.gz
+Approx 95% complete for 9-F6-Diff_S9_R1_trimmed.fastq.gz
+Approx 95% complete for 9-F6-Diff_S9_R2_trimmed.fastq.gz
+Analysis complete for 9-F6-Diff_S9_R1_trimmed.fastq.gz
+Analysis complete for 9-F6-Diff_S9_R2_trimmed.fastq.gz
+(base) [01;32mjcszamosi@bioinformation[00m:[01;34mCRISPR3_Take2[00m$ 
