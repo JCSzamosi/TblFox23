@@ -4,6 +4,11 @@ Differential Expression and Differential Splicing after Fox2/3 Knockdown
 Steps Overview
 --------------
 
+0. Download
+	* Downloaded the files by running `bs list biosample` to get a list of
+	all the biosamples I had access to, then used `bs download biosample -i
+	$sampleID` to download them. To download all the samples in a project at
+	once I used `bs list projects` and then `bs download project -i $projectID`
 1. Sequence Prep
 	1. FastQC 
 		* [script](./scripts/01_fastqc.sh)
@@ -15,13 +20,16 @@ Steps Overview
 		* [logs](./logs/02_cutadapt.screenlog)
 	3. FastQC pass 2 
 		* [script](./scripts/03_fastqc.sh)
-		* [results](./scripts/03_fastqc)
+		* [results](./results/03_fastqc)
 		* [logs](./logs/03_fastqc.screenlog)
 2. Mapping
 	1. Index the genome with STAR 
 		* [script](./scripts/index_genome.sh)
 		* [logs](./logs/index_genome.screenlog)
-	2. Map first pass with STAR [script](./scripts/04_map.sh)
+	2. Map first pass with STAR 
+		* [script](./scripts/04_map.sh)
+		* [results](./results/04_map)
+		* [logs](./logs/04_map.screenlog).
 	3. Second pass map with STAR
 
 Details
@@ -52,9 +60,12 @@ junction database from the GTF file. This is different from your workflow in
 that I used the GTF file to provide _a priori_ information about the location of
 splice junctions.
 
-I mapped using some different parameters. For instance, I used two-pass mapping
-to make sure all samples are mapped against all the novel splice junctions that
-are detected, even if they weren't in the GTF file. I also filtered out reads
+I mapped using some different parameters. For instance, I filtered out reads
 that mapped to more than 20 loci, or who's mapping score was lower than 8. The
-full list of my parameter settings are in the [script](./scripts/04_map.sh)
+full list of my parameter settings are in the [script](./scripts/04_map.sh).
+This mapping produced a new set of splice junctions for each sample.
+
+I then did a second pass mapping of each sample, using the tables of splice
+junctions generated from _all_ the samples, so that all reads that split across
+splice junctions found in other samples could be detected.
 
