@@ -38,10 +38,11 @@ cutadapt, so that it could trim them off, and I raised the quality threshold
 from 20 to 28.
 
 I then ran FastQC a second time, to check how many sequences were lost. All of
-the samples had excellent retention rates except sample 6 (S3), which lost 100%
-of its bases. This happened because the reads were improperly paired, which
-implies that the files are corrupted somehow. I'm re-downloading the files and
-will re-run these steps once they're downloaded.
+the samples had excellent retention rates.
+
+It was at this stage that I discovered that sample 6 was corrupted during
+download and had to re-download it and re-run it to here. Once I did that, it
+was fine. Scripts to do thaat were in [fix_6](./scripts/fix_6/).
 
 ### Mapping
 

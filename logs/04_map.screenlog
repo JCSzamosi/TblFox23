@@ -1,0 +1,122 @@
+./scripts/04_map.sh 
+mkdir -p results/04_map//10-S2-Diff_S10
+STAR --runThreadN 8 --genomeDir /home/jcszamosi/Disk2/CommonData/ReferenceGenomes/Mouse/GRCm39/ncbi-genomes-2022-03-04/STAR2.7.9_100 --readFilesIn data//10-S2-Diff_S10_R1.fastq.gz data//10-S2-Diff_S10_R2.fastq.gz --readFilesCommand gunzip -c --outFilterMultimapNmax 20 --alignSJoverhangMin 8 --outFilterMismatchNmax 999 --outFilterMismatchNoverReadLmax 0.04 --alignIntronMin 20 --alignIntronMax 1000000 --alignMatesGapMax 1000000 --alignSJDBoverhangMin 3 --outFileNamePrefix results/04_map//10-S2-Diff_S10/ --outSAMtype BAM SortedByCoordinate --peOverlapMMp 0.1
+	STAR --runThreadN 8 --genomeDir /home/jcszamosi/Disk2/CommonData/ReferenceGenomes/Mouse/GRCm39/ncbi-genomes-2022-03-04/STAR2.7.9_100 --readFilesIn data//10-S2-Diff_S10_R1.fastq.gz data//10-S2-Diff_S10_R2.fastq.gz --readFilesCommand gunzip -c --outFilterMultimapNmax 20 --alignSJoverhangMin 8 --outFilterMismatchNmax 999 --outFilterMismatchNoverReadLmax 0.04 --alignIntronMin 20 --alignIntronMax 1000000 --alignMatesGapMax 1000000 --alignSJDBoverhangMin 3 --outFileNamePrefix results/04_map//10-S2-Diff_S10/ --outSAMtype BAM SortedByCoordinate --peOverlapMMp 0.1
+	STAR version: 2.7.9a   compiled: 2021-05-04T09:43:56-0400 vega:/home/dobin/data/STAR/STARcode/STAR.master/source
+Mar 07 14:41:58 ..... started STAR run
+Mar 07 14:41:59 ..... loading genome
+Mar 07 14:43:14 ..... started mapping
+Mar 07 15:17:56 ..... finished mapping
+Mar 07 15:17:58 ..... started sorting BAM
+Mar 07 15:23:00 ..... finished successfully
+mkdir -p results/04_map//11-F8P-Diff_S11
+STAR --runThreadN 8 --genomeDir /home/jcszamosi/Disk2/CommonData/ReferenceGenomes/Mouse/GRCm39/ncbi-genomes-2022-03-04/STAR2.7.9_100 --readFilesIn data//11-F8P-Diff_S11_R1.fastq.gz data//11-F8P-Diff_S11_R2.fastq.gz --readFilesCommand gunzip -c --outFilterMultimapNmax 20 --alignSJoverhangMin 8 --outFilterMismatchNmax 999 --outFilterMismatchNoverReadLmax 0.04 --alignIntronMin 20 --alignIntronMax 1000000 --alignMatesGapMax 1000000 --alignSJDBoverhangMin 3 --outFileNamePrefix results/04_map//11-F8P-Diff_S11/ --outSAMtype BAM SortedByCoordinate --peOverlapMMp 0.1
+	STAR --runThreadN 8 --genomeDir /home/jcszamosi/Disk2/CommonData/ReferenceGenomes/Mouse/GRCm39/ncbi-genomes-2022-03-04/STAR2.7.9_100 --readFilesIn data//11-F8P-Diff_S11_R1.fastq.gz data//11-F8P-Diff_S11_R2.fastq.gz --readFilesCommand gunzip -c --outFilterMultimapNmax 20 --alignSJoverhangMin 8 --outFilterMismatchNmax 999 --outFilterMismatchNoverReadLmax 0.04 --alignIntronMin 20 --alignIntronMax 1000000 --alignMatesGapMax 1000000 --alignSJDBoverhangMin 3 --outFileNamePrefix results/04_map//11-F8P-Diff_S11/ --outSAMtype BAM SortedByCoordinate --peOverlapMMp 0.1
+	STAR version: 2.7.9a   compiled: 2021-05-04T09:43:56-0400 vega:/home/dobin/data/STAR/STARcode/STAR.master/source
+Mar 07 15:23:02 ..... started STAR run
+Mar 07 15:23:02 ..... loading genome
+Mar 07 15:24:17 ..... started mapping
+Mar 07 16:03:39 ..... finished mapping
+Mar 07 16:03:40 ..... started sorting BAM
+Mar 07 16:09:21 ..... finished successfully
+mkdir -p results/04_map//12-S3-Diff_S12
+STAR --runThreadN 8 --genomeDir /home/jcszamosi/Disk2/CommonData/ReferenceGenomes/Mouse/GRCm39/ncbi-genomes-2022-03-04/STAR2.7.9_100 --readFilesIn data//12-S3-Diff_S12_R1.fastq.gz data//12-S3-Diff_S12_R2.fastq.gz --readFilesCommand gunzip -c --outFilterMultimapNmax 20 --alignSJoverhangMin 8 --outFilterMismatchNmax 999 --outFilterMismatchNoverReadLmax 0.04 --alignIntronMin 20 --alignIntronMax 1000000 --alignMatesGapMax 1000000 --alignSJDBoverhangMin 3 --outFileNamePrefix results/04_map//12-S3-Diff_S12/ --outSAMtype BAM SortedByCoordinate --peOverlapMMp 0.1
+	STAR --runThreadN 8 --genomeDir /home/jcszamosi/Disk2/CommonData/ReferenceGenomes/Mouse/GRCm39/ncbi-genomes-2022-03-04/STAR2.7.9_100 --readFilesIn data//12-S3-Diff_S12_R1.fastq.gz data//12-S3-Diff_S12_R2.fastq.gz --readFilesCommand gunzip -c --outFilterMultimapNmax 20 --alignSJoverhangMin 8 --outFilterMismatchNmax 999 --outFilterMismatchNoverReadLmax 0.04 --alignIntronMin 20 --alignIntronMax 1000000 --alignMatesGapMax 1000000 --alignSJDBoverhangMin 3 --outFileNamePrefix results/04_map//12-S3-Diff_S12/ --outSAMtype BAM SortedByCoordinate --peOverlapMMp 0.1
+	STAR version: 2.7.9a   compiled: 2021-05-04T09:43:56-0400 vega:/home/dobin/data/STAR/STARcode/STAR.master/source
+Mar 07 16:09:24 ..... started STAR run
+Mar 07 16:09:24 ..... loading genome
+Mar 07 16:10:39 ..... started mapping
+Mar 07 17:10:55 ..... finished mapping
+Mar 07 17:10:56 ..... started sorting BAM
+Mar 07 17:19:04 ..... finished successfully
+mkdir -p results/04_map//1-C1P_S1
+STAR --runThreadN 8 --genomeDir /home/jcszamosi/Disk2/CommonData/ReferenceGenomes/Mouse/GRCm39/ncbi-genomes-2022-03-04/STAR2.7.9_100 --readFilesIn data//1-C1P_S1_R1.fastq.gz data//1-C1P_S1_R2.fastq.gz --readFilesCommand gunzip -c --outFilterMultimapNmax 20 --alignSJoverhangMin 8 --outFilterMismatchNmax 999 --outFilterMismatchNoverReadLmax 0.04 --alignIntronMin 20 --alignIntronMax 1000000 --alignMatesGapMax 1000000 --alignSJDBoverhangMin 3 --outFileNamePrefix results/04_map//1-C1P_S1/ --outSAMtype BAM SortedByCoordinate --peOverlapMMp 0.1
+	STAR --runThreadN 8 --genomeDir /home/jcszamosi/Disk2/CommonData/ReferenceGenomes/Mouse/GRCm39/ncbi-genomes-2022-03-04/STAR2.7.9_100 --readFilesIn data//1-C1P_S1_R1.fastq.gz data//1-C1P_S1_R2.fastq.gz --readFilesCommand gunzip -c --outFilterMultimapNmax 20 --alignSJoverhangMin 8 --outFilterMismatchNmax 999 --outFilterMismatchNoverReadLmax 0.04 --alignIntronMin 20 --alignIntronMax 1000000 --alignMatesGapMax 1000000 --alignSJDBoverhangMin 3 --outFileNamePrefix results/04_map//1-C1P_S1/ --outSAMtype BAM SortedByCoordinate --peOverlapMMp 0.1
+	STAR version: 2.7.9a   compiled: 2021-05-04T09:43:56-0400 vega:/home/dobin/data/STAR/STARcode/STAR.master/source
+Mar 07 17:19:07 ..... started STAR run
+Mar 07 17:19:07 ..... loading genome
+Mar 07 17:20:23 ..... started mapping
+Mar 07 18:00:16 ..... finished mapping
+Mar 07 18:00:17 ..... started sorting BAM
+Mar 07 18:06:22 ..... finished successfully
+mkdir -p results/04_map//2-S1_S2
+STAR --runThreadN 8 --genomeDir /home/jcszamosi/Disk2/CommonData/ReferenceGenomes/Mouse/GRCm39/ncbi-genomes-2022-03-04/STAR2.7.9_100 --readFilesIn data//2-S1_S2_R1.fastq.gz data//2-S1_S2_R2.fastq.gz --readFilesCommand gunzip -c --outFilterMultimapNmax 20 --alignSJoverhangMin 8 --outFilterMismatchNmax 999 --outFilterMismatchNoverReadLmax 0.04 --alignIntronMin 20 --alignIntronMax 1000000 --alignMatesGapMax 1000000 --alignSJDBoverhangMin 3 --outFileNamePrefix results/04_map//2-S1_S2/ --outSAMtype BAM SortedByCoordinate --peOverlapMMp 0.1
+	STAR --runThreadN 8 --genomeDir /home/jcszamosi/Disk2/CommonData/ReferenceGenomes/Mouse/GRCm39/ncbi-genomes-2022-03-04/STAR2.7.9_100 --readFilesIn data//2-S1_S2_R1.fastq.gz data//2-S1_S2_R2.fastq.gz --readFilesCommand gunzip -c --outFilterMultimapNmax 20 --alignSJoverhangMin 8 --outFilterMismatchNmax 999 --outFilterMismatchNoverReadLmax 0.04 --alignIntronMin 20 --alignIntronMax 1000000 --alignMatesGapMax 1000000 --alignSJDBoverhangMin 3 --outFileNamePrefix results/04_map//2-S1_S2/ --outSAMtype BAM SortedByCoordinate --peOverlapMMp 0.1
+	STAR version: 2.7.9a   compiled: 2021-05-04T09:43:56-0400 vega:/home/dobin/data/STAR/STARcode/STAR.master/source
+Mar 07 18:06:25 ..... started STAR run
+Mar 07 18:06:25 ..... loading genome
+Mar 07 18:07:40 ..... started mapping
+Mar 07 18:46:38 ..... finished mapping
+Mar 07 18:46:39 ..... started sorting BAM
+Mar 07 18:52:27 ..... finished successfully
+mkdir -p results/04_map//3-F6_S3
+STAR --runThreadN 8 --genomeDir /home/jcszamosi/Disk2/CommonData/ReferenceGenomes/Mouse/GRCm39/ncbi-genomes-2022-03-04/STAR2.7.9_100 --readFilesIn data//3-F6_S3_R1.fastq.gz data//3-F6_S3_R2.fastq.gz --readFilesCommand gunzip -c --outFilterMultimapNmax 20 --alignSJoverhangMin 8 --outFilterMismatchNmax 999 --outFilterMismatchNoverReadLmax 0.04 --alignIntronMin 20 --alignIntronMax 1000000 --alignMatesGapMax 1000000 --alignSJDBoverhangMin 3 --outFileNamePrefix results/04_map//3-F6_S3/ --outSAMtype BAM SortedByCoordinate --peOverlapMMp 0.1
+	STAR --runThreadN 8 --genomeDir /home/jcszamosi/Disk2/CommonData/ReferenceGenomes/Mouse/GRCm39/ncbi-genomes-2022-03-04/STAR2.7.9_100 --readFilesIn data//3-F6_S3_R1.fastq.gz data//3-F6_S3_R2.fastq.gz --readFilesCommand gunzip -c --outFilterMultimapNmax 20 --alignSJoverhangMin 8 --outFilterMismatchNmax 999 --outFilterMismatchNoverReadLmax 0.04 --alignIntronMin 20 --alignIntronMax 1000000 --alignMatesGapMax 1000000 --alignSJDBoverhangMin 3 --outFileNamePrefix results/04_map//3-F6_S3/ --outSAMtype BAM SortedByCoordinate --peOverlapMMp 0.1
+	STAR version: 2.7.9a   compiled: 2021-05-04T09:43:56-0400 vega:/home/dobin/data/STAR/STARcode/STAR.master/source
+Mar 07 18:52:29 ..... started STAR run
+Mar 07 18:52:29 ..... loading genome
+Mar 07 18:53:44 ..... started mapping
+Mar 07 19:31:34 ..... finished mapping
+Mar 07 19:31:36 ..... started sorting BAM
+Mar 07 19:37:30 ..... finished successfully
+mkdir -p results/04_map//4-S2_S4
+STAR --runThreadN 8 --genomeDir /home/jcszamosi/Disk2/CommonData/ReferenceGenomes/Mouse/GRCm39/ncbi-genomes-2022-03-04/STAR2.7.9_100 --readFilesIn data//4-S2_S4_R1.fastq.gz data//4-S2_S4_R2.fastq.gz --readFilesCommand gunzip -c --outFilterMultimapNmax 20 --alignSJoverhangMin 8 --outFilterMismatchNmax 999 --outFilterMismatchNoverReadLmax 0.04 --alignIntronMin 20 --alignIntronMax 1000000 --alignMatesGapMax 1000000 --alignSJDBoverhangMin 3 --outFileNamePrefix results/04_map//4-S2_S4/ --outSAMtype BAM SortedByCoordinate --peOverlapMMp 0.1
+	STAR --runThreadN 8 --genomeDir /home/jcszamosi/Disk2/CommonData/ReferenceGenomes/Mouse/GRCm39/ncbi-genomes-2022-03-04/STAR2.7.9_100 --readFilesIn data//4-S2_S4_R1.fastq.gz data//4-S2_S4_R2.fastq.gz --readFilesCommand gunzip -c --outFilterMultimapNmax 20 --alignSJoverhangMin 8 --outFilterMismatchNmax 999 --outFilterMismatchNoverReadLmax 0.04 --alignIntronMin 20 --alignIntronMax 1000000 --alignMatesGapMax 1000000 --alignSJDBoverhangMin 3 --outFileNamePrefix results/04_map//4-S2_S4/ --outSAMtype BAM SortedByCoordinate --peOverlapMMp 0.1
+	STAR version: 2.7.9a   compiled: 2021-05-04T09:43:56-0400 vega:/home/dobin/data/STAR/STARcode/STAR.master/source
+Mar 07 19:37:32 ..... started STAR run
+Mar 07 19:37:33 ..... loading genome
+Mar 07 19:38:47 ..... started mapping
+Mar 07 20:23:02 ..... finished mapping
+Mar 07 20:23:03 ..... started sorting BAM
+Mar 07 20:29:16 ..... finished successfully
+mkdir -p results/04_map//5-F8P_S5
+STAR --runThreadN 8 --genomeDir /home/jcszamosi/Disk2/CommonData/ReferenceGenomes/Mouse/GRCm39/ncbi-genomes-2022-03-04/STAR2.7.9_100 --readFilesIn data//5-F8P_S5_R1.fastq.gz data//5-F8P_S5_R2.fastq.gz --readFilesCommand gunzip -c --outFilterMultimapNmax 20 --alignSJoverhangMin 8 --outFilterMismatchNmax 999 --outFilterMismatchNoverReadLmax 0.04 --alignIntronMin 20 --alignIntronMax 1000000 --alignMatesGapMax 1000000 --alignSJDBoverhangMin 3 --outFileNamePrefix results/04_map//5-F8P_S5/ --outSAMtype BAM SortedByCoordinate --peOverlapMMp 0.1
+	STAR --runThreadN 8 --genomeDir /home/jcszamosi/Disk2/CommonData/ReferenceGenomes/Mouse/GRCm39/ncbi-genomes-2022-03-04/STAR2.7.9_100 --readFilesIn data//5-F8P_S5_R1.fastq.gz data//5-F8P_S5_R2.fastq.gz --readFilesCommand gunzip -c --outFilterMultimapNmax 20 --alignSJoverhangMin 8 --outFilterMismatchNmax 999 --outFilterMismatchNoverReadLmax 0.04 --alignIntronMin 20 --alignIntronMax 1000000 --alignMatesGapMax 1000000 --alignSJDBoverhangMin 3 --outFileNamePrefix results/04_map//5-F8P_S5/ --outSAMtype BAM SortedByCoordinate --peOverlapMMp 0.1
+	STAR version: 2.7.9a   compiled: 2021-05-04T09:43:56-0400 vega:/home/dobin/data/STAR/STARcode/STAR.master/source
+Mar 07 20:29:19 ..... started STAR run
+Mar 07 20:29:19 ..... loading genome
+Mar 07 20:30:34 ..... started mapping
+Mar 07 21:19:27 ..... finished mapping
+Mar 07 21:19:28 ..... started sorting BAM
+Mar 07 21:26:47 ..... finished successfully
+mkdir -p results/04_map//6-S3_S6
+STAR --runThreadN 8 --genomeDir /home/jcszamosi/Disk2/CommonData/ReferenceGenomes/Mouse/GRCm39/ncbi-genomes-2022-03-04/STAR2.7.9_100 --readFilesIn data//6-S3_S6_R1.fastq.gz data//6-S3_S6_R2.fastq.gz --readFilesCommand gunzip -c --outFilterMultimapNmax 20 --alignSJoverhangMin 8 --outFilterMismatchNmax 999 --outFilterMismatchNoverReadLmax 0.04 --alignIntronMin 20 --alignIntronMax 1000000 --alignMatesGapMax 1000000 --alignSJDBoverhangMin 3 --outFileNamePrefix results/04_map//6-S3_S6/ --outSAMtype BAM SortedByCoordinate --peOverlapMMp 0.1
+	STAR --runThreadN 8 --genomeDir /home/jcszamosi/Disk2/CommonData/ReferenceGenomes/Mouse/GRCm39/ncbi-genomes-2022-03-04/STAR2.7.9_100 --readFilesIn data//6-S3_S6_R1.fastq.gz data//6-S3_S6_R2.fastq.gz --readFilesCommand gunzip -c --outFilterMultimapNmax 20 --alignSJoverhangMin 8 --outFilterMismatchNmax 999 --outFilterMismatchNoverReadLmax 0.04 --alignIntronMin 20 --alignIntronMax 1000000 --alignMatesGapMax 1000000 --alignSJDBoverhangMin 3 --outFileNamePrefix results/04_map//6-S3_S6/ --outSAMtype BAM SortedByCoordinate --peOverlapMMp 0.1
+	STAR version: 2.7.9a   compiled: 2021-05-04T09:43:56-0400 vega:/home/dobin/data/STAR/STARcode/STAR.master/source
+Mar 07 21:26:50 ..... started STAR run
+Mar 07 21:26:50 ..... loading genome
+Mar 07 21:28:05 ..... started mapping
+Mar 07 22:03:36 ..... finished mapping
+Mar 07 22:03:38 ..... started sorting BAM
+Mar 07 22:08:51 ..... finished successfully
+mkdir -p results/04_map//7-C1P-Diff_S7
+STAR --runThreadN 8 --genomeDir /home/jcszamosi/Disk2/CommonData/ReferenceGenomes/Mouse/GRCm39/ncbi-genomes-2022-03-04/STAR2.7.9_100 --readFilesIn data//7-C1P-Diff_S7_R1.fastq.gz data//7-C1P-Diff_S7_R2.fastq.gz --readFilesCommand gunzip -c --outFilterMultimapNmax 20 --alignSJoverhangMin 8 --outFilterMismatchNmax 999 --outFilterMismatchNoverReadLmax 0.04 --alignIntronMin 20 --alignIntronMax 1000000 --alignMatesGapMax 1000000 --alignSJDBoverhangMin 3 --outFileNamePrefix results/04_map//7-C1P-Diff_S7/ --outSAMtype BAM SortedByCoordinate --peOverlapMMp 0.1
+	STAR --runThreadN 8 --genomeDir /home/jcszamosi/Disk2/CommonData/ReferenceGenomes/Mouse/GRCm39/ncbi-genomes-2022-03-04/STAR2.7.9_100 --readFilesIn data//7-C1P-Diff_S7_R1.fastq.gz data//7-C1P-Diff_S7_R2.fastq.gz --readFilesCommand gunzip -c --outFilterMultimapNmax 20 --alignSJoverhangMin 8 --outFilterMismatchNmax 999 --outFilterMismatchNoverReadLmax 0.04 --alignIntronMin 20 --alignIntronMax 1000000 --alignMatesGapMax 1000000 --alignSJDBoverhangMin 3 --outFileNamePrefix results/04_map//7-C1P-Diff_S7/ --outSAMtype BAM SortedByCoordinate --peOverlapMMp 0.1
+	STAR version: 2.7.9a   compiled: 2021-05-04T09:43:56-0400 vega:/home/dobin/data/STAR/STARcode/STAR.master/source
+Mar 07 22:08:54 ..... started STAR run
+Mar 07 22:08:54 ..... loading genome
+Mar 07 22:10:09 ..... started mapping
+Mar 07 23:08:41 ..... finished mapping
+Mar 07 23:08:43 ..... started sorting BAM
+Mar 07 23:16:44 ..... finished successfully
+mkdir -p results/04_map//8-S1-Diff_S8
+STAR --runThreadN 8 --genomeDir /home/jcszamosi/Disk2/CommonData/ReferenceGenomes/Mouse/GRCm39/ncbi-genomes-2022-03-04/STAR2.7.9_100 --readFilesIn data//8-S1-Diff_S8_R1.fastq.gz data//8-S1-Diff_S8_R2.fastq.gz --readFilesCommand gunzip -c --outFilterMultimapNmax 20 --alignSJoverhangMin 8 --outFilterMismatchNmax 999 --outFilterMismatchNoverReadLmax 0.04 --alignIntronMin 20 --alignIntronMax 1000000 --alignMatesGapMax 1000000 --alignSJDBoverhangMin 3 --outFileNamePrefix results/04_map//8-S1-Diff_S8/ --outSAMtype BAM SortedByCoordinate --peOverlapMMp 0.1
+	STAR --runThreadN 8 --genomeDir /home/jcszamosi/Disk2/CommonData/ReferenceGenomes/Mouse/GRCm39/ncbi-genomes-2022-03-04/STAR2.7.9_100 --readFilesIn data//8-S1-Diff_S8_R1.fastq.gz data//8-S1-Diff_S8_R2.fastq.gz --readFilesCommand gunzip -c --outFilterMultimapNmax 20 --alignSJoverhangMin 8 --outFilterMismatchNmax 999 --outFilterMismatchNoverReadLmax 0.04 --alignIntronMin 20 --alignIntronMax 1000000 --alignMatesGapMax 1000000 --alignSJDBoverhangMin 3 --outFileNamePrefix results/04_map//8-S1-Diff_S8/ --outSAMtype BAM SortedByCoordinate --peOverlapMMp 0.1
+	STAR version: 2.7.9a   compiled: 2021-05-04T09:43:56-0400 vega:/home/dobin/data/STAR/STARcode/STAR.master/source
+Mar 07 23:16:47 ..... started STAR run
+Mar 07 23:16:47 ..... loading genome
+Mar 07 23:18:02 ..... started mapping
+Mar 08 00:06:33 ..... finished mapping
+Mar 08 00:06:35 ..... started sorting BAM
+Mar 08 00:13:18 ..... finished successfully
+mkdir -p results/04_map//9-F6-Diff_S9
+STAR --runThreadN 8 --genomeDir /home/jcszamosi/Disk2/CommonData/ReferenceGenomes/Mouse/GRCm39/ncbi-genomes-2022-03-04/STAR2.7.9_100 --readFilesIn data//9-F6-Diff_S9_R1.fastq.gz data//9-F6-Diff_S9_R2.fastq.gz --readFilesCommand gunzip -c --outFilterMultimapNmax 20 --alignSJoverhangMin 8 --outFilterMismatchNmax 999 --outFilterMismatchNoverReadLmax 0.04 --alignIntronMin 20 --alignIntronMax 1000000 --alignMatesGapMax 1000000 --alignSJDBoverhangMin 3 --outFileNamePrefix results/04_map//9-F6-Diff_S9/ --outSAMtype BAM SortedByCoordinate --peOverlapMMp 0.1
+	STAR --runThreadN 8 --genomeDir /home/jcszamosi/Disk2/CommonData/ReferenceGenomes/Mouse/GRCm39/ncbi-genomes-2022-03-04/STAR2.7.9_100 --readFilesIn data//9-F6-Diff_S9_R1.fastq.gz data//9-F6-Diff_S9_R2.fastq.gz --readFilesCommand gunzip -c --outFilterMultimapNmax 20 --alignSJoverhangMin 8 --outFilterMismatchNmax 999 --outFilterMismatchNoverReadLmax 0.04 --alignIntronMin 20 --alignIntronMax 1000000 --alignMatesGapMax 1000000 --alignSJDBoverhangMin 3 --outFileNamePrefix results/04_map//9-F6-Diff_S9/ --outSAMtype BAM SortedByCoordinate --peOverlapMMp 0.1
+	STAR version: 2.7.9a   compiled: 2021-05-04T09:43:56-0400 vega:/home/dobin/data/STAR/STARcode/STAR.master/source
+Mar 08 00:13:21 ..... started STAR run
+Mar 08 00:13:21 ..... loading genome
+Mar 08 00:14:36 ..... started mapping
+Mar 08 00:56:31 ..... finished mapping
+Mar 08 00:56:33 ..... started sorting BAM
+Mar 08 01:02:38 ..... finished successfully
+(base) [01;32mjcszamosi@bioinformation[00m:[01;34mCRISPR3_Take2[00m$ [K(base) [01;32mjcszamosi@bioinformation[00m:[01;34mCRISPR3_Take2[00m$ 

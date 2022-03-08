@@ -512,4 +512,49 @@ Approx 95% complete for 9-F6-Diff_S9_R1_trimmed.fastq.gz
 Approx 95% complete for 9-F6-Diff_S9_R2_trimmed.fastq.gz
 Analysis complete for 9-F6-Diff_S9_R1_trimmed.fastq.gz
 Analysis complete for 9-F6-Diff_S9_R2_trimmed.fastq.gz
+(base) [01;32mjcszamosi@bioinformation[00m:[01;34mCRISPR3_Take2[00m$ ./scripts/fix_6/04[K3_fastqc.sh 
+mkdir -p results/03_fastqc/
+fastqc -o results/03_fastqc/ -t 10 results/02_cutadapt//6-S3_S6_R1_trimmed.fastq.gz results/02_cutadapt//6-S3_S6_R2_trimmed.fastq.gz
+Started analysis of 6-S3_S6_R1_trimmed.fastq.gz
+Started analysis of 6-S3_S6_R2_trimmed.fastq.gz
+Approx 5% complete for 6-S3_S6_R2_trimmed.fastq.gz
+Approx 5% complete for 6-S3_S6_R1_trimmed.fastq.gz
+Approx 10% complete for 6-S3_S6_R2_trimmed.fastq.gz
+Approx 10% complete for 6-S3_S6_R1_trimmed.fastq.gz
+Approx 15% complete for 6-S3_S6_R2_trimmed.fastq.gz
+Approx 15% complete for 6-S3_S6_R1_trimmed.fastq.gz
+Approx 20% complete for 6-S3_S6_R2_trimmed.fastq.gz
+Approx 20% complete for 6-S3_S6_R1_trimmed.fastq.gz
+Approx 25% complete for 6-S3_S6_R2_trimmed.fastq.gz
+Approx 25% complete for 6-S3_S6_R1_trimmed.fastq.gz
+Approx 30% complete for 6-S3_S6_R2_trimmed.fastq.gz
+Approx 30% complete for 6-S3_S6_R1_trimmed.fastq.gz
+Approx 35% complete for 6-S3_S6_R2_trimmed.fastq.gz
+Approx 35% complete for 6-S3_S6_R1_trimmed.fastq.gz
+Approx 40% complete for 6-S3_S6_R2_trimmed.fastq.gz
+Approx 40% complete for 6-S3_S6_R1_trimmed.fastq.gz
+Approx 45% complete for 6-S3_S6_R2_trimmed.fastq.gz
+Approx 45% complete for 6-S3_S6_R1_trimmed.fastq.gz
+Approx 50% complete for 6-S3_S6_R2_trimmed.fastq.gz
+Approx 50% complete for 6-S3_S6_R1_trimmed.fastq.gz
+Approx 55% complete for 6-S3_S6_R2_trimmed.fastq.gz
+Approx 55% complete for 6-S3_S6_R1_trimmed.fastq.gz
+Approx 60% complete for 6-S3_S6_R2_trimmed.fastq.gz
+Approx 60% complete for 6-S3_S6_R1_trimmed.fastq.gz
+Approx 65% complete for 6-S3_S6_R2_trimmed.fastq.gz
+Approx 65% complete for 6-S3_S6_R1_trimmed.fastq.gz
+Approx 70% complete for 6-S3_S6_R2_trimmed.fastq.gz
+Approx 70% complete for 6-S3_S6_R1_trimmed.fastq.gz
+Approx 75% complete for 6-S3_S6_R2_trimmed.fastq.gz
+Approx 75% complete for 6-S3_S6_R1_trimmed.fastq.gz
+Approx 80% complete for 6-S3_S6_R2_trimmed.fastq.gz
+Approx 80% complete for 6-S3_S6_R1_trimmed.fastq.gz
+Approx 85% complete for 6-S3_S6_R2_trimmed.fastq.gz
+Approx 85% complete for 6-S3_S6_R1_trimmed.fastq.gz
+Approx 90% complete for 6-S3_S6_R2_trimmed.fastq.gz
+Approx 90% complete for 6-S3_S6_R1_trimmed.fastq.gz
+Approx 95% complete for 6-S3_S6_R2_trimmed.fastq.gz
+Approx 95% complete for 6-S3_S6_R1_trimmed.fastq.gz
+Analysis complete for 6-S3_S6_R2_trimmed.fastq.gz
+Analysis complete for 6-S3_S6_R1_trimmed.fastq.gz
 (base) [01;32mjcszamosi@bioinformation[00m:[01;34mCRISPR3_Take2[00m$ 
