@@ -24,7 +24,7 @@ do
 		--readFilesIn $R1 $R2 \
 		--sjdbGTFfile $gtf \
 		--sjdbFileChrStartEnd $SJs \
-		--sjdbOverhang 99 \
+		--sjdbOverhang 49 \
 		--outFilterMultimapNmax 20 \
 		--alignSJoverhangMin 8 \
 		--outFilterMismatchNmax 999 \
@@ -44,7 +44,7 @@ do
 		--readFilesIn $R1 $R2 \
 		--sjdbGTFfile $gtf \
 		--sjdbFileChrStartEnd $SJs \
-		--sjdbOverhang 99 \
+		--sjdbOverhang 49 \
 		--outFilterMultimapNmax 20 \
 		--alignSJoverhangMin 8 \
 		--outFilterMismatchNmax 999 \
