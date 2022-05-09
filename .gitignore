@@ -4,3 +4,6 @@ data*
 orig_data*
 results/*
 .Rproj.user
+.Rsubread*
+RData/*
+refs/*
