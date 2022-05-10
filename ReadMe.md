@@ -39,8 +39,8 @@ Steps Overview
 3. Analysis
 	* All analysis is performed in the [R analysis script](./scripts/06_all_analysis.R)
 	1. Count features using `featureCount()` from `Rsubreads`
-	2. Test for differential exon usage (DEU) and differential gene expression
-	(DE) using `DEXSeq`
+	2. Test for differential exon usage (DEU) using `DEXSeq`
+	    * Differential gene expression (DE) still to do
 	3. Pathway analysis of both DEU and DE using `goseq`
 
 Details
@@ -89,12 +89,11 @@ gene. Full parameters can be found in the [script](./script/06_all_analysis.R).
 
 #### DE/DEU
 
-I used `DEXSeq` to analyze the differential gene expression and differential
-exon usage. I analyzed Naive and Differentiated cells separately with the
-variable of interest being scramble vs. guide sequence. I ran with default
-parameters and the model specified was `~sample + exon + exon:Treatment`. I 
-estimated exon fold changes using `estimateExonFoldChange(dxd, fitExpToVar =
-'Treatment')`.
+I used `DEXSeq` to analyze the differential exon usage (and will use it for 
+differential gene expression). I analyzed Naive and Differentiated cells 
+separately with the variable of interest being scramble vs. guide sequence. I 
+ran with default parameters and the model specified was 
+`~sample + exon + exon:Treatment`. I estimated exon fold changes using `estimateExonFoldChange(dxd, fitExpToVar = 'Treatment')`.
 
 #### Goseq
 
