@@ -110,4 +110,7 @@ to convert the NCBI gene IDs to the refGene IDs, which were also present in the
 GTF file under the field `db_xref GeneID`. Of the 2.9M features in the GTF file,
 63 did not include GeneID tags. These consisted of tRNA genes and mitochondrial
 genes including CytB, COX genes, NADH dehydrogenase genes, etc. These 63 genes
-were omitted from `goseq` analysis.
+were omitted from `goseq` analysis. Additionally, two pairs of genes (AAA and
+BBB) were omitted because each pair shared a single GeneID value, despite being
+on different chromosomes. These genes were both located on the sex chromosomes
+(one of each on the X and Y chromosomes) and neither contained any DEU.
