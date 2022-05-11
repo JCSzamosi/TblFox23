@@ -1,5 +1,10 @@
 Analysis of Fox2/3 KO Experiment
 ================================
+## To Do
+
+* Fix the orientation of the WT/KO comparison so WT is default
+* Remove the genes/exons for which there is not enough info to analyze from 
+the `goseq` analysis
 
 ## Setup
 
@@ -46,6 +51,8 @@ genome = '~/Disk2/CommonData/ReferenceGenomes/Mouse/GRCm39/ncbi-genomes-2022-03-
 # Bring in the sample data and clean it up
 samdat = read.csv('data/sample_data/samdat.csv', row.names = 1)
 samdat
+samdat = (samdat
+          %>% mutate(Treatment = factor(Treatment, levels = c('WT','KO'))))
 samps = rownames(samdat)
 samps = gsub('-','_',samps,fixed = TRUE)
 rownames(samdat) = samps
@@ -176,9 +183,11 @@ These genes can't be merged because they are different, but they have the same
 GeneID. They will be included in the DEXSeq analysis, but excluded from the
 goseq analysis.
 
-## Naive cells
+## Differential Exon Usage
 
-### DEXSeq
+### Naive cells
+
+#### DEXSeq
 
 I run this once and then keep it stored because it takes a long time to run
 
@@ -190,44 +199,75 @@ samdat_undif = filter(samdat, Differentiation == 'Naive')
 exon_ct_undif = exon_counts[,rownames(samdat_undif)]
 samdat_undif
 head(exon_ct_undif)
-
-# dxd = DEXSeqDataSet(exon_ct_undif, samdat_undif, 
+# 
+# dxd = DEXSeqDataSet(exon_ct_undif, samdat_undif,
 #                     design = ~sample + exon + exon:Treatment,
 #                     featureID = annot$exon_unique,
 #                     groupID = annot$GeneID)
 # dxd = estimateSizeFactors(dxd, locfunc = genefilter::shorth)
-# dxd = estimateDispersions(dxd)
+# dxd = estimateDispersions(dxd, BPPARAM = MulticoreParam(workers = 10))
 # save(dxd, file = 'RData/dxd_undif.RData')
 # plotDispEsts(dxd)
-# dxd = testForDEU(dxd)
-# dxd = estimateExonFoldChanges(dxd, fitExpToVar = 'Treatment')
+# dxd = testForDEU(dxd, BPPARAM = MulticoreParam(workers = 10))
+# dxd = estimateExonFoldChanges(dxd, fitExpToVar = 'Treatment', 
+#                               BPPARAM = MulticoreParam(workers = 10))
 # save(dxd, file = 'RData/dxd_undif_deu.RData')
 load('RData/dxd_undif_deu.RData')
-res = DEXSeqResults(dxd)
+res_orig = DEXSeqResults(dxd)
 
 # Identify genes with significanly different (padj < 0.05) exon usage in at 
 # least one exon
-head(res)
+head(res_orig)
+dim(res_orig)
+
+# Remove the exons with insufficient data to analyze
+res = (res_orig
+       %>% data.frame()
+       %>% filter(!is.na(padj)))
+dim(res)
+
+sum(res$padj < 0.05)
+```
+
+There are 1,520,722 exons analyzed. Of them, 1,125,713 had sufficient data for
+analysis, and 6,520 had adjusted p-values less than 0.05.
+
+
+Pull out the genes that have at least one DEU exon:
+
+```{r}
 sig_genes = (res
-           %>% data.frame()
            %>% filter(padj < 0.05)
            %>% select(groupID)
            %>% unique())$groupID
+length(sig_genes)
 
 # Check if any of the problem genes have DEU
 any(sig_genes %in% duplicate_geneIDs$gene_id)
 ```
 
-None of the genes with duplicate IDs have DEU.
+989 genes have at least one exon with DEU. None of the genes with duplicate IDs 
+have DEU.
 
-### Goseq
+#### Goseq
+
+```{r}
+all_genes = unique(res_orig$groupID)
+length(all_genes)
+genes = unique(res$groupID)
+length(genes)
+```
+
+Of the 40840 genes in the data set, 19,028 had sufficient coverage for analysis
+in at least one exon.
 
 ```{r}
 # Make a binary vector of all genes, 1 for significant, 0 for non
-genes = unique(annot$GeneID)
 deg_v = genes %in% sig_genes
 deg_v = as.numeric(deg_v)
 names(deg_v) = genes
+
+# remove the duplicate genes
 deg_v = deg_v[!(genes %in% duplicate_geneIDs$gene_id)]
 names(deg_v) = gene_id_v[names(deg_v)]
 head(deg_v)
@@ -249,59 +289,94 @@ head(gs_fixed)
 sum(sum(gs_fixed$padj < 0.05))
 ```
 
-## Differentiated Cells
+The 989 genes with significantly different exon usage produced 
+over-representation of DEU in 220 GO categories (out of a total of 21,389 
+possible categories, after BH FDR adjustment).
 
-### DEXSeq
+
+### Differentiated cells
+
+#### DEXSeq
 
 I run this once and then keep it stored because it takes a long time to run
 
 ```{r}
-# Run DEXSeq on differentiated samples
-head(exon_counts)
+# # Run DEXSeq on differentiated samples
+# head(exon_counts)
 
 samdat_dif = filter(samdat, Differentiation == 'Diff')
 exon_ct_dif = exon_counts[,rownames(samdat_dif)]
 samdat_dif
 head(exon_ct_dif)
 
-dxd = DEXSeqDataSet(exon_ct_dif, samdat_dif,
-                    design = ~sample + exon + exon:Treatment,
-                    featureID = annot$exon_unique,
-                    groupID = annot$GeneID)
-dxd = estimateSizeFactors(dxd, locfunc = genefilter::shorth)
-dxd = estimateDispersions(dxd, BPPARAM=MulticoreParam(workers = 10))
-save(dxd, file = 'RData/dxd_dif.RData')
-plotDispEsts(dxd)
-dxd = testForDEU(dxd, BPPARAM = MulticoreParam(workers = 10))
-dxd = estimateExonFoldChanges(dxd, fitExpToVar = 'Treatment', 
-                              BPPARAM = MulticoreParam(workers = 10))
-save(dxd, file = 'RData/dxd_dif_deu.RData')
+# dxd = DEXSeqDataSet(exon_ct_dif, samdat_dif,
+#                     design = ~sample + exon + exon:Treatment,
+#                     featureID = annot$exon_unique,
+#                     groupID = annot$GeneID)
+# dxd = estimateSizeFactors(dxd, locfunc = genefilter::shorth)
+# dxd = estimateDispersions(dxd, BPPARAM = MulticoreParam(workers = 10))
+# save(dxd, file = 'RData/dxd_dif.RData')
+# plotDispEsts(dxd)
+# dxd = testForDEU(dxd, BPPARAM = MulticoreParam(workers = 10))
+# dxd = estimateExonFoldChanges(dxd, fitExpToVar = 'Treatment',
+#                               BPPARAM = MulticoreParam(workers = 10))
+# save(dxd, file = 'RData/dxd_dif_deu.RData')
 load('RData/dxd_dif_deu.RData')
-res = DEXSeqResults(dxd)
+res_orig = DEXSeqResults(dxd)
 
 # Identify genes with significanly different (padj < 0.05) exon usage in at 
 # least one exon
-head(res)
+head(res_orig)
+dim(res_orig)
+
+# Remove the exons with insufficient data to analyze
+res = (res_orig
+       %>% data.frame()
+       %>% filter(!is.na(padj)))
+dim(res)
+
+sum(res$padj < 0.05)
+```
+
+There are 1,520,722 exons analyzed. Of them, 1,125,713 had sufficient data for
+analysis, and 6,520 had adjusted p-values less than 0.05.
+
+
+Pull out the genes that have at least one DEU exon:
+
+```{r}
 sig_genes = (res
-           %>% data.frame()
            %>% filter(padj < 0.05)
            %>% select(groupID)
            %>% unique())$groupID
+length(sig_genes)
 
 # Check if any of the problem genes have DEU
 any(sig_genes %in% duplicate_geneIDs$gene_id)
 ```
 
-None of the genes with duplicate IDs have DEU.
+219 genes have at least one exon with DEU. None of the genes with duplicate IDs 
+have DEU.
 
-### Goseq
+#### Goseq
+
+```{r}
+all_genes = unique(res_orig$groupID)
+length(all_genes)
+genes = unique(res$groupID)
+length(genes)
+```
+
+Of the 40840 genes in the data set, 21,782 had sufficient coverage for analysis
+in at least one exon.
 
 ```{r}
 # Make a binary vector of all genes, 1 for significant, 0 for non
-genes = unique(annot$GeneID)
 deg_v = genes %in% sig_genes
 deg_v = as.numeric(deg_v)
 names(deg_v) = genes
+
+# remove the duplicate genes
 deg_v = deg_v[!(genes %in% duplicate_geneIDs$gene_id)]
 names(deg_v) = gene_id_v[names(deg_v)]
 head(deg_v)
@@ -322,3 +397,7 @@ head(gs_fixed)
 # Count the significant categories
 sum(sum(gs_fixed$padj < 0.05))
 ```
+
+The 219 genes with significantly different exon usage produced 
+over-representation of DEU in 0 GO categories (out of a total of 21,389 
+possible categories, after BH FDR adjustment).

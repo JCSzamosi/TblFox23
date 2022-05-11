@@ -37,7 +37,8 @@ Steps Overview
 		* [results](./results/05_map2)
 		* [logs](./logs/05_map2.screenlog)
 3. Analysis
-	* All analysis is performed in the [R analysis script](./scripts/06_all_analysis.R)
+	* All analysis is performed in the [R analysis 
+	script](./06_all_analysis.Rmd) and the output is [here](./06_all_analysis.html)
 	1. Count features using `featureCount()` from `Rsubreads`
 	2. Test for differential exon usage (DEU) using `DEXSeq`
 	    * Differential gene expression (DE) still to do
