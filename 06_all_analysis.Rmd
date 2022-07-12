@@ -230,6 +230,8 @@ sig_dex_undif = (res_dex_undif
 # head(sig_dex_undif)
 rownames(sig_dex_undif) = NULL
 write.csv(sig_dex_undif, file = 'results/06_analysis/naive_deu_sig.csv')
+write.csv(select(res_dex_undif, -genomicData), file = 'results/06_analysis/naive_deu_all.csv',
+            row.names = FALSE)
 ```
 
 There are 1,520,722 exons analyzed. Of them, 1,125,713 had sufficient data for
@@ -296,13 +298,15 @@ sum(gs_fixed_dex_undif$padj < 0.05)
 # Write the results to a file
 write.csv(filter(gs_fixed_dex_undif, padj < 0.05), 
           file = 'results/06_analysis/goseq_deu_naive.csv')
+write.csv(gs_fixed_dex_undif, file = 'results/06_analysis/goseq_deu_naive_all.csv')
 ```
 
 The 989 genes with significantly different exon usage produced 
 over-representation of DEU in 220 GO categories (out of a total of 21,389 
 possible categories, after BH FDR adjustment). You can download the significant
 results of the `goseq` analysis
-[here](./results/06_analysis/goseq_deu_naive.csv')
+[here](./results/06_analysis/goseq_deu_naive.csv), or the full results 
+[here](./results/06_analysis/goseq_deu_naive_all.csv).
 
 
 ### Differentiated cells
@@ -371,6 +375,8 @@ sig_dex_dif = (res_dex_dif
 # head(sig_dex_dif)
 rownames(sig_dex_dif) = NULL
 write.csv(sig_dex_dif, file = 'results/06_analysis/diff_deu_sig.csv')
+write.csv(select(res_dex_dif, -genomicData), file = 'results/06_analysis/diff_deu_all.csv',
+          row.names = FALSE)
 ```
 
 219 genes have at least one exon with DEU. None of the genes with duplicate IDs 
@@ -418,13 +424,15 @@ sum(sum(gs_fixed_dex_dif$padj < 0.05))
 
 write.csv(filter(gs_fixed_dex_dif, padj < 0.05), 
           file = 'results/06_analysis/goseq_deu_diff.csv')
+write.csv(gs_fixed_dex_dif, file = 'results/06_analysis/goseq_deu_diff_all.csv')
 ```
 
 The 219 genes with significantly different exon usage produced 
 over-representation of DEU in 0 GO categories (out of a total of 21,389 
 possible categories, after BH FDR adjustment). You can download the file of
 significant results [here](./results/06_analysis/goseq_deu_diff.csv') if you
-want, but it's empty.
+want, but it's empty. The full results are 
+[here](./results/06_analysis/goseq_deu_diff_all.csv).
 
 ## Differential Expression
 
@@ -472,12 +480,14 @@ sig_des_undif = (res_df_des_undif
                  %>% filter(padj < 0.05))
 # head(sig_des_undif)
 write.csv(sig_des_undif, file = 'results/06_analysis/naive_des_sig.csv')
+write.csv(res_df_des_undif, file = 'results/06_analysis/naive_des_all.csv')
 ```
 
 Of the 40,840 genes analyzed, 19,448 had sufficient coverage for analysis, and 
 1,521 were significantly differentially expressed. You can download the
 significantly differentially expressed gene
-[here](./results/06_analysis/naive_des_sig.csv').
+[here](./results/06_analysis/naive_des_sig.csv), or the full results 
+[here](./results/06_analysis/naive_des_all.csv).
 
 #### Goseq
 
@@ -526,11 +536,13 @@ sum(gs_fixed_des_undif$padj < 0.05)
 # head(gs_fixed_des_undif)
 write.csv(filter(gs_fixed_des_undif, padj < 0.05), 
           file = 'results/06_analysis/goseq_de_naive.csv')
+write.csv(gs_fixed_des_undif, file = 'results/06_analysis/goseq_de_naive_all.csv')
 ```
 
 The 1,521 genes that were significantly differentially expressed led to 
 over-representation of difference in 219 GO categories. You can download the
-`goseq` results [here](./results/06_analysis/goseq_de_naive.csv').
+significant `goseq` results [here](./results/06_analysis/goseq_de_naive.csv'),
+or the full results [here](./results/06_analysis/goseq_de_naive_all.csv).
 
 ### Differentiated Cells
 
@@ -556,12 +568,14 @@ sig_des_dif = (res_df_des_dif
                  %>% filter(padj < 0.05))
 # head(sig_des_dif)
 write.csv(sig_des_dif, file = 'results/06_analysis/diff_des_sig.csv')
+write.csv(res_df_des_dif, file = 'results/06_analysis/diff_des_all.csv')
 ```
 
 Of the 40,840 genes analyzed, 20,403 had sufficient coverage for analysis, and 
 531 were significantly differentially expressed. You can download the
 significantly differentially expressed genes
-[here](./results/06_analysis/diff_des_sig.csv').
+[here](./results/06_analysis/diff_des_sig.csv), or the full results
+[here](./results/06_analysis/diff_des_all.csv).
 
 #### Goseq
 
@@ -608,9 +622,11 @@ sum(gs_fixed_des_dif$padj < 0.05)
 
 write.csv(filter(gs_fixed_des_dif, padj < 0.05), 
           file = 'results/06_analysis/goseq_de_diff.csv')
+write.csv(gs_fixed_des_dif, file = 'results/06_analysis/goseq_de_diff_all.csv')
 ```
 
 The 513 differentially expressed genes led to over-representation of difference
 in 138 GO categories. You can download the significant `goseq` results
-[here](./results/06_analysis/goseq_de_diff.csv').
+[here](./results/06_analysis/goseq_de_diff.csv), or the full results 
+[here](./results/06_analysis/goseq_de_diff_all.csv)
 
