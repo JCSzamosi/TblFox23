@@ -3,6 +3,7 @@
 data*
 orig_data*
 results/*
+!results/06_analysis/
 .Rproj.user
 .Rsubread*
 RData/*
