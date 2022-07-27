@@ -227,9 +227,13 @@ sum(res_dex_undif$padj < 0.05)
 sig_dex_undif = (res_dex_undif
                  %>% filter(padj < 0.05)
                  %>% select(-genomicData))
+sig_10_dex_undif = (res_dex_undif
+                    %>% filter(padj < 0.1)
+                    %>% select(-genomicData))
 # head(sig_dex_undif)
 rownames(sig_dex_undif) = NULL
 write.csv(sig_dex_undif, file = 'results/06_analysis/naive_deu_sig.csv')
+write.csv(sig_10_dex_undif, file = 'results/06_analysis/naive_deu_0.1_sig.csv')
 write.csv(select(res_dex_undif, -genomicData), file = 'results/06_analysis/naive_deu_all.csv',
             row.names = FALSE)
 ```
@@ -372,9 +376,13 @@ any(sig_genes_dex_dif %in% duplicate_geneIDs$gene_id)
 sig_dex_dif = (res_dex_dif
                  %>% filter(padj < 0.05)
                  %>% select(-genomicData))
+sig_10_dex_dif = (res_dex_dif
+                    %>% filter(padj < 0.1)
+                    %>% select(-genomicData))
 # head(sig_dex_dif)
 rownames(sig_dex_dif) = NULL
 write.csv(sig_dex_dif, file = 'results/06_analysis/diff_deu_sig.csv')
+write.csv(sig_10_dex_dif, file = 'results/06_analysis/diff_deu_0.01_sig.csv')
 write.csv(select(res_dex_dif, -genomicData), file = 'results/06_analysis/diff_deu_all.csv',
           row.names = FALSE)
 ```
@@ -726,8 +734,11 @@ resultsNames(dds_undif)
 res_des_undif = lfcShrink(dds_undif, coef = 'Treatment_KO_vs_WT')
 res_df_des_undif = data.frame(res_des_undif)
 rownames(res_df_des_undif) = fc_lst_gene[[1]]$annotation$GeneID
-# head(res_df_des_undif)
+head(res_df_des_undif)
 dim(res_df_des_undif)
+dim(gene_ct_undif)
+res_df_des_undif = cbind(res_df_des_undif, gene_ct_undif)
+head(res_df_des_undif)
 sum(!is.na(res_df_des_undif$padj))
 sum(res_df_des_undif$padj < 0.05, na.rm = TRUE)
 
@@ -814,8 +825,11 @@ resultsNames(dds_dif)
 res_des_dif = lfcShrink(dds_dif, coef = 'Treatment_KO_vs_WT')
 res_df_des_dif = data.frame(res_des_dif)
 rownames(res_df_des_dif) = fc_lst_gene[[1]]$annotation$GeneID
-# head(res_df_des_dif)
+head(res_df_des_dif)
 dim(res_df_des_dif)
+dim(gene_ct_dif)
+head(gene_ct_dif)
+res_df_des_dif = cbind(res_df_des_dif, gene_ct_dif)
 sum(!is.na(res_df_des_dif$padj))
 sum(res_df_des_dif$padj < 0.05, na.rm = TRUE)
 
