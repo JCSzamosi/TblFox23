@@ -489,9 +489,13 @@ sum(res_dex_guide$padj < 0.05)
 sig_dex_guide = (res_dex_guide
                  %>% filter(padj < 0.05)
                  %>% select(-genomicData))
+sig_10_dex_guide = (res_dex_guide
+                 %>% filter(padj < 0.1)
+                 %>% select(-genomicData))
 # head(sig_dex_guide)
 rownames(sig_dex_guide) = NULL
 write.csv(sig_dex_guide, file = 'results/06_analysis/guide_deu_sig.csv')
+write.csv(sig_10_dex_guide, file = 'results/06_analysis/guide_deu_0.01_sig.csv')
 write.csv(select(res_dex_guide, -genomicData), file = 'results/06_analysis/guide_deu_all.csv',
             row.names = FALSE)
 ```
