@@ -4,6 +4,7 @@ data*
 orig_data*
 results/*
 !results/06_analysis/
+results/06_analysis/*deu_all.csv
 .Rproj.user
 .Rsubread*
 RData/*
