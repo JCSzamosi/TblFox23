@@ -453,13 +453,13 @@ I run this once and then keep it stored because it takes a long time to run
 head(exon_counts)
 head(samdat)
 
-samdat_guide = filter(samdat, Treatment == 'KO')
-exon_ct_guide = exon_counts[,rownames(samdat_guide)]
+# samdat_guide = filter(samdat, Treatment == 'KO')
+# exon_ct_guide = exon_counts[,rownames(samdat_guide)]
 # samdat_guide
 # head(exon_ct_guide)
 # 
 # dxd = DEXSeqDataSet(exon_ct_guide, samdat_guide,
-#                     design = ~sample + exon + exon:Treatment,
+#                     design = ~sample + exon + exon:Differentiation,
 #                     featureID = annot$exon_unique,
 #                     groupID = annot$GeneID)
 # dxd = estimateSizeFactors(dxd, locfunc = genefilter::shorth)
@@ -467,8 +467,8 @@ exon_ct_guide = exon_counts[,rownames(samdat_guide)]
 # save(dxd, file = 'RData/dxd_guide.RData')
 # plotDispEsts(dxd)
 # dxd = testForDEU(dxd, BPPARAM = MulticoreParam(workers = 10))
-# dxd = estimateExonFoldChanges(dxd, fitExpToVar = 'Treatment',
-#                               BPPARAM = MulticoreParam(workers = 10))
+# dxd = estimateExonFoldChanges(dxd, fitExpToVar = 'Differentiation',
+#                               BPPARAM = MulticoreParam(workers = 8))
 # save(dxd, file = 'RData/dxd_guide.RData')
 load('RData/dxd_guide.RData')
 res_orig_dex_guide = DEXSeqResults(dxd)
@@ -500,8 +500,8 @@ write.csv(select(res_dex_guide, -genomicData), file = 'results/06_analysis/guide
             row.names = FALSE)
 ```
 
-There are 1,520,722 exons analyzed. Of them, 1,191,946 had sufficient data for
-analysis, and 1,237 had adjusted p-values less than 0.05. You can download the
+There are 1,520,722 exons analyzed. Of them, 1,164,641 had sufficient data for
+analysis, and 6,789 had adjusted p-values less than 0.05. You can download the
 significant results of DEXSeq analysis
 [here](./results/06_analysis/guide_deu_sig.csv).
 
@@ -519,7 +519,7 @@ length(sig_genes_dex_guide)
 any(sig_genes_dex_guide %in% duplicate_geneIDs$gene_id)
 ```
 
-219 genes have at least one exon with DEU. None of the genes with duplicate IDs 
+877 genes have at least one exon with DEU. None of the genes with duplicate IDs 
 have DEU.
 
 #### Goseq
@@ -531,7 +531,7 @@ genes_dex_guide = unique(res_dex_guide$groupID)
 length(genes_dex_guide)
 ```
 
-Of the 40,840 genes in the data set, 21,782 had sufficient coverage for analysis
+Of the 40,840 genes in the data set, 20,537 had sufficient coverage for analysis
 in at least one exon.
 
 ```{r, warning=FALSE, message=FALSE}
@@ -567,8 +567,8 @@ write.csv(filter(gs_fixed_dex_guide, padj < 0.05),
 write.csv(gs_fixed_dex_guide, file = 'results/06_analysis/goseq_deu_guide_all.csv')
 ```
 
-The 219 genes with significantly different exon usage produced 
-over-representation of DEU in 0 GO categories (out of a total of 21,389 
+The 877 genes with significantly different exon usage produced 
+over-representation of DEU in 31 GO categories (out of a total of 21,389 
 possible categories, after BH FDR adjustment). You can download the significant
 results of the `goseq` analysis
 [here](./results/06_analysis/goseq_deu_guide.csv), or the full results 
@@ -591,7 +591,7 @@ samdat_ctl
 # head(exon_ct_ctl)
 
 # dxd = DEXSeqDataSet(exon_ct_ctl, samdat_ctl,
-#                     design = ~sample + exon + exon:Treatment,
+#                     design = ~sample + exon + exon:Differentiation,
 #                     featureID = annot$exon_unique,
 #                     groupID = annot$GeneID)
 # dxd = estimateSizeFactors(dxd, locfunc = genefilter::shorth)
@@ -599,7 +599,7 @@ samdat_ctl
 # save(dxd, file = 'RData/dxd_ctl.RData')
 # plotDispEsts(dxd)
 # dxd = testForDEU(dxd, BPPARAM = MulticoreParam(workers = 10))
-# dxd = estimateExonFoldChanges(dxd, fitExpToVar = 'Treatment',
+# dxd = estimateExonFoldChanges(dxd, fitExpToVar = 'Differentiation',
 #                               BPPARAM = MulticoreParam(workers = 10))
 # save(dxd, file = 'RData/dxd_ctl_deu.RData')
 load('RData/dxd_ctl_deu.RData')
@@ -619,8 +619,8 @@ dim(res_dex_ctl)
 sum(res_dex_ctl$padj < 0.05)
 ```
 
-There are 1,520,722 exons analyzed. Of them, 1,191,946 had sufficient data for
-analysis, and 1,237 had adjusted p-values less than 0.05.
+There are 1,520,722 exons analyzed. Of them, 1,154,143 had sufficient data for
+analysis, and 27,967 had adjusted p-values less than 0.05.
 
 
 Pull out the genes that have at least one DEU exon:
@@ -645,7 +645,7 @@ write.csv(select(res_dex_ctl, -genomicData), file = 'results/06_analysis/ctl_deu
           row.names = FALSE)
 ```
 
-219 genes have at least one exon with DEU. None of the genes with duplicate IDs 
+3,135 genes have at least one exon with DEU. None of the genes with duplicate IDs 
 have DEU. You can download the significant results of DEXSeq
 [here](./results/06_analysis/ctl_deu_sig.csv').
 
@@ -658,7 +658,7 @@ genes_dex_ctl = unique(res_dex_ctl$groupID)
 length(genes_dex_ctl)
 ```
 
-Of the 40,840 genes in the data set, 21,782 had sufficient coverage for analysis
+Of the 40,840 genes in the data set, 20,299 had sufficient coverage for analysis
 in at least one exon.
 
 ```{r, warning=FALSE, message=FALSE}
@@ -693,8 +693,8 @@ write.csv(filter(gs_fixed_dex_ctl, padj < 0.05),
 write.csv(gs_fixed_dex_ctl, file = 'results/06_analysis/goseq_deu_ctl_all.csv')
 ```
 
-The 219 genes with significantly different exon usage produced 
-over-representation of DEU in 0 GO categories (out of a total of 21,389 
+The 3,135 genes with significantly different exon usage produced 
+over-representation of DEU in 110 GO categories (out of a total of 21,613 
 possible categories, after BH FDR adjustment). You can download the file of
 significant results [here](./results/06_analysis/goseq_deu_ctl.csv') if you
 want, but it's empty. The full results are 
