@@ -5,6 +5,7 @@ Analysis of Fox2/3 KO Experiment
 ## Setup
 
 ```{r, message=FALSE}
+knitr::opts_chunk$set(message=FALSE, warning =FALSE)
 library('DEXSeq')
 library('Rsubread')
 library(tidyverse)
@@ -724,6 +725,206 @@ for(samp in samps){
 # head(gene_counts)
 ```
 
+### Interaction Model
+
+#### DESeq
+
+```{r, warning=FALSE, message=FALSE}
+samdat
+head(gene_counts)
+
+dds = DESeqDataSetFromMatrix(gene_counts, samdat, ~Treatment*Differentiation)
+dds = DESeq(dds)
+resultsNames(dds)
+```
+
+##### Naive Cell Results
+
+```{r}
+resultsNames(dds)
+res_undif = lfcShrink(dds, contrast = c('Treatment', 'KO', 'WT'), 
+                      type = 'ashr')
+res_undif_df = data.frame(res_undif)
+rownames(res_undif_df) = fc_lst_gene[[1]]$annotation$GeneID
+head(res_undif_df)
+dim(res_undif_df)
+dim(gene_counts)
+res_undif_df = cbind(res_undif_df, gene_counts)
+head(res_undif_df)
+sum(!is.na(res_undif_df$padj))
+sum(res_undif_df$padj < 0.05, na.rm = TRUE)
+
+sig_undif = (res_undif_df
+             %>% filter(padj < 0.05))
+write.csv(sig_undif, file = 'results/06_analysis/naive_des_sig.csv')
+write.csv(res_undif_df, file = 'results/06_analysis/naive_des_all.csv')
+```
+
+Of the 40,840 genes analysed, 20,969 had sufficient coverage for analysis. Of
+those, 804 were significantly differentially expressed between the KO and WT
+treatments within _undifferentiated_ cells.
+
+##### Differentiated Cell Results
+
+```{r}
+resultsNames(dds)
+res_dif = lfcShrink(dds, contrast = list(c('Treatment_KO_vs_WT', 
+                                           'TreatmentKO.DifferentiationDiff')),
+                      type = 'ashr')
+res_dif_df = data.frame(res_dif)
+rownames(res_dif_df) = fc_lst_gene[[1]]$annotation$GeneID
+head(res_dif_df)
+dim(res_dif_df)
+dim(gene_counts)
+res_dif_df = cbind(res_dif_df, gene_counts)
+head(res_dif_df)
+sum(!is.na(res_dif_df$padj))
+sum(res_dif_df$padj < 0.05, na.rm = TRUE)
+
+sig_dif = (res_dif_df
+             %>% filter(padj < 0.05))
+write.csv(sig_dif, file = 'results/06_analysis/diff_des_sig.csv')
+write.csv(res_dif_df, file = 'results/06_analysis/diff_des_all.csv')
+```
+
+Of the 40,840 genes analysed, 20,395 had sufficient coverage for analysis. Of
+those, 1,173 were significantly differentially expressed between the KO and WT
+treatments within _differentiated_ cells.
+
+##### Control Cell Results
+
+```{r}
+resultsNames(dds)
+res_ctl = lfcShrink(dds, contrast = c('Differentiation', 'Diff', 'Naive'), 
+                      type = 'ashr')
+res_ctl_df = data.frame(res_ctl)
+rownames(res_ctl_df) = fc_lst_gene[[1]]$annotation$GeneID
+head(res_ctl_df)
+dim(res_ctl_df)
+dim(gene_counts)
+res_ctl_df = cbind(res_ctl_df, gene_counts)
+head(res_ctl_df)
+sum(!is.na(res_ctl_df$padj))
+sum(res_ctl_df$padj < 0.05, na.rm = TRUE)
+
+sig_ctl = (res_ctl_df
+             %>% filter(padj < 0.05))
+write.csv(sig_ctl, file = 'results/06_analysis/ctl_des_sig.csv')
+write.csv(res_ctl_df, file = 'results/06_analysis/ctl_des_all.csv')
+```
+
+Of the 40,840 genes analysed, 20,969 had sufficient coverage for analysis. Of
+those, 6,112 were significantly differentially expressed between the Naive and 
+Differentiated cells within the _scramble control WT_ treatment.
+
+##### Guide Cell Results
+
+```{r}
+resultsNames(dds)
+res_guide = lfcShrink(dds, contrast = list(c('Differentiation_Diff_vs_Naive',
+                                           'TreatmentKO.DifferentiationDiff')),
+                      type = 'ashr')
+res_guide_df = data.frame(res_guide)
+rownames(res_guide_df) = fc_lst_gene[[1]]$annotation$GeneID
+head(res_guide_df)
+dim(res_guide_df)
+dim(gene_counts)
+res_guide_df = cbind(res_guide_df, gene_counts)
+head(res_guide_df)
+sum(!is.na(res_guide_df$padj))
+sum(res_guide_df$padj < 0.05, na.rm = TRUE)
+
+sig_guide = (res_guide_df
+             %>% filter(padj < 0.05))
+write.csv(sig_guide, file = 'results/06_analysis/guide_des_sig.csv')
+write.csv(res_guide_df, file = 'results/06_analysis/guide_des_all.csv')
+```
+
+Of the 40,840 genes analysed, 20,969 had sufficient coverage for analysis. Of
+those, 4,099 were significantly differentially expressed between the Naive and
+Differentiated cells within the _guide KO_ treatment.
+
+##### Interaction Term Result
+
+```{r}
+resultsNames(dds)
+res_des = lfcShrink(dds, contrast = list(c('TreatmentKO.DifferentiationDiff')),
+                    type = 'ashr')
+res_df_des = data.frame(res_des)
+rownames(res_df_des) = fc_lst_gene[[1]]$annotation$GeneID
+head(res_df_des)
+dim(res_df_des)
+dim(gene_counts)
+res_df_des = cbind(res_df_des, gene_counts)
+head(res_df_des)
+sum(!is.na(res_df_des$padj))
+sum(res_df_des$padj < 0.05, na.rm = TRUE)
+
+sig_des = (res_df_des
+                 %>% filter(padj < 0.05))
+# head(sig_des_undif)
+write.csv(sig_des, file = 'results/06_analysis/interaction_des_sig.csv')
+write.csv(res_df_des, file = 'results/06_analysis/interaction_des_all.csv')
+```
+
+Of the 40,840 genes analyzed, 30,155 had sufficient coverage for analysis, and 
+none were significant in the interaction term, which is quite odd, but likely
+reflects the noisiness of the data more than anything else.
+
+#### Goseq
+
+```{r}
+all_genes_des_undif = rownames(res_df_des_undif)
+# length(all_genes_des_undif)
+genes = (res_df_des_undif
+         %>% filter(!is.na(padj))
+         %>% rownames())
+# length(genes)
+
+sig_genes_des_undif = (res_df_des_undif
+             %>% filter(padj < 0.05)
+             %>% rownames())
+
+```
+
+
+```{r, message=FALSE, warning=FALSE}
+# Make a binary vector of all genes, 1 for significant, 0 for non
+deg_v_des_undif = genes %in% sig_genes_des_undif
+deg_v_des_undif = as.numeric(deg_v_des_undif)
+names(deg_v_des_undif) = genes
+
+# remove the duplicate genes
+deg_v_des_undif = deg_v_des_undif[!(genes %in% duplicate_geneIDs$gene_id)]
+names(deg_v_des_undif) = gene_id_v[names(deg_v_des_undif)]
+# head(deg_v_des_undif)
+any(is.na(names(deg_v_des_undif)))
+
+# Get the bias and length estimations for goseq
+np_des_undif = nullp(deg_v_des_undif, 'mm39', 'refGene')
+
+# Run goseq
+gs_des_undif = goseq(np_des_undif, 'mm39', 'refGene')
+
+# head(gs_des_undif)
+dim(gs_des_undif)
+gs_fixed_des_undif = (gs_des_undif
+            %>% mutate(padj = p.adjust(over_represented_pvalue, 'BH')))
+# head(gs_fixed_des_undif)
+
+# Count the significant categories
+sum(gs_fixed_des_undif$padj < 0.05)
+
+# head(gs_fixed_des_undif)
+write.csv(filter(gs_fixed_des_undif, padj < 0.05), 
+          file = 'results/06_analysis/goseq_de_naive.csv')
+write.csv(gs_fixed_des_undif, file = 'results/06_analysis/goseq_de_naive_all.csv')
+```
+
+The 1,521 genes that were significantly differentially expressed led to 
+over-representation of difference in 219 GO categories. You can download the
+significant `goseq` results [here](./results/06_analysis/goseq_de_naive.csv'),
+or the full results [here](./results/06_analysis/goseq_de_naive_all.csv).
 
 ### Naive Cells
 
@@ -906,93 +1107,3 @@ in 138 GO categories. You can download the significant `goseq` results
 [here](./results/06_analysis/goseq_de_diff_all.csv)
 
 
-### Interaction Model
-
-#### DESeq
-
-```{r, warning=FALSE, message=FALSE}
-samdat
-head(gene_counts)
-
-dds = DESeqDataSetFromMatrix(gene_counts, samdat, ~Treatment*Differentiation)
-dds = DESeq(dds)
-resultsNames(dds)
-
-res_des = lfcShrink(dds, coef = 'TreatmentKO.DifferentiationDiff')
-res_df_des = data.frame(res_des)
-rownames(res_df_des) = fc_lst_gene[[1]]$annotation$GeneID
-head(res_df_des)
-dim(res_df_des)
-dim(gene_counts)
-res_df_des = cbind(res_df_des, gene_counts)
-head(res_df_des)
-sum(!is.na(res_df_des$padj))
-sum(res_df_des$padj < 0.05, na.rm = TRUE)
-
-sig_des = (res_df_des
-                 %>% filter(padj < 0.05))
-# head(sig_des_undif)
-write.csv(sig_des_undif, file = 'results/06_analysis/naive_des_sig.csv')
-write.csv(res_df_des_undif, file = 'results/06_analysis/naive_des_all.csv')
-```
-
-Of the 40,840 genes analyzed, 19,448 had sufficient coverage for analysis, and 
-1,521 were significantly differentially expressed. You can download the
-significantly differentially expressed gene
-[here](./results/06_analysis/naive_des_sig.csv), or the full results 
-[here](./results/06_analysis/naive_des_all.csv).
-
-#### Goseq
-
-```{r}
-all_genes_des_undif = rownames(res_df_des_undif)
-# length(all_genes_des_undif)
-genes = (res_df_des_undif
-         %>% filter(!is.na(padj))
-         %>% rownames())
-# length(genes)
-
-sig_genes_des_undif = (res_df_des_undif
-             %>% filter(padj < 0.05)
-             %>% rownames())
-
-```
-
-
-```{r, message=FALSE, warning=FALSE}
-# Make a binary vector of all genes, 1 for significant, 0 for non
-deg_v_des_undif = genes %in% sig_genes_des_undif
-deg_v_des_undif = as.numeric(deg_v_des_undif)
-names(deg_v_des_undif) = genes
-
-# remove the duplicate genes
-deg_v_des_undif = deg_v_des_undif[!(genes %in% duplicate_geneIDs$gene_id)]
-names(deg_v_des_undif) = gene_id_v[names(deg_v_des_undif)]
-# head(deg_v_des_undif)
-any(is.na(names(deg_v_des_undif)))
-
-# Get the bias and length estimations for goseq
-np_des_undif = nullp(deg_v_des_undif, 'mm39', 'refGene')
-
-# Run goseq
-gs_des_undif = goseq(np_des_undif, 'mm39', 'refGene')
-
-# head(gs_des_undif)
-dim(gs_des_undif)
-gs_fixed_des_undif = (gs_des_undif
-            %>% mutate(padj = p.adjust(over_represented_pvalue, 'BH')))
-# head(gs_fixed_des_undif)
-
-# Count the significant categories
-sum(gs_fixed_des_undif$padj < 0.05)
-
-# head(gs_fixed_des_undif)
-write.csv(filter(gs_fixed_des_undif, padj < 0.05), 
-          file = 'results/06_analysis/goseq_de_naive.csv')
-write.csv(gs_fixed_des_undif, file = 'results/06_analysis/goseq_de_naive_all.csv')
-```
-
-The 1,521 genes that were significantly differentially expressed led to 
-over-representation of difference in 219 GO categories. You can download the
-significant `goseq` results [here](./results/06_analysis/goseq_de_naive.csv'),
-or the full results [here](./results/06_analysis/goseq_de_naive_all.csv).
