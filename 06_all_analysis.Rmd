@@ -5,7 +5,8 @@ Analysis of Fox2/3 KO Experiment
 ## Setup
 
 ```{r, message=FALSE}
-knitr::opts_chunk$set(message=FALSE, warning =FALSE)
+knitr::opts_chunk$set(message=FALSE, warning =FALSE, 
+                      fig.keep = 'none')
 library('DEXSeq')
 library('Rsubread')
 library(tidyverse)
@@ -146,7 +147,7 @@ load('RData/feature_counts.RData')
 #     chk[i-1] = all_equal(fc_lst[[1]]$annotation, fc_lst[[i]]$annotation)
 # }
 annot = fc_lst[[1]]$annotation
-# head(annot)
+head(annot)
 
 # Make sure exon numbers are unique and in a format DEXSeq can use
 annot = (annot
@@ -156,6 +157,7 @@ annot = (annot
          %>% data.frame())
 # head(annot)
 # head(rownames(exon_counts))
+write.csv(annot, file = 'results/06_analysis/exon_annotation.csv')
 
 # Make sure sample names are correctly formatted
 samps = colnames(exon_counts)
@@ -385,7 +387,7 @@ sig_10_dex_dif = (res_dex_dif
 # head(sig_dex_dif)
 rownames(sig_dex_dif) = NULL
 write.csv(sig_dex_dif, file = 'results/06_analysis/diff_deu_sig.csv')
-write.csv(sig_10_dex_dif, file = 'results/06_analysis/diff_deu_0.01_sig.csv')
+write.csv(sig_10_dex_dif, file = 'results/06_analysis/diff_deu_0.1_sig.csv')
 # write.csv(select(res_dex_dif, -genomicData), file = 'results/06_analysis/diff_deu_all.csv',
           # row.names = FALSE)
 ```
@@ -498,7 +500,7 @@ sig_10_dex_guide = (res_dex_guide
 # head(sig_dex_guide)
 rownames(sig_dex_guide) = NULL
 write.csv(sig_dex_guide, file = 'results/06_analysis/guide_deu_sig.csv')
-write.csv(sig_10_dex_guide, file = 'results/06_analysis/guide_deu_0.01_sig.csv')
+write.csv(sig_10_dex_guide, file = 'results/06_analysis/guide_deu_0.1_sig.csv')
 # write.csv(select(res_dex_guide, -genomicData), file = 'results/06_analysis/guide_deu_all.csv',
 #             row.names = FALSE)
 ```
@@ -749,7 +751,9 @@ rownames(res_undif_df) = fc_lst_gene[[1]]$annotation$GeneID
 head(res_undif_df)
 dim(res_undif_df)
 dim(gene_counts)
-res_undif_df = cbind(res_undif_df, gene_counts)
+samps = rownames((samdat
+         %>% filter(Differentiation == 'Naive')))
+res_undif_df = cbind(res_undif_df, gene_counts[,samps])
 head(res_undif_df)
 sum(!is.na(res_undif_df$padj))
 sum(res_undif_df$padj < 0.05, na.rm = TRUE)
@@ -762,7 +766,9 @@ write.csv(res_undif_df, file = 'results/06_analysis/naive_des_all.csv')
 
 Of the 40,840 genes analysed, 20,969 had sufficient coverage for analysis. Of
 those, 804 were significantly differentially expressed between the KO and WT
-treatments within _undifferentiated_ cells.
+treatments within _undifferentiated_ cells. You can find the significant results
+[here](./results/06_analysis/naive_des_sig.csv) and the full results 
+[here](./results/06_analysis/naive_des_all.csv).
 
 ###### Goseq
 
@@ -811,7 +817,8 @@ sum(gs_fixed_des_undif$padj < 0.05)
 # head(gs_fixed_des_undif)
 write.csv(filter(gs_fixed_des_undif, padj < 0.05), 
           file = 'results/06_analysis/goseq_de_naive.csv')
-write.csv(gs_fixed_des_undif, file = 'results/06_analysis/goseq_de_naive_all.csv')
+write.csv(gs_fixed_des_undif, 
+          file = 'results/06_analysis/goseq_de_naive_all.csv')
 ```
 
 The 804 genes that were significantly differentially expressed led to 
@@ -831,7 +838,9 @@ rownames(res_dif_df) = fc_lst_gene[[1]]$annotation$GeneID
 head(res_dif_df)
 dim(res_dif_df)
 dim(gene_counts)
-res_dif_df = cbind(res_dif_df, gene_counts)
+samps = rownames((samdat
+         %>% filter(Differentiation == 'Diff')))
+res_dif_df = cbind(res_dif_df, gene_counts[,samps])
 head(res_dif_df)
 sum(!is.na(res_dif_df$padj))
 sum(res_dif_df$padj < 0.05, na.rm = TRUE)
@@ -844,7 +853,9 @@ write.csv(res_dif_df, file = 'results/06_analysis/diff_des_all.csv')
 
 Of the 40,840 genes analysed, 20,395 had sufficient coverage for analysis. Of
 those, 1,173 were significantly differentially expressed between the KO and WT
-treatments within _differentiated_ cells.
+treatments within _differentiated_ cells. You can find the significant results
+[here](./results/06_analysis/diff_des_sig.csv) and the full results 
+[here](./results/06_analysis/diff_des_all.csv).
 
 ###### Goseq
 
@@ -913,7 +924,9 @@ rownames(res_ctl_df) = fc_lst_gene[[1]]$annotation$GeneID
 head(res_ctl_df)
 dim(res_ctl_df)
 dim(gene_counts)
-res_ctl_df = cbind(res_ctl_df, gene_counts)
+samps = rownames((samdat
+         %>% filter(Treatment == 'WT')))
+res_ctl_df = cbind(res_ctl_df, gene_counts[,samps])
 head(res_ctl_df)
 sum(!is.na(res_ctl_df$padj))
 sum(res_ctl_df$padj < 0.05, na.rm = TRUE)
@@ -926,7 +939,9 @@ write.csv(res_ctl_df, file = 'results/06_analysis/ctl_des_all.csv')
 
 Of the 40,840 genes analysed, 20,969 had sufficient coverage for analysis. Of
 those, 6,112 were significantly differentially expressed between the Naive and 
-Differentiated cells within the _scramble control WT_ treatment.
+Differentiated cells within the _scramble control WT_ treatment. You can find
+the significant results [here](./results/06_analysis/ctl_des_sig.csv) and the
+full results [here](./results/06_analysis/ctl_des_all.csv).
 
 ###### Goseq
 
@@ -996,7 +1011,9 @@ rownames(res_guide_df) = fc_lst_gene[[1]]$annotation$GeneID
 head(res_guide_df)
 dim(res_guide_df)
 dim(gene_counts)
-res_guide_df = cbind(res_guide_df, gene_counts)
+samps = rownames((samdat
+         %>% filter(Treatment == 'KO')))
+res_guide_df = cbind(res_guide_df, gene_counts[,samps])
 head(res_guide_df)
 sum(!is.na(res_guide_df$padj))
 sum(res_guide_df$padj < 0.05, na.rm = TRUE)
@@ -1009,7 +1026,9 @@ write.csv(res_guide_df, file = 'results/06_analysis/guide_des_all.csv')
 
 Of the 40,840 genes analysed, 20,969 had sufficient coverage for analysis. Of
 those, 4,099 were significantly differentially expressed between the Naive and
-Differentiated cells within the _guide KO_ treatment.
+Differentiated cells within the _guide KO_ treatment. You can find the 
+significant results [here](./results/06_analysis/guide_des_sig.csv) and the full
+results [here](./results/06_analysis/guide_des_all.csv).
 
 ###### Goseq
 
@@ -1092,7 +1111,8 @@ write.csv(res_df_des, file = 'results/06_analysis/interaction_des_all.csv')
 
 Of the 40,840 genes analyzed, 30,155 had sufficient coverage for analysis, and 
 none were significant in the interaction term, which is quite odd, but likely
-reflects the noisiness of the data more than anything else.
+reflects the noisiness of the data more than anything else. You can find the
+full results [here](./results/06_analysis//interaction_des_all.csv).
 
 ###### Goseq
 
