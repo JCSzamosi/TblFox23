@@ -49,7 +49,9 @@ genome = '~/Disk2/CommonData/ReferenceGenomes/Mouse/GRCm39/ncbi-genomes-2022-03-
 samdat = read.csv('data/sample_data/samdat.csv', row.names = 1)
 samdat
 samdat = (samdat
-          %>% mutate(Treatment = factor(Treatment, levels = c('WT','KO'))))
+          %>% mutate(Treatment = factor(Treatment, levels = c('WT','KO')),
+                     Differentiation = factor(Differentiation, 
+                                              levels = c('Naive', 'Diff'))))
 samps = rownames(samdat)
 samps = gsub('-','_',samps,fixed = TRUE)
 rownames(samdat) = samps
@@ -234,8 +236,8 @@ sig_10_dex_undif = (res_dex_undif
 rownames(sig_dex_undif) = NULL
 write.csv(sig_dex_undif, file = 'results/06_analysis/naive_deu_sig.csv')
 write.csv(sig_10_dex_undif, file = 'results/06_analysis/naive_deu_0.1_sig.csv')
-write.csv(select(res_dex_undif, -genomicData), file = 'results/06_analysis/naive_deu_all.csv',
-            row.names = FALSE)
+# write.csv(select(res_dex_undif, -genomicData), file = 'results/06_analysis/naive_deu_all.csv',
+#             row.names = FALSE)
 ```
 
 There are 1,520,722 exons analyzed. Of them, 1,125,713 had sufficient data for
@@ -383,8 +385,8 @@ sig_10_dex_dif = (res_dex_dif
 rownames(sig_dex_dif) = NULL
 write.csv(sig_dex_dif, file = 'results/06_analysis/diff_deu_sig.csv')
 write.csv(sig_10_dex_dif, file = 'results/06_analysis/diff_deu_0.01_sig.csv')
-write.csv(select(res_dex_dif, -genomicData), file = 'results/06_analysis/diff_deu_all.csv',
-          row.names = FALSE)
+# write.csv(select(res_dex_dif, -genomicData), file = 'results/06_analysis/diff_deu_all.csv',
+          # row.names = FALSE)
 ```
 
 219 genes have at least one exon with DEU. None of the genes with duplicate IDs 
@@ -496,8 +498,8 @@ sig_10_dex_guide = (res_dex_guide
 rownames(sig_dex_guide) = NULL
 write.csv(sig_dex_guide, file = 'results/06_analysis/guide_deu_sig.csv')
 write.csv(sig_10_dex_guide, file = 'results/06_analysis/guide_deu_0.01_sig.csv')
-write.csv(select(res_dex_guide, -genomicData), file = 'results/06_analysis/guide_deu_all.csv',
-            row.names = FALSE)
+# write.csv(select(res_dex_guide, -genomicData), file = 'results/06_analysis/guide_deu_all.csv',
+#             row.names = FALSE)
 ```
 
 There are 1,520,722 exons analyzed. Of them, 1,164,641 had sufficient data for
@@ -587,20 +589,20 @@ I run this once and then keep it stored because it takes a long time to run
 
 samdat_ctl = filter(samdat, Treatment == 'WT')
 exon_ct_ctl = exon_counts[,rownames(samdat_ctl)]
-samdat_ctl
+# samdat_ctl
 # head(exon_ct_ctl)
-
+# 
 # dxd = DEXSeqDataSet(exon_ct_ctl, samdat_ctl,
 #                     design = ~sample + exon + exon:Differentiation,
 #                     featureID = annot$exon_unique,
 #                     groupID = annot$GeneID)
 # dxd = estimateSizeFactors(dxd, locfunc = genefilter::shorth)
-# dxd = estimateDispersions(dxd, BPPARAM = MulticoreParam(workers = 10))
+# dxd = estimateDispersions(dxd, BPPARAM = MulticoreParam(workers = 6))
 # save(dxd, file = 'RData/dxd_ctl.RData')
 # plotDispEsts(dxd)
-# dxd = testForDEU(dxd, BPPARAM = MulticoreParam(workers = 10))
+# dxd = testForDEU(dxd, BPPARAM = MulticoreParam(workers = 6))
 # dxd = estimateExonFoldChanges(dxd, fitExpToVar = 'Differentiation',
-#                               BPPARAM = MulticoreParam(workers = 10))
+#                               BPPARAM = MulticoreParam(workers = 6))
 # save(dxd, file = 'RData/dxd_ctl_deu.RData')
 load('RData/dxd_ctl_deu.RData')
 res_orig_dex_ctl = DEXSeqResults(dxd)
@@ -906,6 +908,91 @@ in 138 GO categories. You can download the significant `goseq` results
 
 ### Interaction Model
 
-#### DEXSeq
+#### DESeq
+
+```{r, warning=FALSE, message=FALSE}
+samdat
+head(gene_counts)
+
+dds = DESeqDataSetFromMatrix(gene_counts, samdat, ~Treatment*Differentiation)
+dds = DESeq(dds)
+resultsNames(dds)
+
+res_des = lfcShrink(dds, coef = 'TreatmentKO.DifferentiationDiff')
+res_df_des = data.frame(res_des)
+rownames(res_df_des) = fc_lst_gene[[1]]$annotation$GeneID
+head(res_df_des)
+dim(res_df_des)
+dim(gene_counts)
+res_df_des = cbind(res_df_des, gene_counts)
+head(res_df_des)
+sum(!is.na(res_df_des$padj))
+sum(res_df_des$padj < 0.05, na.rm = TRUE)
+
+sig_des = (res_df_des
+                 %>% filter(padj < 0.05))
+# head(sig_des_undif)
+write.csv(sig_des_undif, file = 'results/06_analysis/naive_des_sig.csv')
+write.csv(res_df_des_undif, file = 'results/06_analysis/naive_des_all.csv')
+```
+
+Of the 40,840 genes analyzed, 19,448 had sufficient coverage for analysis, and 
+1,521 were significantly differentially expressed. You can download the
+significantly differentially expressed gene
+[here](./results/06_analysis/naive_des_sig.csv), or the full results 
+[here](./results/06_analysis/naive_des_all.csv).
 
 #### Goseq
+
+```{r}
+all_genes_des_undif = rownames(res_df_des_undif)
+# length(all_genes_des_undif)
+genes = (res_df_des_undif
+         %>% filter(!is.na(padj))
+         %>% rownames())
+# length(genes)
+
+sig_genes_des_undif = (res_df_des_undif
+             %>% filter(padj < 0.05)
+             %>% rownames())
+
+```
+
+
+```{r, message=FALSE, warning=FALSE}
+# Make a binary vector of all genes, 1 for significant, 0 for non
+deg_v_des_undif = genes %in% sig_genes_des_undif
+deg_v_des_undif = as.numeric(deg_v_des_undif)
+names(deg_v_des_undif) = genes
+
+# remove the duplicate genes
+deg_v_des_undif = deg_v_des_undif[!(genes %in% duplicate_geneIDs$gene_id)]
+names(deg_v_des_undif) = gene_id_v[names(deg_v_des_undif)]
+# head(deg_v_des_undif)
+any(is.na(names(deg_v_des_undif)))
+
+# Get the bias and length estimations for goseq
+np_des_undif = nullp(deg_v_des_undif, 'mm39', 'refGene')
+
+# Run goseq
+gs_des_undif = goseq(np_des_undif, 'mm39', 'refGene')
+
+# head(gs_des_undif)
+dim(gs_des_undif)
+gs_fixed_des_undif = (gs_des_undif
+            %>% mutate(padj = p.adjust(over_represented_pvalue, 'BH')))
+# head(gs_fixed_des_undif)
+
+# Count the significant categories
+sum(gs_fixed_des_undif$padj < 0.05)
+
+# head(gs_fixed_des_undif)
+write.csv(filter(gs_fixed_des_undif, padj < 0.05), 
+          file = 'results/06_analysis/goseq_de_naive.csv')
+write.csv(gs_fixed_des_undif, file = 'results/06_analysis/goseq_de_naive_all.csv')
+```
+
+The 1,521 genes that were significantly differentially expressed led to 
+over-representation of difference in 219 GO categories. You can download the
+significant `goseq` results [here](./results/06_analysis/goseq_de_naive.csv'),
+or the full results [here](./results/06_analysis/goseq_de_naive_all.csv).
