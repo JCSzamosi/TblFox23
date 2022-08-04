@@ -764,6 +764,61 @@ Of the 40,840 genes analysed, 20,969 had sufficient coverage for analysis. Of
 those, 804 were significantly differentially expressed between the KO and WT
 treatments within _undifferentiated_ cells.
 
+###### Goseq
+
+```{r}
+all_genes_des_undif = rownames(res_undif_df)
+# length(all_genes_des_undif)
+genes = (res_undif_df
+         %>% filter(!is.na(padj))
+         %>% rownames())
+# length(genes)
+
+sig_genes_des_undif = (res_undif_df
+             %>% filter(padj < 0.05)
+             %>% rownames())
+
+```
+
+
+```{r, message=FALSE, warning=FALSE}
+# Make a binary vector of all genes, 1 for significant, 0 for non
+deg_v_des_undif = genes %in% sig_genes_des_undif
+deg_v_des_undif = as.numeric(deg_v_des_undif)
+names(deg_v_des_undif) = genes
+
+# remove the duplicate genes
+deg_v_des_undif = deg_v_des_undif[!(genes %in% duplicate_geneIDs$gene_id)]
+names(deg_v_des_undif) = gene_id_v[names(deg_v_des_undif)]
+# head(deg_v_des_undif)
+any(is.na(names(deg_v_des_undif)))
+
+# Get the bias and length estimations for goseq
+np_des_undif = nullp(deg_v_des_undif, 'mm39', 'refGene')
+
+# Run goseq
+gs_des_undif = goseq(np_des_undif, 'mm39', 'refGene')
+
+# head(gs_des_undif)
+dim(gs_des_undif)
+gs_fixed_des_undif = (gs_des_undif
+            %>% mutate(padj = p.adjust(over_represented_pvalue, 'BH')))
+# head(gs_fixed_des_undif)
+
+# Count the significant categories
+sum(gs_fixed_des_undif$padj < 0.05)
+
+# head(gs_fixed_des_undif)
+write.csv(filter(gs_fixed_des_undif, padj < 0.05), 
+          file = 'results/06_analysis/goseq_de_naive.csv')
+write.csv(gs_fixed_des_undif, file = 'results/06_analysis/goseq_de_naive_all.csv')
+```
+
+The 804 genes that were significantly differentially expressed led to 
+over-representation of difference in 65 GO categories. You can download the
+significant `goseq` results [here](./results/06_analysis/goseq_de_naive.csv'),
+or the full results [here](./results/06_analysis/goseq_de_naive_all.csv).
+
 ##### Differentiated Cell Results
 
 ```{r}
@@ -791,6 +846,62 @@ Of the 40,840 genes analysed, 20,395 had sufficient coverage for analysis. Of
 those, 1,173 were significantly differentially expressed between the KO and WT
 treatments within _differentiated_ cells.
 
+###### Goseq
+
+```{r}
+head(res_dif_df)
+all_genes_des_dif = rownames(res_dif_df)
+# length(all_genes_des_undif)
+genes = (res_dif_df
+         %>% filter(!is.na(padj))
+         %>% rownames())
+# length(genes)
+
+sig_genes_des_dif = (res_dif_df
+             %>% filter(padj < 0.05)
+             %>% rownames())
+
+```
+
+
+```{r, message=FALSE, warning=FALSE}
+# Make a binary vector of all genes, 1 for significant, 0 for non
+deg_v_des_dif = genes %in% sig_genes_des_dif
+deg_v_des_dif = as.numeric(deg_v_des_dif)
+names(deg_v_des_dif) = genes
+
+# remove the duplicate genes
+deg_v_des_dif = deg_v_des_dif[!(genes %in% duplicate_geneIDs$gene_id)]
+names(deg_v_des_dif) = gene_id_v[names(deg_v_des_dif)]
+# head(deg_v_des_dif)
+any(is.na(names(deg_v_des_dif)))
+
+# Get the bias and length estimations for goseq
+np_des_dif = nullp(deg_v_des_dif, 'mm39', 'refGene')
+
+# Run goseq
+gs_des_dif = goseq(np_des_dif, 'mm39', 'refGene')
+
+# head(gs_des_dif)
+dim(gs_des_dif)
+gs_fixed_des_dif = (gs_des_dif
+            %>% mutate(padj = p.adjust(over_represented_pvalue, 'BH')))
+# head(gs_fixed_des_dif)
+
+# Count the significant categories
+sum(gs_fixed_des_dif$padj < 0.05)
+
+# head(gs_fixed_des_dif)
+write.csv(filter(gs_fixed_des_dif, padj < 0.05), 
+          file = 'results/06_analysis/goseq_de_diff.csv')
+write.csv(gs_fixed_des_dif, file = 'results/06_analysis/goseq_de_diff_all.csv')
+```
+
+The 1,173 genes that were significantly differentially expressed led to 
+over-representation of difference in 50 GO categories. You can download the
+significant `goseq` results [here](./results/06_analysis/goseq_de_diff.csv'),
+or the full results [here](./results/06_analysis/goseq_de_diff_all.csv).
+
 ##### Control Cell Results
 
 ```{r}
@@ -816,6 +927,62 @@ write.csv(res_ctl_df, file = 'results/06_analysis/ctl_des_all.csv')
 Of the 40,840 genes analysed, 20,969 had sufficient coverage for analysis. Of
 those, 6,112 were significantly differentially expressed between the Naive and 
 Differentiated cells within the _scramble control WT_ treatment.
+
+###### Goseq
+
+```{r}
+head(res_ctl_df)
+all_genes_des_ctl = rownames(res_ctl_df)
+# length(all_genes_des_ctl)
+genes = (res_ctl_df
+         %>% filter(!is.na(padj))
+         %>% rownames())
+# length(genes)
+
+sig_genes_des_ctl = (res_ctl_df
+             %>% filter(padj < 0.05)
+             %>% rownames())
+
+```
+
+
+```{r, message=FALSE, warning=FALSE}
+# Make a binary vector of all genes, 1 for significant, 0 for non
+deg_v_des_ctl = genes %in% sig_genes_des_ctl
+deg_v_des_ctl = as.numeric(deg_v_des_ctl)
+names(deg_v_des_ctl) = genes
+
+# remove the duplicate genes
+deg_v_des_ctl = deg_v_des_ctl[!(genes %in% duplicate_geneIDs$gene_id)]
+names(deg_v_des_ctl) = gene_id_v[names(deg_v_des_ctl)]
+# head(deg_v_des_ctl)
+any(is.na(names(deg_v_des_ctl)))
+
+# Get the bias and length estimations for goseq
+np_des_ctl = nullp(deg_v_des_ctl, 'mm39', 'refGene')
+
+# Run goseq
+gs_des_ctl = goseq(np_des_ctl, 'mm39', 'refGene')
+
+# head(gs_des_ctl)
+dim(gs_des_ctl)
+gs_fixed_des_ctl = (gs_des_ctl
+            %>% mutate(padj = p.adjust(over_represented_pvalue, 'BH')))
+# head(gs_fixed_des_ctl)
+
+# Count the significant categories
+sum(gs_fixed_des_ctl$padj < 0.05)
+
+# head(gs_fixed_des_ctl)
+write.csv(filter(gs_fixed_des_ctl, padj < 0.05), 
+          file = 'results/06_analysis/goseq_de_ctl.csv')
+write.csv(gs_fixed_des_ctl, file = 'results/06_analysis/goseq_de_ctl.csv')
+```
+
+The 6,112 genes that were significantly differentially expressed led to 
+over-representation of difference in 154 GO categories. You can download the
+significant `goseq` results [here](./results/06_analysis/goseq_de_ctl.csv'),
+or the full results [here](./results/06_analysis/goseq_de_ctl_all.csv).
 
 ##### Guide Cell Results
 
@@ -844,6 +1011,62 @@ Of the 40,840 genes analysed, 20,969 had sufficient coverage for analysis. Of
 those, 4,099 were significantly differentially expressed between the Naive and
 Differentiated cells within the _guide KO_ treatment.
 
+###### Goseq
+
+```{r}
+head(res_guide_df)
+all_genes_des_guide = rownames(res_guide_df)
+# length(all_genes_des_guide)
+genes = (res_guide_df
+         %>% filter(!is.na(padj))
+         %>% rownames())
+# length(genes)
+
+sig_genes_des_guide = (res_guide_df
+             %>% filter(padj < 0.05)
+             %>% rownames())
+
+```
+
+
+```{r, message=FALSE, warning=FALSE}
+# Make a binary vector of all genes, 1 for significant, 0 for non
+deg_v_des_guide = genes %in% sig_genes_des_guide
+deg_v_des_guide = as.numeric(deg_v_des_guide)
+names(deg_v_des_guide) = genes
+
+# remove the duplicate genes
+deg_v_des_guide = deg_v_des_guide[!(genes %in% duplicate_geneIDs$gene_id)]
+names(deg_v_des_guide) = gene_id_v[names(deg_v_des_guide)]
+# head(deg_v_des_guide)
+any(is.na(names(deg_v_des_guide)))
+
+# Get the bias and length estimations for goseq
+np_des_guide = nullp(deg_v_des_guide, 'mm39', 'refGene')
+
+# Run goseq
+gs_des_guide = goseq(np_des_guide, 'mm39', 'refGene')
+
+# head(gs_des_guide)
+dim(gs_des_guide)
+gs_fixed_des_guide = (gs_des_guide
+            %>% mutate(padj = p.adjust(over_represented_pvalue, 'BH')))
+# head(gs_fixed_des_guide)
+
+# Count the significant categories
+sum(gs_fixed_des_guide$padj < 0.05)
+
+# head(gs_fixed_des_guide)
+write.csv(filter(gs_fixed_des_guide, padj < 0.05), 
+          file = 'results/06_analysis/goseq_de_guide.csv')
+write.csv(gs_fixed_des_guide, file = 'results/06_analysis/goseq_de_guide.csv')
+```
+
+The 4,099 genes that were significantly differentially expressed led to 
+over-representation of difference in 84 GO categories. You can download the
+significant `goseq` results [here](./results/06_analysis/goseq_de_guide.csv'),
+or the full results [here](./results/06_analysis/goseq_de_guide_all.csv).
+
 ##### Interaction Term Result
 
 ```{r}
@@ -871,239 +1094,7 @@ Of the 40,840 genes analyzed, 30,155 had sufficient coverage for analysis, and
 none were significant in the interaction term, which is quite odd, but likely
 reflects the noisiness of the data more than anything else.
 
-#### Goseq
+###### Goseq
 
-```{r}
-all_genes_des_undif = rownames(res_df_des_undif)
-# length(all_genes_des_undif)
-genes = (res_df_des_undif
-         %>% filter(!is.na(padj))
-         %>% rownames())
-# length(genes)
-
-sig_genes_des_undif = (res_df_des_undif
-             %>% filter(padj < 0.05)
-             %>% rownames())
-
-```
-
-
-```{r, message=FALSE, warning=FALSE}
-# Make a binary vector of all genes, 1 for significant, 0 for non
-deg_v_des_undif = genes %in% sig_genes_des_undif
-deg_v_des_undif = as.numeric(deg_v_des_undif)
-names(deg_v_des_undif) = genes
-
-# remove the duplicate genes
-deg_v_des_undif = deg_v_des_undif[!(genes %in% duplicate_geneIDs$gene_id)]
-names(deg_v_des_undif) = gene_id_v[names(deg_v_des_undif)]
-# head(deg_v_des_undif)
-any(is.na(names(deg_v_des_undif)))
-
-# Get the bias and length estimations for goseq
-np_des_undif = nullp(deg_v_des_undif, 'mm39', 'refGene')
-
-# Run goseq
-gs_des_undif = goseq(np_des_undif, 'mm39', 'refGene')
-
-# head(gs_des_undif)
-dim(gs_des_undif)
-gs_fixed_des_undif = (gs_des_undif
-            %>% mutate(padj = p.adjust(over_represented_pvalue, 'BH')))
-# head(gs_fixed_des_undif)
-
-# Count the significant categories
-sum(gs_fixed_des_undif$padj < 0.05)
-
-# head(gs_fixed_des_undif)
-write.csv(filter(gs_fixed_des_undif, padj < 0.05), 
-          file = 'results/06_analysis/goseq_de_naive.csv')
-write.csv(gs_fixed_des_undif, file = 'results/06_analysis/goseq_de_naive_all.csv')
-```
-
-The 1,521 genes that were significantly differentially expressed led to 
-over-representation of difference in 219 GO categories. You can download the
-significant `goseq` results [here](./results/06_analysis/goseq_de_naive.csv'),
-or the full results [here](./results/06_analysis/goseq_de_naive_all.csv).
-
-### Naive Cells
-
-#### DESeq
-
-```{r, warning=FALSE, message=FALSE}
-samdat_undif
-gene_ct_undif = gene_counts[,rownames(samdat_undif)]
-
-dds_undif = DESeqDataSetFromMatrix(gene_ct_undif, samdat_undif, ~Treatment)
-dds_undif = DESeq(dds_undif)
-resultsNames(dds_undif)
-
-res_des_undif = lfcShrink(dds_undif, coef = 'Treatment_KO_vs_WT')
-res_df_des_undif = data.frame(res_des_undif)
-rownames(res_df_des_undif) = fc_lst_gene[[1]]$annotation$GeneID
-head(res_df_des_undif)
-dim(res_df_des_undif)
-dim(gene_ct_undif)
-res_df_des_undif = cbind(res_df_des_undif, gene_ct_undif)
-head(res_df_des_undif)
-sum(!is.na(res_df_des_undif$padj))
-sum(res_df_des_undif$padj < 0.05, na.rm = TRUE)
-
-sig_des_undif = (res_df_des_undif
-                 %>% filter(padj < 0.05))
-# head(sig_des_undif)
-write.csv(sig_des_undif, file = 'results/06_analysis/naive_des_sig.csv')
-write.csv(res_df_des_undif, file = 'results/06_analysis/naive_des_all.csv')
-```
-
-Of the 40,840 genes analyzed, 19,448 had sufficient coverage for analysis, and 
-1,521 were significantly differentially expressed. You can download the
-significantly differentially expressed gene
-[here](./results/06_analysis/naive_des_sig.csv), or the full results 
-[here](./results/06_analysis/naive_des_all.csv).
-
-#### Goseq
-
-```{r}
-all_genes_des_undif = rownames(res_df_des_undif)
-# length(all_genes_des_undif)
-genes = (res_df_des_undif
-         %>% filter(!is.na(padj))
-         %>% rownames())
-# length(genes)
-
-sig_genes_des_undif = (res_df_des_undif
-             %>% filter(padj < 0.05)
-             %>% rownames())
-
-```
-
-
-```{r, message=FALSE, warning=FALSE}
-# Make a binary vector of all genes, 1 for significant, 0 for non
-deg_v_des_undif = genes %in% sig_genes_des_undif
-deg_v_des_undif = as.numeric(deg_v_des_undif)
-names(deg_v_des_undif) = genes
-
-# remove the duplicate genes
-deg_v_des_undif = deg_v_des_undif[!(genes %in% duplicate_geneIDs$gene_id)]
-names(deg_v_des_undif) = gene_id_v[names(deg_v_des_undif)]
-# head(deg_v_des_undif)
-any(is.na(names(deg_v_des_undif)))
-
-# Get the bias and length estimations for goseq
-np_des_undif = nullp(deg_v_des_undif, 'mm39', 'refGene')
-
-# Run goseq
-gs_des_undif = goseq(np_des_undif, 'mm39', 'refGene')
-
-# head(gs_des_undif)
-dim(gs_des_undif)
-gs_fixed_des_undif = (gs_des_undif
-            %>% mutate(padj = p.adjust(over_represented_pvalue, 'BH')))
-# head(gs_fixed_des_undif)
-
-# Count the significant categories
-sum(gs_fixed_des_undif$padj < 0.05)
-
-# head(gs_fixed_des_undif)
-write.csv(filter(gs_fixed_des_undif, padj < 0.05), 
-          file = 'results/06_analysis/goseq_de_naive.csv')
-write.csv(gs_fixed_des_undif, file = 'results/06_analysis/goseq_de_naive_all.csv')
-```
-
-The 1,521 genes that were significantly differentially expressed led to 
-over-representation of difference in 219 GO categories. You can download the
-significant `goseq` results [here](./results/06_analysis/goseq_de_naive.csv'),
-or the full results [here](./results/06_analysis/goseq_de_naive_all.csv).
-
-### Differentiated Cells
-
-#### DESeq
-
-```{r, message=FALSE, warning=FALSE}
-samdat_dif
-gene_ct_dif = gene_counts[,rownames(samdat_dif)]
-
-dds_dif = DESeqDataSetFromMatrix(gene_ct_dif, samdat_dif, ~Treatment)
-dds_dif = DESeq(dds_dif)
-resultsNames(dds_dif)
-
-res_des_dif = lfcShrink(dds_dif, coef = 'Treatment_KO_vs_WT')
-res_df_des_dif = data.frame(res_des_dif)
-rownames(res_df_des_dif) = fc_lst_gene[[1]]$annotation$GeneID
-head(res_df_des_dif)
-dim(res_df_des_dif)
-dim(gene_ct_dif)
-head(gene_ct_dif)
-res_df_des_dif = cbind(res_df_des_dif, gene_ct_dif)
-sum(!is.na(res_df_des_dif$padj))
-sum(res_df_des_dif$padj < 0.05, na.rm = TRUE)
-
-sig_des_dif = (res_df_des_dif
-                 %>% filter(padj < 0.05))
-# head(sig_des_dif)
-write.csv(sig_des_dif, file = 'results/06_analysis/diff_des_sig.csv')
-write.csv(res_df_des_dif, file = 'results/06_analysis/diff_des_all.csv')
-```
-
-Of the 40,840 genes analyzed, 20,403 had sufficient coverage for analysis, and 
-531 were significantly differentially expressed. You can download the
-significantly differentially expressed genes
-[here](./results/06_analysis/diff_des_sig.csv), or the full results
-[here](./results/06_analysis/diff_des_all.csv).
-
-#### Goseq
-
-```{r, warning=FALSE,message=FALSE}
-all_genes = rownames(res_df_des_dif)
-# length(all_genes)
-genes_des_dif = (res_df_des_dif
-         %>% filter(!is.na(padj))
-         %>% rownames())
-# length(genes_des_dif)
-
-sig_genes_des_dif = (res_df_des_dif
-             %>% filter(padj < 0.05)
-             %>% rownames())
-```
-
-
-```{r, message=FALSE, warning=FALSE}
-# Make a binary vector of all genes, 1 for significant, 0 for non
-deg_v_des_dif = genes_des_dif %in% sig_genes_des_dif
-deg_v_des_dif = as.numeric(deg_v_des_dif)
-names(deg_v_des_dif) = genes_des_dif
-
-# remove the duplicate genes
-deg_v_des_dif = deg_v_des_dif[!(genes_des_dif %in% duplicate_geneIDs$gene_id)]
-names(deg_v_des_dif) = gene_id_v[names(deg_v_des_dif)]
-# head(deg_v_des_dif)
-any(is.na(names(deg_v_des_dif)))
-
-# Get the bias and length estimations for goseq
-np_des_dif = nullp(deg_v_des_dif, 'mm39', 'refGene')
-
-# Run goseq
-gs_des_dif = goseq(np_des_dif, 'mm39', 'refGene')
-
-# head(gs_des_dif)
-dim(gs_des_dif)
-gs_fixed_des_dif = (gs_des_dif
-            %>% mutate(padj = p.adjust(over_represented_pvalue, 'BH')))
-# head(gs_fixed_des_dif)
-
-# Count the significant categories
-sum(gs_fixed_des_dif$padj < 0.05)
-
-write.csv(filter(gs_fixed_des_dif, padj < 0.05), 
-          file = 'results/06_analysis/goseq_de_diff.csv')
-write.csv(gs_fixed_des_dif, file = 'results/06_analysis/goseq_de_diff_all.csv')
-```
-
-The 513 differentially expressed genes led to over-representation of difference
-in 138 GO categories. You can download the significant `goseq` results
-[here](./results/06_analysis/goseq_de_diff.csv), or the full results 
-[here](./results/06_analysis/goseq_de_diff_all.csv)
-
+I did not run goseq since there were no genes with significant interactions.
 
