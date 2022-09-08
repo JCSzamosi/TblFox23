@@ -412,12 +412,7 @@ names(gene_id_v) = gene_id_lookup$gene_id
 ## 2 170942 2           Erdr1
 ## 3 654820 2 G530011O06Rik_1
 ## 4 654820 2   G530011O06Rik</code></pre>
-<pre class="r"><code># Pre-make the data frames to fill all the numbers in
-exon_counts = matrix(NA, ncol = length(samps), nrow = 1520722)
-colnames(exon_counts) = samps
-# head(exon_counts)
-
-# Define the gtf and genome files
+<pre class="r"><code># Define the gtf and genome files
 gtf = &#39;~/Disk2/CommonData/ReferenceGenomes/Mouse/GRCm39/ncbi-genomes-2022-03-04/GCF_000001635.27_GRCm39_genomic.gtf&#39;
 genome = &#39;~/Disk2/CommonData/ReferenceGenomes/Mouse/GRCm39/ncbi-genomes-2022-03-04/GCF_000001635.27_GRCm39_genomic.fna&#39;
 
@@ -443,7 +438,12 @@ samdat</code></pre>
                                               levels = c(&#39;Naive&#39;, &#39;Diff&#39;))))
 samps = rownames(samdat)
 samps = gsub(&#39;-&#39;,&#39;_&#39;,samps,fixed = TRUE)
-rownames(samdat) = samps</code></pre>
+rownames(samdat) = samps
+
+# Pre-make the data frames to fill all the numbers in
+exon_counts = matrix(NA, ncol = length(samps), nrow = 1520722)
+colnames(exon_counts) = samps
+# head(exon_counts)</code></pre>
 </div>
 <div id="feature-counts" class="section level2">
 <h2>Feature Counts</h2>
@@ -455,7 +455,9 @@ call_fc = function(bamf, gtf, genome, useMF = FALSE){
                        annot.ext = gtf, isGTFAnnotationFile = TRUE,
                        GTF.featureType = &#39;exon&#39;, 
                        GTF.attrType = &#39;gene_id&#39;,
-                       GTF.attrType.extra = &#39;exon_number&#39;, 
+                       GTF.attrType.extra = c(&#39;transcript_id&#39;,
+                                              &#39;product&#39;,
+                                              &#39;exon_number&#39;), 
                        allowMultiOverlap = TRUE,
                        strandSpecific = 2,
                        genome = genome,
@@ -473,29 +475,171 @@ call_fc = function(bamf, gtf, genome, useMF = FALSE){
 <h3>Run on the first sample</h3>
 <p>I run this once and then keep it stored because it takes a long time
 to run</p>
-<pre class="r"><code># # Call it all once to set up the structure
-# samp = samps[1]
-# dr = dirs[1]
-# bamf = paste(dr, &#39;Aligned.sortedByCoord.out.bam&#39;, sep = &#39;/&#39;)
-# fc = call_fc(bamf, gtf, genome)
-# fc_genes = call_fc(bamf, gtf, genome, TRUE)
-# stats = (fc$stat
-#          %&gt;% data.frame()
-#          %&gt;% column_to_rownames(&#39;Status&#39;))
-# colnames(stats) = samp
-# exon_counts[,samp] = fc$counts
-# 
-# fc_lst = list()
-# fc_lst[[samp]] = fc
-# fc_lst_gene = list()
-# fc_lst_gene[[samp]] = fc_genes</code></pre>
+<pre class="r"><code># Call it all once to set up the structure
+samp = samps[1]
+dr = dirs[1]
+bamf = paste(dr, &#39;Aligned.sortedByCoord.out.bam&#39;, sep = &#39;/&#39;)
+fc = call_fc(bamf, gtf, genome)</code></pre>
+<pre><code>## 
+##         ==========     _____ _    _ ____  _____  ______          _____  
+##         =====         / ____| |  | |  _ \|  __ \|  ____|   /\   |  __ \ 
+##           =====      | (___ | |  | | |_) | |__) | |__     /  \  | |  | |
+##             ====      \___ \| |  | |  _ &lt;|  _  /|  __|   / /\ \ | |  | |
+##               ====    ____) | |__| | |_) | | \ \| |____ / ____ \| |__| |
+##         ==========   |_____/ \____/|____/|_|  \_\______/_/    \_\_____/
+##        Rsubread 2.10.0
+## 
+## //========================== featureCounts setting ===========================\\
+## ||                                                                            ||
+## ||             Input files : 1 BAM file                                       ||
+## ||                                                                            ||
+## ||                           Aligned.sortedByCoord.out.bam                    ||
+## ||                                                                            ||
+## ||              Paired-end : yes                                              ||
+## ||        Count read pairs : no                                               ||
+## ||              Annotation : GCF_000001635.27_GRCm39_genomic.gtf (GTF)        ||
+## ||      Dir for temp files : .                                                ||
+## ||                 Threads : 10                                               ||
+## ||                   Level : feature level                                    ||
+## ||      Multimapping reads : counted                                          ||
+## || Multi-overlapping reads : counted                                          ||
+## ||   Min overlapping bases : 1                                                ||
+## ||                                                                            ||
+## \\============================================================================//
+## 
+## //================================= Running ==================================\\
+## ||                                                                            ||
+## || Load annotation file GCF_000001635.27_GRCm39_genomic.gtf ...               ||
+## ||    Features : 1520722                                                      ||
+## ||    Meta-features : 40840                                                   ||
+## ||    Chromosomes/contigs : 42                                                ||
+## ||                                                                            ||
+## || Load FASTA contigs from GCF_000001635.27_GRCm39_genomic.fna...             ||
+## ||    60 contigs were loaded                                                  ||
+## ||                                                                            ||
+## || Process BAM file Aligned.sortedByCoord.out.bam...                          ||
+## ||    Strand specific : reversely stranded                                    ||
+## ||                                                                            ||
+## || Chromosomes/contigs in input file but not in annotation                    ||
+## ||    NT_166454.1                                                             ||
+## ||    NT_166471.1                                                             ||
+## ||    NT_166467.1                                                             ||
+## ||    NT_166463.1                                                             ||
+## ||    NT_166480.1                                                             ||
+## ||    NT_166476.1                                                             ||
+## ||    NT_166451.1                                                             ||
+## ||    NT_187061.1                                                             ||
+## ||    NT_166338.1                                                             ||
+## ||    NT_166473.1                                                             ||
+## ||    NT_166469.1                                                             ||
+## ||    NT_166452.1                                                             ||
+## ||    NT_187062.1                                                             ||
+## ||    NT_166465.1                                                             ||
+## ||    NT_166478.1                                                             ||
+## ||    NT_166444.1                                                             ||
+## ||    NT_166474.1                                                             ||
+## ||    NT_187063.1                                                             ||
+## ||    NT_166466.1                                                             ||
+## ||                                                                            ||
+## ||    Paired-end reads are included.                                          ||
+## ||    The reads are assigned on the single-end mode.                          ||
+## ||    Total alignments : 237963952                                            ||
+## ||    Successfully assigned alignments : 163192702 (68.6%)                    ||
+## ||    Running time : 0.81 minutes                                             ||
+## ||                                                                            ||
+## || Write the final count table.                                               ||
+## || Write the read assignment summary.                                         ||
+## ||                                                                            ||
+## \\============================================================================//</code></pre>
+<pre class="r"><code>fc_genes = call_fc(bamf, gtf, genome, TRUE)</code></pre>
+<pre><code>## 
+##         ==========     _____ _    _ ____  _____  ______          _____  
+##         =====         / ____| |  | |  _ \|  __ \|  ____|   /\   |  __ \ 
+##           =====      | (___ | |  | | |_) | |__) | |__     /  \  | |  | |
+##             ====      \___ \| |  | |  _ &lt;|  _  /|  __|   / /\ \ | |  | |
+##               ====    ____) | |__| | |_) | | \ \| |____ / ____ \| |__| |
+##         ==========   |_____/ \____/|____/|_|  \_\______/_/    \_\_____/
+##        Rsubread 2.10.0
+## 
+## //========================== featureCounts setting ===========================\\
+## ||                                                                            ||
+## ||             Input files : 1 BAM file                                       ||
+## ||                                                                            ||
+## ||                           Aligned.sortedByCoord.out.bam                    ||
+## ||                                                                            ||
+## ||              Paired-end : yes                                              ||
+## ||        Count read pairs : no                                               ||
+## ||              Annotation : GCF_000001635.27_GRCm39_genomic.gtf (GTF)        ||
+## ||      Dir for temp files : .                                                ||
+## ||                 Threads : 10                                               ||
+## ||                   Level : meta-feature level                               ||
+## ||      Multimapping reads : counted                                          ||
+## || Multi-overlapping reads : counted                                          ||
+## ||   Min overlapping bases : 1                                                ||
+## ||                                                                            ||
+## \\============================================================================//
+## 
+## //================================= Running ==================================\\
+## ||                                                                            ||
+## || Load annotation file GCF_000001635.27_GRCm39_genomic.gtf ...               ||
+## ||    Features : 1520722                                                      ||
+## ||    Meta-features : 40840                                                   ||
+## ||    Chromosomes/contigs : 42                                                ||
+## ||                                                                            ||
+## || Load FASTA contigs from GCF_000001635.27_GRCm39_genomic.fna...             ||
+## ||    60 contigs were loaded                                                  ||
+## ||                                                                            ||
+## || Process BAM file Aligned.sortedByCoord.out.bam...                          ||
+## ||    Strand specific : reversely stranded                                    ||
+## ||                                                                            ||
+## || Chromosomes/contigs in input file but not in annotation                    ||
+## ||    NT_166454.1                                                             ||
+## ||    NT_166471.1                                                             ||
+## ||    NT_166467.1                                                             ||
+## ||    NT_166463.1                                                             ||
+## ||    NT_166480.1                                                             ||
+## ||    NT_166476.1                                                             ||
+## ||    NT_166451.1                                                             ||
+## ||    NT_187061.1                                                             ||
+## ||    NT_166338.1                                                             ||
+## ||    NT_166473.1                                                             ||
+## ||    NT_166469.1                                                             ||
+## ||    NT_166452.1                                                             ||
+## ||    NT_187062.1                                                             ||
+## ||    NT_166465.1                                                             ||
+## ||    NT_166478.1                                                             ||
+## ||    NT_166444.1                                                             ||
+## ||    NT_166474.1                                                             ||
+## ||    NT_187063.1                                                             ||
+## ||    NT_166466.1                                                             ||
+## ||                                                                            ||
+## ||    Paired-end reads are included.                                          ||
+## ||    The reads are assigned on the single-end mode.                          ||
+## ||    Total alignments : 237963952                                            ||
+## ||    Successfully assigned alignments : 163192702 (68.6%)                    ||
+## ||    Running time : 0.75 minutes                                             ||
+## ||                                                                            ||
+## || Write the final count table.                                               ||
+## || Write the read assignment summary.                                         ||
+## ||                                                                            ||
+## \\============================================================================//</code></pre>
+<pre class="r"><code>stats = (fc$stat
+         %&gt;% data.frame()
+         %&gt;% column_to_rownames(&#39;Status&#39;))
+colnames(stats) = samp
+exon_counts[,samp] = fc$counts
+
+fc_lst = list()
+fc_lst[[samp]] = fc
+fc_lst_gene = list()
+fc_lst_gene[[samp]] = fc_genes</code></pre>
 </div>
 <div id="run-on-the-rest-of-the-samples" class="section level3">
 <h3>Run on the rest of the samples</h3>
 <p>I run this once and then keep it stored because it takes a long time
 to run</p>
-<pre class="r"><code># # Call the same thing on all the mapping files
-# 
+<pre class="r"><code># Call the same thing on all the mapping files
+
 # for (i in 2:length(dirs)){
 #     samp = samps[i]
 #     dr = dirs[i]
@@ -511,43 +655,146 @@ to run</p>
 # # get gene lengths
 # gene_lens = select(fc_genes$annotation, GeneID, Length)
 # 
-# save(list = c(&#39;exon_counts&#39;, &#39;stats&#39;, &#39;fc_lst&#39;, &#39;fc_lst_gene&#39;, &#39;gene_lens&#39;), 
+# save(list = c(&#39;exon_counts&#39;, &#39;stats&#39;, &#39;fc_lst&#39;, &#39;fc_lst_gene&#39;, &#39;gene_lens&#39;),
 #      file = &#39;RData/feature_counts.RData&#39;)
 load(&#39;RData/feature_counts.RData&#39;)
 # head(exon_counts)</code></pre>
 </div>
-<div id="parse-the-feature-counts" class="section level3">
-<h3>Parse the feature counts</h3>
+<div id="remove-duplicates" class="section level3">
+<h3>Remove Duplicates</h3>
+<pre class="r"><code>annot = fc_lst[[1]]$annotation
+head(annot, 10)</code></pre>
+<pre><code>##     GeneID         Chr   Start     End Strand Length  transcript_id
+## 1  Gm26206 NC_000067.7 3172239 3172348      +    110 XR_004936710.1
+## 2     Xkr4 NC_000067.7 3740775 3741733      -    959 XM_006495550.5
+## 3     Xkr4 NC_000067.7 3491925 3492124      -    200 XM_006495550.5
+## 4     Xkr4 NC_000067.7 3283662 3287191      -   3530 XM_006495550.5
+## 5     Xkr4 NC_000067.7 3269956 3277540      -   7585 XM_006495550.5
+## 6     Xkr4 NC_000067.7 3740775 3741721      -    947 NM_001011874.1
+## 7     Xkr4 NC_000067.7 3491925 3492124      -    200 NM_001011874.1
+## 8     Xkr4 NC_000067.7 3284705 3287191      -   2487 NM_001011874.1
+## 9     Xkr4 NC_000067.7 3740775 3741733      -    959 XM_011238395.4
+## 10    Xkr4 NC_000067.7 3491925 3492124      -    200 XM_011238395.4
+##                                                     product exon_number
+## 1                                       U6 spliceosomal RNA           1
+## 2  X-linked Kx blood group related 4, transcript variant X1           1
+## 3  X-linked Kx blood group related 4, transcript variant X1           2
+## 4  X-linked Kx blood group related 4, transcript variant X1           3
+## 5  X-linked Kx blood group related 4, transcript variant X1           4
+## 6                         X-linked Kx blood group related 4           1
+## 7                         X-linked Kx blood group related 4           2
+## 8                         X-linked Kx blood group related 4           3
+## 9  X-linked Kx blood group related 4, transcript variant X3           1
+## 10 X-linked Kx blood group related 4, transcript variant X3           2</code></pre>
+<pre class="r"><code>annot %&gt;% filter(GeneID == &#39;Xkr4&#39;)</code></pre>
+<pre><code>##    GeneID         Chr   Start     End Strand Length  transcript_id
+## 1    Xkr4 NC_000067.7 3740775 3741733      -    959 XM_006495550.5
+## 2    Xkr4 NC_000067.7 3491925 3492124      -    200 XM_006495550.5
+## 3    Xkr4 NC_000067.7 3283662 3287191      -   3530 XM_006495550.5
+## 4    Xkr4 NC_000067.7 3269956 3277540      -   7585 XM_006495550.5
+## 5    Xkr4 NC_000067.7 3740775 3741721      -    947 NM_001011874.1
+## 6    Xkr4 NC_000067.7 3491925 3492124      -    200 NM_001011874.1
+## 7    Xkr4 NC_000067.7 3284705 3287191      -   2487 NM_001011874.1
+## 8    Xkr4 NC_000067.7 3740775 3741733      -    959 XM_011238395.4
+## 9    Xkr4 NC_000067.7 3491925 3492124      -    200 XM_011238395.4
+## 10   Xkr4 NC_000067.7 3393039 3393983      -    945 XM_011238395.4
+## 11   Xkr4 NC_000067.7 3740775 3741733      -    959 XM_036152287.1
+## 12   Xkr4 NC_000067.7 3491925 3492124      -    200 XM_036152287.1
+## 13   Xkr4 NC_000067.7 3420932 3422536      -   1605 XM_036152287.1
+##                                                     product exon_number
+## 1  X-linked Kx blood group related 4, transcript variant X1           1
+## 2  X-linked Kx blood group related 4, transcript variant X1           2
+## 3  X-linked Kx blood group related 4, transcript variant X1           3
+## 4  X-linked Kx blood group related 4, transcript variant X1           4
+## 5                         X-linked Kx blood group related 4           1
+## 6                         X-linked Kx blood group related 4           2
+## 7                         X-linked Kx blood group related 4           3
+## 8  X-linked Kx blood group related 4, transcript variant X3           1
+## 9  X-linked Kx blood group related 4, transcript variant X3           2
+## 10 X-linked Kx blood group related 4, transcript variant X3           3
+## 11 X-linked Kx blood group related 4, transcript variant X2           1
+## 12 X-linked Kx blood group related 4, transcript variant X2           2
+## 13 X-linked Kx blood group related 4, transcript variant X2           3</code></pre>
+<pre class="r"><code>dim(annot)</code></pre>
+<pre><code>## [1] 1520722       9</code></pre>
+<pre class="r"><code>dim(unique(annot))</code></pre>
+<pre><code>## [1] 1520722       9</code></pre>
+<p>Exon numbering is complicated here. On the one hand, exons are
+numbered not by gene, but by transcript. This means two things:</p>
+<ol style="list-style-type: decimal">
+<li>The same exon <em>number</em> can appear multiple times in a single
+gene, but refer to different, non-overlapping exons.</li>
+<li>The same <em>exon</em> (as defined by start and end positions) can
+appear in multiple transcripts, and therefore appear multiple times in
+the same gene. It may or may not have the same “exon number” in that
+situation.</li>
+</ol>
+<p>In order to procede with the DEU analysis as discussed, I need to
+pare this down so that each exon (as defined by start and end positions)
+appears only once in the dataset.</p>
+</div>
+<div id="parse-and-pare-down-the-feature-counts" class="section level3">
+<h3>Parse and pare down the feature counts</h3>
 <pre class="r"><code># Get the gene and exon information for all the files
-# chk = vector(length = length(fc_lst) -1)
-# for (i in 2:length(fc_lst)){
-#     chk[i-1] = all_equal(fc_lst[[1]]$annotation, fc_lst[[i]]$annotation)
-# }
-annot = fc_lst[[1]]$annotation
-head(annot)</code></pre>
-<pre><code>##    GeneID         Chr   Start     End Strand Length exon_number
-## 1 Gm26206 NC_000067.7 3172239 3172348      +    110           1
-## 2    Xkr4 NC_000067.7 3740775 3741733      -    959           1
-## 3    Xkr4 NC_000067.7 3491925 3492124      -    200           2
-## 4    Xkr4 NC_000067.7 3283662 3287191      -   3530           3
-## 5    Xkr4 NC_000067.7 3269956 3277540      -   7585           4
-## 6    Xkr4 NC_000067.7 3740775 3741721      -    947           1</code></pre>
+chk = vector(length = length(fc_lst) -1)
+for (i in 2:length(fc_lst)){
+    chk[i-1] = all_equal(fc_lst[[1]]$annotation, fc_lst[[i]]$annotation)
+}
+# Remove the duplicates
+dups = duplicated(annot[,c(&#39;Chr&#39;,&#39;Start&#39;,&#39;End&#39;)])
+annot = annot[!dups,]
+exon_counts = exon_counts[!dups,]
+
+dim(annot)</code></pre>
+<pre><code>## [1] 361141      9</code></pre>
+<pre class="r"><code>dim(unique(annot[,c(&#39;transcript_id&#39;,&#39;exon_number&#39;)]))</code></pre>
+<pre><code>## [1] 361141      2</code></pre>
 <pre class="r"><code># Make sure exon numbers are unique and in a format DEXSeq can use
 annot = (annot
-         %&gt;% data.frame()
-         %&gt;% group_by(GeneID)
-         %&gt;% mutate(exon_unique = as.character(1:length(GeneID)))
-         %&gt;% data.frame())
-# head(annot)
-# head(rownames(exon_counts))
-write.csv(annot, file = &#39;results/06_analysis/exon_annotation.csv&#39;)
+         %&gt;% mutate(exon_unique = paste(transcript_id, exon_number,
+                                        sep = &#39;-&#39;)))
+head(annot)</code></pre>
+<pre><code>##    GeneID         Chr   Start     End Strand Length  transcript_id
+## 1 Gm26206 NC_000067.7 3172239 3172348      +    110 XR_004936710.1
+## 2    Xkr4 NC_000067.7 3740775 3741733      -    959 XM_006495550.5
+## 3    Xkr4 NC_000067.7 3491925 3492124      -    200 XM_006495550.5
+## 4    Xkr4 NC_000067.7 3283662 3287191      -   3530 XM_006495550.5
+## 5    Xkr4 NC_000067.7 3269956 3277540      -   7585 XM_006495550.5
+## 6    Xkr4 NC_000067.7 3740775 3741721      -    947 NM_001011874.1
+##                                                    product exon_number
+## 1                                      U6 spliceosomal RNA           1
+## 2 X-linked Kx blood group related 4, transcript variant X1           1
+## 3 X-linked Kx blood group related 4, transcript variant X1           2
+## 4 X-linked Kx blood group related 4, transcript variant X1           3
+## 5 X-linked Kx blood group related 4, transcript variant X1           4
+## 6                        X-linked Kx blood group related 4           1
+##        exon_unique
+## 1 XR_004936710.1-1
+## 2 XM_006495550.5-1
+## 3 XM_006495550.5-2
+## 4 XM_006495550.5-3
+## 5 XM_006495550.5-4
+## 6 NM_001011874.1-1</code></pre>
+<pre class="r"><code>head(rownames(exon_counts))</code></pre>
+<pre><code>## NULL</code></pre>
+<pre class="r"><code>write.csv(annot, file = &#39;results/06_analysis/exon_annotation.csv&#39;)
 
 # Make sure sample names are correctly formatted
 samps = colnames(exon_counts)
 samps = gsub(&#39;-&#39;,&#39;_&#39;,samps, fixed = TRUE)
-colnames(exon_counts) = samps</code></pre>
-<p>Check if the two pairs of genes with duplicate IDs have any read
-counts associated with them</p>
+colnames(exon_counts) = samps
+
+dim(exon_counts)</code></pre>
+<pre><code>## [1] 361141     12</code></pre>
+<p>Exon numbers now include a transcript number. It is important to
+remember that many exons appear in more than one transcript, so the
+transcript number in the exon name is <em>a</em> transcript that exon
+appears in, but may not be <em>the only</em> transcript that exon
+appears in.</p>
+<p>Once duplicates have been removed, there are 361,141 unique
+exons.</p>
+<p>Now I check if the two pairs of genes with duplicate IDs have any
+read counts associated with them</p>
 <pre class="r"><code># Do the genes with duplicate IDs have any counts associated with them?
 rowSums(exon_counts[annot$GeneID %in% duplicate_geneIDs$gene_id,])</code></pre>
 <pre><code>## [1]     0     0 43081 68367     0     1 53680 86925 21367</code></pre>
@@ -586,26 +833,36 @@ dup_cts</code></pre>
 ## Erdr1_1                 9734
 ## Erdr1_1                 2243</code></pre>
 <pre class="r"><code>annot %&gt;% filter(GeneID %in% duplicate_geneIDs$gene_id)</code></pre>
-<pre><code>##            GeneID         Chr     Start       End Strand Length exon_number
-## 1   G530011O06Rik NC_000086.8 168761282 168761913      -    632           1
-## 2   G530011O06Rik NC_000086.8 168758039 168759786      -   1748           2
-## 3           Erdr1 NC_000086.8 168793522 168794059      +    538           1
-## 4           Erdr1 NC_000086.8 168801670 168801793      +    124           2
-## 5 G530011O06Rik_1 NC_000087.8  90765690  90766319      -    630           1
-## 6 G530011O06Rik_1 NC_000087.8  90762409  90764192      -   1784           2
-## 7         Erdr1_1 NC_000087.8  90796711  90797248      +    538           1
-## 8         Erdr1_1 NC_000087.8  90804565  90804686      +    122           2
-## 9         Erdr1_1 NC_000087.8  90827618  90827734      +    117           3
-##   exon_unique
-## 1           1
-## 2           2
-## 3           1
-## 4           2
-## 5           1
-## 6           2
-## 7           1
-## 8           2
-## 9           3</code></pre>
+<pre><code>##            GeneID         Chr     Start       End Strand Length transcript_id
+## 1   G530011O06Rik NC_000086.8 168761282 168761913      -    632   NR_029457.1
+## 2   G530011O06Rik NC_000086.8 168758039 168759786      -   1748   NR_029457.1
+## 3           Erdr1 NC_000086.8 168793522 168794059      +    538   NR_137282.1
+## 4           Erdr1 NC_000086.8 168801670 168801793      +    124   NR_137282.1
+## 5 G530011O06Rik_1 NC_000087.8  90765690  90766319      -    630   NR_137283.1
+## 6 G530011O06Rik_1 NC_000087.8  90762409  90764192      -   1784   NR_137283.1
+## 7         Erdr1_1 NC_000087.8  90796711  90797248      +    538 NR_137282.1_1
+## 8         Erdr1_1 NC_000087.8  90804565  90804686      +    122 NR_137282.1_1
+## 9         Erdr1_1 NC_000087.8  90827618  90827734      +    117 NR_137282.1_1
+##                                                                   product
+## 1                        RIKEN cDNA G530011O06 gene, transcript variant 1
+## 2                        RIKEN cDNA G530011O06 gene, transcript variant 1
+## 3 erythroid differentiation regulator 1, transcript variant 1, non-coding
+## 4 erythroid differentiation regulator 1, transcript variant 1, non-coding
+## 5                        RIKEN cDNA G530011O06 gene, transcript variant 1
+## 6                        RIKEN cDNA G530011O06 gene, transcript variant 1
+## 7 erythroid differentiation regulator 1, transcript variant 1, non-coding
+## 8 erythroid differentiation regulator 1, transcript variant 1, non-coding
+## 9 erythroid differentiation regulator 1, transcript variant 1, non-coding
+##   exon_number     exon_unique
+## 1           1   NR_029457.1-1
+## 2           2   NR_029457.1-2
+## 3           1   NR_137282.1-1
+## 4           2   NR_137282.1-2
+## 5           1   NR_137283.1-1
+## 6           2   NR_137283.1-2
+## 7           1 NR_137282.1_1-1
+## 8           2 NR_137282.1_1-2
+## 9           3 NR_137282.1_1-3</code></pre>
 <p>These genes can’t be merged because they are different, but they have
 the same GeneID. They will be included in the DEXSeq and DESeq analyses,
 but excluded from the goseq analysis.</p>
@@ -621,18 +878,11 @@ but excluded from the goseq analysis.</p>
 to run</p>
 <pre class="r"><code># Run DEXSeq on undifferentiated samples
 # head(exon_counts)
-
-samdat_undif = filter(samdat, Differentiation == &#39;Naive&#39;)
-exon_ct_undif = exon_counts[,rownames(samdat_undif)]
-samdat_undif</code></pre>
-<pre><code>##          Treatment Differentiation
-## 1_C1P_S1        KO           Naive
-## 2_S1_S2         WT           Naive
-## 3_F6_S3         KO           Naive
-## 4_S2_S4         WT           Naive
-## 5_F8P_S5        KO           Naive
-## 6_S3_S6         WT           Naive</code></pre>
-<pre class="r"><code># head(exon_ct_undif)
+# 
+# samdat_undif = filter(samdat, Differentiation == &#39;Naive&#39;)
+# exon_ct_undif = exon_counts[,rownames(samdat_undif)]
+# samdat_undif
+# head(exon_ct_undif)
 # 
 # dxd = DEXSeqDataSet(exon_ct_undif, samdat_undif,
 #                     design = ~sample + exon + exon:Treatment,
@@ -643,7 +893,7 @@ samdat_undif</code></pre>
 # save(dxd, file = &#39;RData/dxd_undif.RData&#39;)
 # plotDispEsts(dxd)
 # dxd = testForDEU(dxd, BPPARAM = MulticoreParam(workers = 10))
-# dxd = estimateExonFoldChanges(dxd, fitExpToVar = &#39;Treatment&#39;, 
+# dxd = estimateExonFoldChanges(dxd, fitExpToVar = &#39;Treatment&#39;,
 #                               BPPARAM = MulticoreParam(workers = 10))
 # save(dxd, file = &#39;RData/dxd_undif_deu.RData&#39;)
 load(&#39;RData/dxd_undif_deu.RData&#39;)
@@ -653,15 +903,15 @@ res_orig_dex_undif = DEXSeqResults(dxd)
 # least one exon
 # head(res_orig_dex_undif)
 dim(res_orig_dex_undif)</code></pre>
-<pre><code>## [1] 1520722      12</code></pre>
+<pre><code>## [1] 361141     12</code></pre>
 <pre class="r"><code># Remove the exons with insufficient data to analyze
 res_dex_undif = (res_orig_dex_undif
        %&gt;% data.frame()
        %&gt;% filter(!is.na(padj)))
 dim(res_dex_undif)</code></pre>
-<pre><code>## [1] 1125713      17</code></pre>
+<pre><code>## [1] 224844     17</code></pre>
 <pre class="r"><code>sum(res_dex_undif$padj &lt; 0.05)</code></pre>
-<pre><code>## [1] 6520</code></pre>
+<pre><code>## [1] 1836</code></pre>
 <pre class="r"><code>sig_dex_undif = (res_dex_undif
                  %&gt;% filter(padj &lt; 0.05)
                  %&gt;% select(-genomicData))
@@ -674,8 +924,8 @@ write.csv(sig_dex_undif, file = &#39;results/06_analysis/naive_deu_sig.csv&#39;)
 write.csv(sig_10_dex_undif, file = &#39;results/06_analysis/naive_deu_0.1_sig.csv&#39;)
 # write.csv(select(res_dex_undif, -genomicData), file = &#39;results/06_analysis/naive_deu_all.csv&#39;,
 #             row.names = FALSE)</code></pre>
-<p>There are 1,520,722 exons analyzed. Of them, 1,125,713 had sufficient
-data for analysis, and 6,520 had adjusted p-values less than 0.05. You
+<p>There were 361,141 exons analyzed. Of them, 224,844 had sufficient
+data for analysis, and 1,836 had adjusted p-values less than 0.05. You
 can download the significant results of DEXSeq analysis <a href="./results/06_analysis/naive_deu_sig.csv&#39;">here</a></p>
 <p>Pull out the genes that have at least one DEU exon:</p>
 <pre class="r"><code>sig_genes_dex_undif = (res_dex_undif
@@ -683,22 +933,22 @@ can download the significant results of DEXSeq analysis <a href="./results/06_an
            %&gt;% select(groupID)
            %&gt;% unique())$groupID
 length(sig_genes_dex_undif)</code></pre>
-<pre><code>## [1] 989</code></pre>
+<pre><code>## [1] 1114</code></pre>
 <pre class="r"><code># Check if any of the problem genes have DEU
 any(sig_genes_dex_undif %in% duplicate_geneIDs$gene_id)</code></pre>
 <pre><code>## [1] FALSE</code></pre>
-<p>989 genes have at least one exon with DEU. None of the genes with
+<p>1,114 genes have at least one exon with DEU. None of the genes with
 duplicate IDs have DEU.</p>
 </div>
 <div id="goseq" class="section level4">
 <h4>Goseq</h4>
 <pre class="r"><code>all_genes = unique(res_orig_dex_undif$groupID)
 length(all_genes)</code></pre>
-<pre><code>## [1] 40840</code></pre>
+<pre><code>## [1] 40836</code></pre>
 <pre class="r"><code>genes_dex_undif = unique(res_dex_undif$groupID)
 length(genes_dex_undif)</code></pre>
-<pre><code>## [1] 19028</code></pre>
-<p>Of the 40,840 genes in the data set, 19,028 had sufficient coverage
+<pre><code>## [1] 19467</code></pre>
+<p>Of the 40,836 genes in the data set, 19,467 had sufficient coverage
 for analysis in at least one exon.</p>
 <pre class="r"><code># Make a binary vector of all genes, 1 for significant, 0 for non
 deg_v_dex_undif = genes_dex_undif %in% sig_genes_dex_undif
@@ -719,21 +969,21 @@ gs_dex_undif = goseq(np_dex_undif, &#39;mm39&#39;, &#39;refGene&#39;)
 
 # head(gs_dex_undif)
 dim(gs_dex_undif)</code></pre>
-<pre><code>## [1] 21389     7</code></pre>
+<pre><code>## [1] 21457     7</code></pre>
 <pre class="r"><code>gs_fixed_dex_undif = (gs_dex_undif
             %&gt;% mutate(padj = p.adjust(over_represented_pvalue, &#39;BH&#39;)))
 # head(gs_fixed_dex_undif)
 
 # Count the significant categories
 sum(gs_fixed_dex_undif$padj &lt; 0.05)</code></pre>
-<pre><code>## [1] 220</code></pre>
+<pre><code>## [1] 228</code></pre>
 <pre class="r"><code># Write the results to a file
 write.csv(filter(gs_fixed_dex_undif, padj &lt; 0.05), 
           file = &#39;results/06_analysis/goseq_deu_naive.csv&#39;)
 write.csv(gs_fixed_dex_undif, file = &#39;results/06_analysis/goseq_deu_naive_all.csv&#39;)</code></pre>
-<p>The 989 genes with significantly different exon usage produced
-over-representation of DEU in 220 GO categories (out of a total of
-21,389 possible categories, after BH FDR adjustment). You can download
+<p>The 1,114 genes with significantly different exon usage produced
+over-representation of DEU in 228 GO categories (out of a total of
+21,457 possible categories, after BH FDR adjustment). You can download
 the significant results of the <code>goseq</code> analysis <a href="./results/06_analysis/goseq_deu_naive.csv">here</a>, or the full
 results <a href="./results/06_analysis/goseq_deu_naive_all.csv">here</a>.</p>
 </div>
@@ -747,18 +997,11 @@ to run</p>
 <pre class="r"><code># # Run DEXSeq on differentiated samples
 # head(exon_counts)
 
-samdat_dif = filter(samdat, Differentiation == &#39;Diff&#39;)
-exon_ct_dif = exon_counts[,rownames(samdat_dif)]
-samdat_dif</code></pre>
-<pre><code>##                 Treatment Differentiation
-## 10_S2_Diff_S10         WT            Diff
-## 11_F8P_Diff_S11        KO            Diff
-## 12_S3_Diff_S12         WT            Diff
-## 7_C1P_Diff_S7          KO            Diff
-## 8_S1_Diff_S8           WT            Diff
-## 9_F6_Diff_S9           KO            Diff</code></pre>
-<pre class="r"><code># head(exon_ct_dif)
-
+# samdat_dif = filter(samdat, Differentiation == &#39;Diff&#39;)
+# exon_ct_dif = exon_counts[,rownames(samdat_dif)]
+# samdat_dif
+# # head(exon_ct_dif)
+# 
 # dxd = DEXSeqDataSet(exon_ct_dif, samdat_dif,
 #                     design = ~sample + exon + exon:Treatment,
 #                     featureID = annot$exon_unique,
@@ -778,24 +1021,24 @@ res_orig_dex_dif = DEXSeqResults(dxd)
 # least one exon
 # head(res_orig_dex_dif)
 dim(res_orig_dex_dif)</code></pre>
-<pre><code>## [1] 1520722      12</code></pre>
+<pre><code>## [1] 361141     12</code></pre>
 <pre class="r"><code># Remove the exons with insufficient data to analyze
 res_dex_dif = (res_orig_dex_dif
        %&gt;% data.frame()
        %&gt;% filter(!is.na(padj)))
 dim(res_dex_dif)</code></pre>
-<pre><code>## [1] 1191946      17</code></pre>
+<pre><code>## [1] 229316     17</code></pre>
 <pre class="r"><code>sum(res_dex_dif$padj &lt; 0.05)</code></pre>
-<pre><code>## [1] 1237</code></pre>
-<p>There are 1,520,722 exons analyzed. Of them, 1,191,946 had sufficient
-data for analysis, and 1,237 had adjusted p-values less than 0.05.</p>
+<pre><code>## [1] 407</code></pre>
+<p>There are 361,141 exons analyzed. Of them, 229,316 had sufficient
+data for analysis, and 407 had adjusted p-values less than 0.05.</p>
 <p>Pull out the genes that have at least one DEU exon:</p>
 <pre class="r"><code>sig_genes_dex_dif = (res_dex_dif
            %&gt;% filter(padj &lt; 0.05)
            %&gt;% select(groupID)
            %&gt;% unique())$groupID
 length(sig_genes_dex_dif)</code></pre>
-<pre><code>## [1] 219</code></pre>
+<pre><code>## [1] 256</code></pre>
 <pre class="r"><code># Check if any of the problem genes have DEU
 any(sig_genes_dex_dif %in% duplicate_geneIDs$gene_id)</code></pre>
 <pre><code>## [1] FALSE</code></pre>
@@ -810,8 +1053,8 @@ rownames(sig_dex_dif) = NULL
 write.csv(sig_dex_dif, file = &#39;results/06_analysis/diff_deu_sig.csv&#39;)
 write.csv(sig_10_dex_dif, file = &#39;results/06_analysis/diff_deu_0.1_sig.csv&#39;)
 # write.csv(select(res_dex_dif, -genomicData), file = &#39;results/06_analysis/diff_deu_all.csv&#39;,
-          # row.names = FALSE)</code></pre>
-<p>219 genes have at least one exon with DEU. None of the genes with
+# row.names = FALSE)</code></pre>
+<p>256 genes have at least one exon with DEU. None of the genes with
 duplicate IDs have DEU. You can download the significant results of
 DEXSeq <a href="./results/06_analysis/diff_deu_sig.csv&#39;">here</a>.</p>
 </div>
@@ -819,11 +1062,11 @@ DEXSeq <a href="./results/06_analysis/diff_deu_sig.csv&#39;">here</a>.</p>
 <h4>Goseq</h4>
 <pre class="r"><code>all_genes = unique(res_orig_dex_dif$groupID)
 length(all_genes)</code></pre>
-<pre><code>## [1] 40840</code></pre>
+<pre><code>## [1] 40836</code></pre>
 <pre class="r"><code>genes_dex_dif = unique(res_dex_dif$groupID)
 length(genes_dex_dif)</code></pre>
-<pre><code>## [1] 21782</code></pre>
-<p>Of the 40,840 genes in the data set, 21,782 had sufficient coverage
+<pre><code>## [1] 20171</code></pre>
+<p>Of the 40,836 genes in the data set, 20,171 had sufficient coverage
 for analysis in at least one exon.</p>
 <pre class="r"><code># Make a binary vector of all genes, 1 for significant, 0 for non
 deg_v_dex_dif = genes_dex_dif %in% sig_genes_dex_dif
@@ -844,7 +1087,7 @@ gs_dex_dif = goseq(np_dex_dif, &#39;mm39&#39;, &#39;refGene&#39;)
 
 # head(gs_dex_dif)
 dim(gs_dex_dif)</code></pre>
-<pre><code>## [1] 21872     7</code></pre>
+<pre><code>## [1] 21570     7</code></pre>
 <pre class="r"><code>gs_fixed_dex_dif = (gs_dex_dif
             %&gt;% mutate(padj = p.adjust(over_represented_pvalue, &#39;BH&#39;)))
 # head(gs_fixed_dex_dif)
@@ -855,8 +1098,8 @@ sum(sum(gs_fixed_dex_dif$padj &lt; 0.05))</code></pre>
 <pre class="r"><code>write.csv(filter(gs_fixed_dex_dif, padj &lt; 0.05), 
           file = &#39;results/06_analysis/goseq_deu_diff.csv&#39;)
 write.csv(gs_fixed_dex_dif, file = &#39;results/06_analysis/goseq_deu_diff_all.csv&#39;)</code></pre>
-<p>The 219 genes with significantly different exon usage produced
-over-representation of DEU in 0 GO categories (out of a total of 21,389
+<p>The 256 genes with significantly different exon usage produced
+over-representation of DEU in 0 GO categories (out of a total of 21,570
 possible categories, after BH FDR adjustment). You can download the file
 of significant results <a href="./results/06_analysis/goseq_deu_diff.csv&#39;">here</a> if you
 want, but it’s empty. The full results are <a href="./results/06_analysis/goseq_deu_diff_all.csv">here</a>.</p>
@@ -916,15 +1159,15 @@ res_orig_dex_guide = DEXSeqResults(dxd)
 # least one exon
 # head(res_orig_dex_guide)
 dim(res_orig_dex_guide)</code></pre>
-<pre><code>## [1] 1520722      12</code></pre>
+<pre><code>## [1] 361141     12</code></pre>
 <pre class="r"><code># Remove the exons with insufficient data to analyze
 res_dex_guide = (res_orig_dex_guide
        %&gt;% data.frame()
        %&gt;% filter(!is.na(padj)))
 dim(res_dex_guide)</code></pre>
-<pre><code>## [1] 1164641      17</code></pre>
+<pre><code>## [1] 224113     17</code></pre>
 <pre class="r"><code>sum(res_dex_guide$padj &lt; 0.05)</code></pre>
-<pre><code>## [1] 6789</code></pre>
+<pre><code>## [1] 1551</code></pre>
 <pre class="r"><code>sig_dex_guide = (res_dex_guide
                  %&gt;% filter(padj &lt; 0.05)
                  %&gt;% select(-genomicData))
@@ -937,8 +1180,8 @@ write.csv(sig_dex_guide, file = &#39;results/06_analysis/guide_deu_sig.csv&#39;)
 write.csv(sig_10_dex_guide, file = &#39;results/06_analysis/guide_deu_0.1_sig.csv&#39;)
 # write.csv(select(res_dex_guide, -genomicData), file = &#39;results/06_analysis/guide_deu_all.csv&#39;,
 #             row.names = FALSE)</code></pre>
-<p>There are 1,520,722 exons analyzed. Of them, 1,164,641 had sufficient
-data for analysis, and 6,789 had adjusted p-values less than 0.05. You
+<p>There are 361,141 exons analyzed. Of them, 224,113 had sufficient
+data for analysis, and 1,551 had adjusted p-values less than 0.05. You
 can download the significant results of DEXSeq analysis <a href="./results/06_analysis/guide_deu_sig.csv">here</a>.</p>
 <p>Pull out the genes that have at least one DEU exon:</p>
 <pre class="r"><code>sig_genes_dex_guide = (res_dex_guide
@@ -946,22 +1189,22 @@ can download the significant results of DEXSeq analysis <a href="./results/06_an
            %&gt;% select(groupID)
            %&gt;% unique())$groupID
 length(sig_genes_dex_guide)</code></pre>
-<pre><code>## [1] 877</code></pre>
+<pre><code>## [1] 886</code></pre>
 <pre class="r"><code># Check if any of the problem genes have DEU
 any(sig_genes_dex_guide %in% duplicate_geneIDs$gene_id)</code></pre>
 <pre><code>## [1] FALSE</code></pre>
-<p>877 genes have at least one exon with DEU. None of the genes with
+<p>886 genes have at least one exon with DEU. None of the genes with
 duplicate IDs have DEU.</p>
 </div>
 <div id="goseq-2" class="section level4">
 <h4>Goseq</h4>
 <pre class="r"><code>all_genes = unique(res_orig_dex_guide$groupID)
 length(all_genes)</code></pre>
-<pre><code>## [1] 40840</code></pre>
+<pre><code>## [1] 40836</code></pre>
 <pre class="r"><code>genes_dex_guide = unique(res_dex_guide$groupID)
 length(genes_dex_guide)</code></pre>
-<pre><code>## [1] 20537</code></pre>
-<p>Of the 40,840 genes in the data set, 20,537 had sufficient coverage
+<pre><code>## [1] 19368</code></pre>
+<p>Of the 40,836 genes in the data set, 19,368 had sufficient coverage
 for analysis in at least one exon.</p>
 <pre class="r"><code># Make a binary vector of all genes, 1 for significant, 0 for non
 deg_v_dex_guide = genes_dex_guide %in% sig_genes_dex_guide
@@ -982,20 +1225,20 @@ gs_dex_guide = goseq(np_dex_guide, &#39;mm39&#39;, &#39;refGene&#39;)
 
 # head(gs_dex_guide)
 dim(gs_dex_guide)</code></pre>
-<pre><code>## [1] 21643     7</code></pre>
+<pre><code>## [1] 21454     7</code></pre>
 <pre class="r"><code>gs_fixed_dex_guide = (gs_dex_guide
             %&gt;% mutate(padj = p.adjust(over_represented_pvalue, &#39;BH&#39;)))
 # head(gs_fixed_dex_guide)
 
 # Count the significant categories
 sum(gs_fixed_dex_guide$padj &lt; 0.05)</code></pre>
-<pre><code>## [1] 31</code></pre>
+<pre><code>## [1] 33</code></pre>
 <pre class="r"><code># Write the results to a file
 write.csv(filter(gs_fixed_dex_guide, padj &lt; 0.05), 
           file = &#39;results/06_analysis/goseq_deu_guide.csv&#39;)
 write.csv(gs_fixed_dex_guide, file = &#39;results/06_analysis/goseq_deu_guide_all.csv&#39;)</code></pre>
-<p>The 877 genes with significantly different exon usage produced
-over-representation of DEU in 31 GO categories (out of a total of 21,389
+<p>The 886 genes with significantly different exon usage produced
+over-representation of DEU in 33 GO categories (out of a total of 21,454
 possible categories, after BH FDR adjustment). You can download the
 significant results of the <code>goseq</code> analysis <a href="./results/06_analysis/goseq_deu_guide.csv">here</a>, or the full
 results <a href="./results/06_analysis/goseq_deu_guide_all.csv">here</a>.</p>
@@ -1034,24 +1277,24 @@ res_orig_dex_ctl = DEXSeqResults(dxd)
 # least one exon
 # head(res_orig_dex_ctl)
 dim(res_orig_dex_ctl)</code></pre>
-<pre><code>## [1] 1520722      12</code></pre>
+<pre><code>## [1] 361141     12</code></pre>
 <pre class="r"><code># Remove the exons with insufficient data to analyze
 res_dex_ctl = (res_orig_dex_ctl
        %&gt;% data.frame()
        %&gt;% filter(!is.na(padj)))
 dim(res_dex_ctl)</code></pre>
-<pre><code>## [1] 1154143      17</code></pre>
+<pre><code>## [1] 225495     17</code></pre>
 <pre class="r"><code>sum(res_dex_ctl$padj &lt; 0.05)</code></pre>
-<pre><code>## [1] 27967</code></pre>
-<p>There are 1,520,722 exons analyzed. Of them, 1,154,143 had sufficient
-data for analysis, and 27,967 had adjusted p-values less than 0.05.</p>
+<pre><code>## [1] 8409</code></pre>
+<p>There are 361,141 exons analyzed. Of them, 225,495 had sufficient
+data for analysis, and 8,409 had adjusted p-values less than 0.05.</p>
 <p>Pull out the genes that have at least one DEU exon:</p>
 <pre class="r"><code>sig_genes_dex_ctl = (res_dex_ctl
            %&gt;% filter(padj &lt; 0.05)
            %&gt;% select(groupID)
            %&gt;% unique())$groupID
 length(sig_genes_dex_ctl)</code></pre>
-<pre><code>## [1] 3135</code></pre>
+<pre><code>## [1] 3379</code></pre>
 <pre class="r"><code># Check if any of the problem genes have DEU
 any(sig_genes_dex_ctl %in% duplicate_geneIDs$gene_id)</code></pre>
 <pre><code>## [1] TRUE</code></pre>
@@ -1063,7 +1306,7 @@ rownames(sig_dex_ctl) = NULL
 write.csv(sig_dex_ctl, file = &#39;results/06_analysis/ctl_deu_sig.csv&#39;)
 write.csv(select(res_dex_ctl, -genomicData), file = &#39;results/06_analysis/ctl_deu_all.csv&#39;,
           row.names = FALSE)</code></pre>
-<p>3,135 genes have at least one exon with DEU. None of the genes with
+<p>3,379 genes have at least one exon with DEU. None of the genes with
 duplicate IDs have DEU. You can download the significant results of
 DEXSeq <a href="./results/06_analysis/ctl_deu_sig.csv&#39;">here</a>.</p>
 </div>
@@ -1071,11 +1314,11 @@ DEXSeq <a href="./results/06_analysis/ctl_deu_sig.csv&#39;">here</a>.</p>
 <h4>Goseq</h4>
 <pre class="r"><code>all_genes = unique(res_orig_dex_ctl$groupID)
 length(all_genes)</code></pre>
-<pre><code>## [1] 40840</code></pre>
+<pre><code>## [1] 40836</code></pre>
 <pre class="r"><code>genes_dex_ctl = unique(res_dex_ctl$groupID)
 length(genes_dex_ctl)</code></pre>
-<pre><code>## [1] 20299</code></pre>
-<p>Of the 40,840 genes in the data set, 20,299 had sufficient coverage
+<pre><code>## [1] 19700</code></pre>
+<p>Of the 40,836 genes in the data set, 19,700 had sufficient coverage
 for analysis in at least one exon.</p>
 <pre class="r"><code># Make a binary vector of all genes, 1 for significant, 0 for non
 deg_v_dex_ctl = genes_dex_ctl %in% sig_genes_dex_ctl
@@ -1096,20 +1339,20 @@ gs_dex_ctl = goseq(np_dex_ctl, &#39;mm39&#39;, &#39;refGene&#39;)
 
 # head(gs_dex_ctl)
 dim(gs_dex_ctl)</code></pre>
-<pre><code>## [1] 21613     7</code></pre>
+<pre><code>## [1] 21498     7</code></pre>
 <pre class="r"><code>gs_fixed_dex_ctl = (gs_dex_ctl
             %&gt;% mutate(padj = p.adjust(over_represented_pvalue, &#39;BH&#39;)))
 # head(gs_fixed_dex_ctl)
 
 # Count the significant categories
 sum(sum(gs_fixed_dex_ctl$padj &lt; 0.05))</code></pre>
-<pre><code>## [1] 110</code></pre>
+<pre><code>## [1] 101</code></pre>
 <pre class="r"><code>write.csv(filter(gs_fixed_dex_ctl, padj &lt; 0.05), 
           file = &#39;results/06_analysis/goseq_deu_ctl.csv&#39;)
 write.csv(gs_fixed_dex_ctl, file = &#39;results/06_analysis/goseq_deu_ctl_all.csv&#39;)</code></pre>
-<p>The 3,135 genes with significantly different exon usage produced
-over-representation of DEU in 110 GO categories (out of a total of
-21,613 possible categories, after BH FDR adjustment). You can download
+<p>The 3,379 genes with significantly different exon usage produced
+over-representation of DEU in 101 GO categories (out of a total of
+21,498 possible categories, after BH FDR adjustment). You can download
 the file of significant results <a href="./results/06_analysis/goseq_deu_ctl.csv&#39;">here</a> if you
 want, but it’s empty. The full results are <a href="./results/06_analysis/goseq_deu_ctl_all.csv">here</a>.</p>
 </div>

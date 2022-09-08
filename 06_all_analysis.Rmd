@@ -38,10 +38,6 @@ names(gene_id_v) = gene_id_lookup$gene_id
                      %>% left_join(gene_id_lookup)))
 
 
-# Pre-make the data frames to fill all the numbers in
-exon_counts = matrix(NA, ncol = length(samps), nrow = 1520722)
-colnames(exon_counts) = samps
-# head(exon_counts)
 
 # Define the gtf and genome files
 gtf = '~/Disk2/CommonData/ReferenceGenomes/Mouse/GRCm39/ncbi-genomes-2022-03-04/GCF_000001635.27_GRCm39_genomic.gtf'
@@ -57,6 +53,11 @@ samdat = (samdat
 samps = rownames(samdat)
 samps = gsub('-','_',samps,fixed = TRUE)
 rownames(samdat) = samps
+
+# Pre-make the data frames to fill all the numbers in
+exon_counts = matrix(NA, ncol = length(samps), nrow = 1520722)
+colnames(exon_counts) = samps
+# head(exon_counts)
 ```
 
 ## Feature Counts
@@ -69,7 +70,9 @@ call_fc = function(bamf, gtf, genome, useMF = FALSE){
                        annot.ext = gtf, isGTFAnnotationFile = TRUE,
                        GTF.featureType = 'exon', 
                        GTF.attrType = 'gene_id',
-                       GTF.attrType.extra = 'exon_number', 
+                       GTF.attrType.extra = c('transcript_id',
+                                              'product',
+                                              'exon_number'), 
                        allowMultiOverlap = TRUE,
                        strandSpecific = 2,
                        genome = genome,
@@ -90,22 +93,22 @@ I run this once and then keep it stored because it takes a long time
 to run
 
 ```{r}
-# # Call it all once to set up the structure
-# samp = samps[1]
-# dr = dirs[1]
-# bamf = paste(dr, 'Aligned.sortedByCoord.out.bam', sep = '/')
-# fc = call_fc(bamf, gtf, genome)
-# fc_genes = call_fc(bamf, gtf, genome, TRUE)
-# stats = (fc$stat
-#          %>% data.frame()
-#          %>% column_to_rownames('Status'))
-# colnames(stats) = samp
-# exon_counts[,samp] = fc$counts
-# 
-# fc_lst = list()
-# fc_lst[[samp]] = fc
-# fc_lst_gene = list()
-# fc_lst_gene[[samp]] = fc_genes
+# Call it all once to set up the structure
+samp = samps[1]
+dr = dirs[1]
+bamf = paste(dr, 'Aligned.sortedByCoord.out.bam', sep = '/')
+fc = call_fc(bamf, gtf, genome)
+fc_genes = call_fc(bamf, gtf, genome, TRUE)
+stats = (fc$stat
+         %>% data.frame()
+         %>% column_to_rownames('Status'))
+colnames(stats) = samp
+exon_counts[,samp] = fc$counts
+
+fc_lst = list()
+fc_lst[[samp]] = fc
+fc_lst_gene = list()
+fc_lst_gene[[samp]] = fc_genes
 ```
 
 ### Run on the rest of the samples
@@ -114,8 +117,8 @@ I run this once and then keep it stored because it takes a long time
 to run
 
 ```{r}
-# # Call the same thing on all the mapping files
-# 
+# Call the same thing on all the mapping files
+
 # for (i in 2:length(dirs)){
 #     samp = samps[i]
 #     dr = dirs[i]
@@ -131,41 +134,76 @@ to run
 # # get gene lengths
 # gene_lens = select(fc_genes$annotation, GeneID, Length)
 # 
-# save(list = c('exon_counts', 'stats', 'fc_lst', 'fc_lst_gene', 'gene_lens'), 
+# save(list = c('exon_counts', 'stats', 'fc_lst', 'fc_lst_gene', 'gene_lens'),
 #      file = 'RData/feature_counts.RData')
 load('RData/feature_counts.RData')
 # head(exon_counts)
 ```
 
+### Remove Duplicates
 
-### Parse the feature counts
+```{r}
+annot = fc_lst[[1]]$annotation
+head(annot, 10)
+annot %>% filter(GeneID == 'Xkr4')
+
+dim(annot)
+dim(unique(annot))
+```
+
+Exon numbering is complicated here. On the one hand, exons are numbered not by
+gene, but by transcript. This means two things:
+
+1. The same exon _number_ can appear multiple times in a single gene, but refer
+to different, non-overlapping exons.
+2. The same _exon_ (as defined by start and end positions) can appear in 
+multiple transcripts, and therefore appear multiple times in the same gene. 
+It may or may not have the same "exon number" in that situation.
+
+In order to procede with the DEU analysis as discussed, I need to pare this
+down so that each exon (as defined by start and end positions) appears only once 
+in the dataset.
+
+### Parse and pare down the feature counts
 
 ```{r}
 # Get the gene and exon information for all the files
-# chk = vector(length = length(fc_lst) -1)
-# for (i in 2:length(fc_lst)){
-#     chk[i-1] = all_equal(fc_lst[[1]]$annotation, fc_lst[[i]]$annotation)
-# }
-annot = fc_lst[[1]]$annotation
-head(annot)
+chk = vector(length = length(fc_lst) -1)
+for (i in 2:length(fc_lst)){
+    chk[i-1] = all_equal(fc_lst[[1]]$annotation, fc_lst[[i]]$annotation)
+}
+# Remove the duplicates
+dups = duplicated(annot[,c('Chr','Start','End')])
+annot = annot[!dups,]
+exon_counts = exon_counts[!dups,]
+
+dim(annot)
+dim(unique(annot[,c('transcript_id','exon_number')]))
 
 # Make sure exon numbers are unique and in a format DEXSeq can use
 annot = (annot
-         %>% data.frame()
-         %>% group_by(GeneID)
-         %>% mutate(exon_unique = as.character(1:length(GeneID)))
-         %>% data.frame())
-# head(annot)
-# head(rownames(exon_counts))
+         %>% mutate(exon_unique = paste(transcript_id, exon_number,
+                                        sep = '-')))
+head(annot)
+head(rownames(exon_counts))
 write.csv(annot, file = 'results/06_analysis/exon_annotation.csv')
 
 # Make sure sample names are correctly formatted
 samps = colnames(exon_counts)
 samps = gsub('-','_',samps, fixed = TRUE)
 colnames(exon_counts) = samps
+
+dim(exon_counts)
 ```
 
-Check if the two pairs of genes with duplicate IDs have any read
+Exon numbers now include a transcript number. It is important to remember that 
+many exons appear in more than one transcript, so the transcript number in the
+exon name is _a_ transcript that exon appears in, but may not be _the only_
+transcript that exon appears in.
+
+Once duplicates have been removed, there are 361,141 unique exons.
+
+Now I check if the two pairs of genes with duplicate IDs have any read
 counts associated with them
 
 ```{r}
@@ -195,10 +233,10 @@ I run this once and then keep it stored because it takes a long time to run
 ```{r}
 # Run DEXSeq on undifferentiated samples
 # head(exon_counts)
-
-samdat_undif = filter(samdat, Differentiation == 'Naive')
-exon_ct_undif = exon_counts[,rownames(samdat_undif)]
-samdat_undif
+# 
+# samdat_undif = filter(samdat, Differentiation == 'Naive')
+# exon_ct_undif = exon_counts[,rownames(samdat_undif)]
+# samdat_undif
 # head(exon_ct_undif)
 # 
 # dxd = DEXSeqDataSet(exon_ct_undif, samdat_undif,
@@ -210,7 +248,7 @@ samdat_undif
 # save(dxd, file = 'RData/dxd_undif.RData')
 # plotDispEsts(dxd)
 # dxd = testForDEU(dxd, BPPARAM = MulticoreParam(workers = 10))
-# dxd = estimateExonFoldChanges(dxd, fitExpToVar = 'Treatment', 
+# dxd = estimateExonFoldChanges(dxd, fitExpToVar = 'Treatment',
 #                               BPPARAM = MulticoreParam(workers = 10))
 # save(dxd, file = 'RData/dxd_undif_deu.RData')
 load('RData/dxd_undif_deu.RData')
@@ -243,8 +281,8 @@ write.csv(sig_10_dex_undif, file = 'results/06_analysis/naive_deu_0.1_sig.csv')
 #             row.names = FALSE)
 ```
 
-There are 1,520,722 exons analyzed. Of them, 1,125,713 had sufficient data for
-analysis, and 6,520 had adjusted p-values less than 0.05. You can download the
+There were 361,141 exons analyzed. Of them, 224,844 had sufficient data for
+analysis, and 1,836 had adjusted p-values less than 0.05. You can download the
 significant results of DEXSeq analysis
 [here](./results/06_analysis/naive_deu_sig.csv')
 
@@ -262,8 +300,8 @@ length(sig_genes_dex_undif)
 any(sig_genes_dex_undif %in% duplicate_geneIDs$gene_id)
 ```
 
-989 genes have at least one exon with DEU. None of the genes with duplicate IDs 
-have DEU.
+1,114 genes have at least one exon with DEU. None of the genes with duplicate
+IDs have DEU.
 
 #### Goseq
 
@@ -274,7 +312,7 @@ genes_dex_undif = unique(res_dex_undif$groupID)
 length(genes_dex_undif)
 ```
 
-Of the 40,840 genes in the data set, 19,028 had sufficient coverage for analysis
+Of the 40,836 genes in the data set, 19,467 had sufficient coverage for analysis
 in at least one exon.
 
 ```{r, warning=FALSE, message=FALSE}
@@ -310,8 +348,8 @@ write.csv(filter(gs_fixed_dex_undif, padj < 0.05),
 write.csv(gs_fixed_dex_undif, file = 'results/06_analysis/goseq_deu_naive_all.csv')
 ```
 
-The 989 genes with significantly different exon usage produced 
-over-representation of DEU in 220 GO categories (out of a total of 21,389 
+The 1,114 genes with significantly different exon usage produced 
+over-representation of DEU in 228 GO categories (out of a total of 21,457 
 possible categories, after BH FDR adjustment). You can download the significant
 results of the `goseq` analysis
 [here](./results/06_analysis/goseq_deu_naive.csv), or the full results 
@@ -328,11 +366,11 @@ I run this once and then keep it stored because it takes a long time to run
 # # Run DEXSeq on differentiated samples
 # head(exon_counts)
 
-samdat_dif = filter(samdat, Differentiation == 'Diff')
-exon_ct_dif = exon_counts[,rownames(samdat_dif)]
-samdat_dif
-# head(exon_ct_dif)
-
+# samdat_dif = filter(samdat, Differentiation == 'Diff')
+# exon_ct_dif = exon_counts[,rownames(samdat_dif)]
+# samdat_dif
+# # head(exon_ct_dif)
+# 
 # dxd = DEXSeqDataSet(exon_ct_dif, samdat_dif,
 #                     design = ~sample + exon + exon:Treatment,
 #                     featureID = annot$exon_unique,
@@ -362,8 +400,8 @@ dim(res_dex_dif)
 sum(res_dex_dif$padj < 0.05)
 ```
 
-There are 1,520,722 exons analyzed. Of them, 1,191,946 had sufficient data for
-analysis, and 1,237 had adjusted p-values less than 0.05.
+There are 361,141 exons analyzed. Of them, 229,316 had sufficient data for
+analysis, and 407 had adjusted p-values less than 0.05.
 
 
 Pull out the genes that have at least one DEU exon:
@@ -389,10 +427,10 @@ rownames(sig_dex_dif) = NULL
 write.csv(sig_dex_dif, file = 'results/06_analysis/diff_deu_sig.csv')
 write.csv(sig_10_dex_dif, file = 'results/06_analysis/diff_deu_0.1_sig.csv')
 # write.csv(select(res_dex_dif, -genomicData), file = 'results/06_analysis/diff_deu_all.csv',
-          # row.names = FALSE)
+# row.names = FALSE)
 ```
 
-219 genes have at least one exon with DEU. None of the genes with duplicate IDs 
+256 genes have at least one exon with DEU. None of the genes with duplicate IDs 
 have DEU. You can download the significant results of DEXSeq
 [here](./results/06_analysis/diff_deu_sig.csv').
 
@@ -405,7 +443,7 @@ genes_dex_dif = unique(res_dex_dif$groupID)
 length(genes_dex_dif)
 ```
 
-Of the 40,840 genes in the data set, 21,782 had sufficient coverage for analysis
+Of the 40,836 genes in the data set, 20,171 had sufficient coverage for analysis
 in at least one exon.
 
 ```{r, warning=FALSE, message=FALSE}
@@ -440,8 +478,8 @@ write.csv(filter(gs_fixed_dex_dif, padj < 0.05),
 write.csv(gs_fixed_dex_dif, file = 'results/06_analysis/goseq_deu_diff_all.csv')
 ```
 
-The 219 genes with significantly different exon usage produced 
-over-representation of DEU in 0 GO categories (out of a total of 21,389 
+The 256 genes with significantly different exon usage produced 
+over-representation of DEU in 0 GO categories (out of a total of 21,570 
 possible categories, after BH FDR adjustment). You can download the file of
 significant results [here](./results/06_analysis/goseq_deu_diff.csv') if you
 want, but it's empty. The full results are 
@@ -505,8 +543,8 @@ write.csv(sig_10_dex_guide, file = 'results/06_analysis/guide_deu_0.1_sig.csv')
 #             row.names = FALSE)
 ```
 
-There are 1,520,722 exons analyzed. Of them, 1,164,641 had sufficient data for
-analysis, and 6,789 had adjusted p-values less than 0.05. You can download the
+There are 361,141 exons analyzed. Of them, 224,113 had sufficient data for
+analysis, and 1,551 had adjusted p-values less than 0.05. You can download the
 significant results of DEXSeq analysis
 [here](./results/06_analysis/guide_deu_sig.csv).
 
@@ -524,7 +562,7 @@ length(sig_genes_dex_guide)
 any(sig_genes_dex_guide %in% duplicate_geneIDs$gene_id)
 ```
 
-877 genes have at least one exon with DEU. None of the genes with duplicate IDs 
+886 genes have at least one exon with DEU. None of the genes with duplicate IDs 
 have DEU.
 
 #### Goseq
@@ -536,7 +574,7 @@ genes_dex_guide = unique(res_dex_guide$groupID)
 length(genes_dex_guide)
 ```
 
-Of the 40,840 genes in the data set, 20,537 had sufficient coverage for analysis
+Of the 40,836 genes in the data set, 19,368 had sufficient coverage for analysis
 in at least one exon.
 
 ```{r, warning=FALSE, message=FALSE}
@@ -572,8 +610,8 @@ write.csv(filter(gs_fixed_dex_guide, padj < 0.05),
 write.csv(gs_fixed_dex_guide, file = 'results/06_analysis/goseq_deu_guide_all.csv')
 ```
 
-The 877 genes with significantly different exon usage produced 
-over-representation of DEU in 31 GO categories (out of a total of 21,389 
+The 886 genes with significantly different exon usage produced 
+over-representation of DEU in 33 GO categories (out of a total of 21,454 
 possible categories, after BH FDR adjustment). You can download the significant
 results of the `goseq` analysis
 [here](./results/06_analysis/goseq_deu_guide.csv), or the full results 
@@ -624,8 +662,8 @@ dim(res_dex_ctl)
 sum(res_dex_ctl$padj < 0.05)
 ```
 
-There are 1,520,722 exons analyzed. Of them, 1,154,143 had sufficient data for
-analysis, and 27,967 had adjusted p-values less than 0.05.
+There are 361,141 exons analyzed. Of them, 225,495 had sufficient data for
+analysis, and 8,409 had adjusted p-values less than 0.05.
 
 
 Pull out the genes that have at least one DEU exon:
@@ -650,8 +688,8 @@ write.csv(select(res_dex_ctl, -genomicData), file = 'results/06_analysis/ctl_deu
           row.names = FALSE)
 ```
 
-3,135 genes have at least one exon with DEU. None of the genes with duplicate IDs 
-have DEU. You can download the significant results of DEXSeq
+3,379 genes have at least one exon with DEU. None of the genes with duplicate 
+IDs have DEU. You can download the significant results of DEXSeq
 [here](./results/06_analysis/ctl_deu_sig.csv').
 
 #### Goseq
@@ -663,7 +701,7 @@ genes_dex_ctl = unique(res_dex_ctl$groupID)
 length(genes_dex_ctl)
 ```
 
-Of the 40,840 genes in the data set, 20,299 had sufficient coverage for analysis
+Of the 40,836 genes in the data set, 19,700 had sufficient coverage for analysis
 in at least one exon.
 
 ```{r, warning=FALSE, message=FALSE}
@@ -698,8 +736,8 @@ write.csv(filter(gs_fixed_dex_ctl, padj < 0.05),
 write.csv(gs_fixed_dex_ctl, file = 'results/06_analysis/goseq_deu_ctl_all.csv')
 ```
 
-The 3,135 genes with significantly different exon usage produced 
-over-representation of DEU in 110 GO categories (out of a total of 21,613 
+The 3,379 genes with significantly different exon usage produced 
+over-representation of DEU in 101 GO categories (out of a total of 21,498 
 possible categories, after BH FDR adjustment). You can download the file of
 significant results [here](./results/06_analysis/goseq_deu_ctl.csv') if you
 want, but it's empty. The full results are 
